@@ -7,13 +7,15 @@ const OddBits = () => {
 
   const addToOddBits = (event) => {
     event.preventDefault();
+    debugger;
     setOddBits([oddBit, ...oddBits]);
     setOddBit("");
   };
 
   const addOddBitOnEnter = (event) => {
-    if (event.keyCode === 13) {
-      addToOddBits();
+    if (event.key === "Enter") {
+      setOddBits([oddBit, ...oddBits]);
+      setOddBit("");
     }
   };
 
@@ -40,7 +42,7 @@ const OddBits = () => {
               className={` ma1 pa1 input-reset center ba bg-transparent br2 hover-bg-light-gray w-50-ns w-100 `}
               onChange={(e) => setOddBit(e.target.value)}
               value={oddBit}
-              onKeyPress={addOddBitOnEnter}
+              //   onKeyDown={(e) => addOddBitOnEnter(e)}
             />
             <Button
               className="w-50-ns center w-100 "
