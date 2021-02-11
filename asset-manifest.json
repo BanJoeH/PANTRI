@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/recipe-shopping-list-2/static/css/main.bf603db5.chunk.css",
+    "main.js": "/recipe-shopping-list-2/static/js/main.6bc6d086.chunk.js",
+    "main.js.map": "/recipe-shopping-list-2/static/js/main.6bc6d086.chunk.js.map",
+    "runtime-main.js": "/recipe-shopping-list-2/static/js/runtime-main.e6f10d90.js",
+    "runtime-main.js.map": "/recipe-shopping-list-2/static/js/runtime-main.e6f10d90.js.map",
+    "static/css/2.eaf66dc3.chunk.css": "/recipe-shopping-list-2/static/css/2.eaf66dc3.chunk.css",
+    "static/js/2.d1e1b25a.chunk.js": "/recipe-shopping-list-2/static/js/2.d1e1b25a.chunk.js",
+    "static/js/2.d1e1b25a.chunk.js.map": "/recipe-shopping-list-2/static/js/2.d1e1b25a.chunk.js.map",
+    "index.html": "/recipe-shopping-list-2/index.html",
+    "static/css/2.eaf66dc3.chunk.css.map": "/recipe-shopping-list-2/static/css/2.eaf66dc3.chunk.css.map",
+    "static/css/main.bf603db5.chunk.css.map": "/recipe-shopping-list-2/static/css/main.bf603db5.chunk.css.map",
+    "static/js/2.d1e1b25a.chunk.js.LICENSE.txt": "/recipe-shopping-list-2/static/js/2.d1e1b25a.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.e6f10d90.js",
+    "static/css/2.eaf66dc3.chunk.css",
+    "static/js/2.d1e1b25a.chunk.js",
+    "static/css/main.bf603db5.chunk.css",
+    "static/js/main.6bc6d086.chunk.js"
+  ]
+}
