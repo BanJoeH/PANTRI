@@ -23,7 +23,7 @@ const OddBits = ({
               className={` ma1 pa1 ttc input-reset ba bg-transparent br2 hover-bg-light-gray w-50-ns w-100 `}
               onChange={(e) => setOddBit(e.target.value)}
               value={oddBit}
-              //   onKeyDown={(e) => addOddBitOnEnter(e)}
+              onKeyPress={addOddBitOnEnter}
             />
             <Button
               className="w-50-ns center w-100 "
