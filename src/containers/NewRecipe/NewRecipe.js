@@ -70,27 +70,27 @@ function NewRecipe({ setRecipes, recipes }) {
           <input
             name="recipeName"
             placeholder="Recipe Name"
-            className={` ma1 pa1 input-reset ba bg-transparent br2 hover-bg-light-gray w-50-ns w-100 `}
+            className={` ma1 pa1 input-reset ba bg-transparent br2 hover-bg-light-gray w-50-ns w-90 `}
             onChange={(e) => setNewRecipeName(e.target.value)}
             value={newRecipeName}
           />
           <input
             name="recipeLink"
             placeholder="Link"
-            className={` ma1 pa1 input-reset ba bg-transparent br2 hover-bg-light-gray w-50-ns w-100 `}
+            className={` ma1 pa1 input-reset ba bg-transparent br2 hover-bg-light-gray w-50-ns w-90 `}
             onChange={(e) => setNewRecipeLink(e.target.value)}
             value={newRecipeLink}
           />
           <input
             name="recipeIngredient"
             placeholder="Ingredient"
-            className={` ma1 pa1 input-reset ba bg-transparent br2 hover-bg-light-gray w-50-ns w-100 `}
+            className={` ma1 pa1 input-reset ba bg-transparent br2 hover-bg-light-gray w-50-ns w-90 `}
             onChange={(e) => setNewRecipeIngredient(e.target.value)}
             value={newRecipeIngredient}
             onKeyDown={(e) => addIngredientOnEnter(e)}
           />
           <Button
-            className="w-50-ns w-100 "
+            className="w-50-ns w-900 "
             value="AddIngredient"
             inner="+"
             button={addToIngredients}
@@ -122,7 +122,7 @@ function NewRecipe({ setRecipes, recipes }) {
         </div>
         <div className="center w-80">
           <Button
-            className=" pv2"
+            className=" pv2 w-90"
             value="AddRecipe"
             inner="Add Recipe"
             button={addRecipe}
