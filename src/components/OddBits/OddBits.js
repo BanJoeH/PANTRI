@@ -1,43 +1,26 @@
-import { useState, useEffect } from "react";
+import React from "react";
 import Button from "../../elements/Button/Button";
 
-const OddBits = () => {
-  const [oddBits, setOddBits] = useState([]);
-  const [oddBit, setOddBit] = useState("");
-
-  const addToOddBits = (event) => {
-    event.preventDefault();
-    setOddBits([oddBit, ...oddBits]);
-    setOddBit("");
-  };
-
-  const addOddBitOnEnter = (event) => {
-    if (event.keyCode === 13) {
-      addToOddBits();
-    }
-  };
-
-  const removeOddBit = (event) => {
-    event.preventDefault();
-    let tempOddBits = oddBits.filter((item) => {
-      if (item !== event.target.value) {
-        return item;
-      }
-    });
-    setOddBits(tempOddBits);
-  };
+const OddBits = ({
+  addOddBitOnEnter,
+  addToOddBits,
+  removeOddBit,
+  setOddBit,
+  oddBits,
+  oddBit,
+}) => {
   return (
-    <article className="center mw6 br3 hidden ba b--black-10 mv4 ">
-      <div className="bg-dark-gray w-100 ph3 pv1 flex justify-between items-center">
+    <article className="center mw6 br3 hidden shadow-4 ba b--black-10 mv4">
+      <div className="bg-dark-gray w-100 ph3 flex br--bottom justify-between items-center">
         <h2 className="white dib mr3">Odd Bits</h2>
       </div>
-      <div className="pa3 bt b--black-10 flex">
+      <div className="pa3 bt b--black-10 center flex">
         <form className="bn ph1 center w-80 ">
-          <div className="center">
+          <div className="tc cf ph2-ns mw9">
             <input
               name="oddBit"
               placeholder="Add your odd bits here"
-              className={` ma1 pa1 input-reset center ba bg-transparent br2 hover-bg-light-gray w-50-ns w-100 `}
+              className={` ma1 pa1 ttc input-reset ba bg-transparent br2 hover-bg-light-gray w-50-ns w-100 `}
               onChange={(e) => setOddBit(e.target.value)}
               value={oddBit}
               onKeyPress={addOddBitOnEnter}

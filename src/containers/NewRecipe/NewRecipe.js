@@ -14,6 +14,16 @@ function NewRecipe({ setRecipes, recipes }) {
     setNewRecipeIngredient("");
   };
 
+  const removeNewIngredient = (event) => {
+    event.preventDefault();
+    let tempIngredients = newRecipeIngredients.filter((ingredient, i) => {
+      if (ingredient + i !== event.target.value) {
+        return ingredient;
+      }
+    });
+    setNewRecipeIngredients(tempIngredients);
+  };
+
   const addIngredientOnEnter = (event) => {
     if (event.key === "Enter") {
       setNewRecipeIngredients([newRecipeIngredient, ...newRecipeIngredients]);
@@ -27,7 +37,7 @@ function NewRecipe({ setRecipes, recipes }) {
       message: "Success",
       type: "success",
       insert: "bottom",
-      container: "top-center",
+      container: "bottom-center",
       dismiss: {
         duration: 2000,
       },
@@ -53,10 +63,10 @@ function NewRecipe({ setRecipes, recipes }) {
   };
 
   return (
-    <div className="center debug">
+    <div className="center pb5">
       <h2 className="tc">New Recipe</h2>
-      <article className="center mw9 mw6-ns  br3 hidden ba b--black-10 mv4">
-        <div className="tc cf ph2-ns mw9 ">
+      <article className="center mw9 mw6-ns shadow-4 br3 hidden ba b--black-10 pa2 mv4">
+        <div className="tc pa1 cf ph2-ns mw9 ">
           <input
             name="recipeName"
             placeholder="Recipe Name"
@@ -88,11 +98,11 @@ function NewRecipe({ setRecipes, recipes }) {
         </div>
         <div className="pa3 bt b--black-10 flex">
           <form className="bn ph1 center w-80 ">
-            {newRecipeIngredients.map((ingredient) => {
+            {newRecipeIngredients.map((ingredient, i) => {
               return (
                 <div
                   className="items-center mb1 bb b--light-silver flex justify-between"
-                  key={ingredient}
+                  key={ingredient + i}
                 >
                   <div htmlFor={ingredient} className="lh-copy">
                     {ingredient}
@@ -100,7 +110,8 @@ function NewRecipe({ setRecipes, recipes }) {
                   <button
                     className="mr2 ba ph1  b--moon-gray gray br2  tc bg-white hover-bg-near-white pointer"
                     name={ingredient}
-                    value={ingredient}
+                    value={ingredient + i}
+                    onClick={removeNewIngredient}
                   >
                     X
                   </button>
@@ -109,12 +120,14 @@ function NewRecipe({ setRecipes, recipes }) {
             })}
           </form>
         </div>
-        <Button
-          className="w-60-ns w-100"
-          value="AddRecipe"
-          inner="Add Recipe"
-          button={addRecipe}
-        />
+        <div className="center w-80">
+          <Button
+            className=" pv2"
+            value="AddRecipe"
+            inner="Add Recipe"
+            button={addRecipe}
+          />
+        </div>
       </article>
     </div>
   );
