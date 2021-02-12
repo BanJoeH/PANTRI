@@ -72,50 +72,14 @@ function NewRecipe({ setRecipes, recipes }) {
               value={newRecipeLink}
             />
           </div>
-          {/* <input
-            name="recipeIngredient"
-            placeholder="Ingredient"
-            className={` ma1 pa1 input-reset ba bg-transparent br2 hover-bg-light-gray w-50-ns w-90 `}
-            onChange={(e) => setNewRecipeIngredient(e.target.value)}
-            value={newRecipeIngredient}
-            onKeyDown={(e) => addIngredientOnEnter(e)}
-          />
-          <Button
-            className="w-50-ns w-900 "
-            value="AddIngredient"
-            inner="+"
-            button={addToIngredients}
-          /> */}
+
           <IngredientInput
             setNewRecipeIngredients={setNewRecipeIngredients}
             inputList={inputList}
             setInputList={setInputList}
           />
         </div>
-        {/* <div className="pa3 bt b--black-10 flex">
-          <form className="bn ph1 center w-80 ">
-            {newRecipeIngredients.map((ingredient, i) => {
-              return (
-                <div
-                  className="items-center mb1 bb b--light-silver flex justify-between"
-                  key={ingredient + i}
-                >
-                  <div htmlFor={ingredient} className="lh-copy">
-                    {ingredient}
-                  </div>
-                  <button
-                    className="mr2 ba ph1  b--moon-gray gray br2  tc bg-white hover-bg-near-white pointer"
-                    name={ingredient}
-                    value={ingredient + i}
-                    onClick={removeNewIngredient}
-                  >
-                    X
-                  </button>
-                </div>
-              );
-            })}
-          </form>
-        </div> */}
+
         <div className="center w-80">
           <Button
             className=" pv2 w-90"
