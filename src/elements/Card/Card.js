@@ -10,8 +10,8 @@ function Card({
   className,
 }) {
   return (
-    <article className="center mw6 br3 hidden shadow-4 ba b--black-10 mv4 ">
-      <div className="bg-dark-gray w-100 ph3 br--bottom flex justify-between items-center">
+    <article className="center mw6 br3 hidden shadow-4 ttc ba b--black-10 mv4 ">
+      <div className="bg-dark-gray ph3 br--bottom flex justify-between items-center">
         <h2 className="white dib mr3">{recipe.name}</h2>
         {recipe.link === "" ? (
           <div></div>
