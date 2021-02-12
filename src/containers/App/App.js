@@ -17,7 +17,6 @@ export default function App() {
   const [oddBits, setOddBits] = useState(
     JSON.parse(localStorage.getItem("storedOdd")) || []
   );
-  const [oddBit, setOddBit] = useState("");
 
   useEffect(() => {
     localStorage.setItem("storedRecipes", JSON.stringify(recipes));
@@ -47,7 +46,7 @@ export default function App() {
 
   const removeIngredientFromShoppingList = (event) => {
     event.preventDefault();
-    let tempShoppingList = shoppingList.map((recipe) => {
+    let tempShoppingList = shoppingList.map((recipe, i) => {
       if (recipe.id === +event.target.name) {
         let tempIngredientList = recipe.ingredients.filter((ingredient) => {
           if (ingredient !== event.target.value) {
@@ -75,7 +74,7 @@ export default function App() {
 
   const removeFromShoppingList = (event) => {
     event.preventDefault();
-    let tempShoppingList = shoppingList.filter((recipe) => {
+    let tempShoppingList = shoppingList.filter((recipe, i) => {
       if (recipe.id !== +event.target.value) {
         return recipe;
       }
@@ -83,30 +82,8 @@ export default function App() {
     setShoppingList(tempShoppingList);
   };
 
-  const addToOddBits = (event) => {
-    event.preventDefault();
-    setOddBits([oddBit, ...oddBits]);
-    setOddBit("");
-  };
-
-  const addOddBitOnEnter = (event) => {
-    if (event.keyCode === 13) {
-      addToOddBits(event);
-    }
-  };
-
-  const removeOddBit = (event) => {
-    event.preventDefault();
-    let tempOddBits = oddBits.filter((item) => {
-      if (item !== event.target.value) {
-        return item;
-      }
-    });
-    setOddBits(tempOddBits);
-  };
-
   return (
-    <div className="ttc relative min-h-90">
+    <div className="relative min-h-90">
       <ReactNotification />
       <Router>
         <div className="pb-3">
@@ -140,12 +117,8 @@ export default function App() {
                 recipes={shoppingList}
                 cardButton={removeFromShoppingList}
                 ingredientButton={removeIngredientFromShoppingList}
-                addOddBitOnEnter={addOddBitOnEnter}
-                addToOddBits={addToOddBits}
-                removeOddBit={removeOddBit}
                 oddBits={oddBits}
-                oddBit={oddBit}
-                setOddBit={setOddBit}
+                setOddBits={setOddBits}
               />
             </Route>
           </Switch>

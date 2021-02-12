@@ -8,10 +8,11 @@ function Card({
   ingredientButton,
   removeFromRecipes,
   className,
+  recipeIndex,
 }) {
   return (
-    <article className="center mw6 br3 hidden shadow-4 ba b--black-10 mv4 ">
-      <div className="bg-dark-gray w-100 ph3 br--bottom flex justify-between items-center">
+    <article className="center mw6 br3 hidden shadow-4 ttc ba b--black-10 mv4 ">
+      <div className="bg-dark-gray ph3 br--bottom flex justify-between items-center">
         <h2 className="white dib mr3">{recipe.name}</h2>
         {recipe.link === "" ? (
           <div></div>
@@ -37,7 +38,7 @@ function Card({
       </div>
       <div className="pa3 bt b--black-10 flex">
         <form className="bn ph1 center w-80 ">
-          {recipe.ingredients.map((ingredient) => {
+          {recipe.ingredients.map((ingredient, i) => {
             return (
               <div
                 className="items-center mb1 bb b--light-silver flex justify-between"
@@ -57,12 +58,13 @@ function Card({
               </div>
             );
           })}
-          <Button
-            inner={buttonText}
-            button={button}
-            className="center"
+          <button
+            className={`pv1 mb1 ph3 w-90 bg-white hover-bg-near-white center tc ba b--moon-gray br2 shadow-4`}
+            onClick={button}
             value={recipe.id}
-          />
+          >
+            {buttonText}
+          </button>
         </form>
       </div>
     </article>

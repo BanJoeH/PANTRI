@@ -1,29 +1,13 @@
-import React from "react";
+import { useState, useEffect } from "react";
 import Card from "../../elements/Card/Card.js";
 import OddBits from "../../components/OddBits/OddBits.js";
 
-function Home({
-  recipes,
-  cardButton,
-  ingredientButton,
-  addOddBitOnEnter,
-  addToOddBits,
-  removeOddBit,
-  oddBits,
-  oddBit,
-  setOddBit,
-}) {
+function Home({ recipes, cardButton, ingredientButton, oddBits, setOddBits }) {
   return (
-    <div className="center pb5">
+    <div className="center pb6">
       <h2 className="tc">Shopping List</h2>
-      <OddBits
-        addOddBitOnEnter={addOddBitOnEnter}
-        addToOddBits={addToOddBits}
-        removeOddBit={removeOddBit}
-        oddBits={oddBits}
-        oddBit={oddBit}
-        setOddBit={setOddBit}
-      />
+      <OddBits setOddBits={setOddBits} oddBits={oddBits} />
+
       {recipes.length === 0 ? (
         <div>
           <h4 className="tc center">No recipes in your shopping list.</h4>
@@ -39,6 +23,7 @@ function Home({
               button={cardButton}
               buttonText="Done"
               ingredientButton={ingredientButton}
+              recipeindex={i}
             />
           );
         })

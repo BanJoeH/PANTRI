@@ -1,35 +1,15 @@
-import React, { useState } from "react";
+import { useState, useEffect } from "react";
 import { store } from "react-notifications-component";
 import Button from "../../elements/Button/Button.js";
+import IngredientInput from "../../components/IngredientInput/IngredientInput.js";
 
 function NewRecipe({ setRecipes, recipes }) {
   const [newRecipeName, setNewRecipeName] = useState("");
   const [newRecipeLink, setNewRecipeLink] = useState("");
-  const [newRecipeIngredient, setNewRecipeIngredient] = useState("");
   const [newRecipeIngredients, setNewRecipeIngredients] = useState([]);
-
-  const addToIngredients = (event) => {
-    event.preventDefault();
-    setNewRecipeIngredients([newRecipeIngredient, ...newRecipeIngredients]);
-    setNewRecipeIngredient("");
-  };
-
-  const removeNewIngredient = (event) => {
-    event.preventDefault();
-    let tempIngredients = newRecipeIngredients.filter((ingredient, i) => {
-      if (ingredient + i !== event.target.value) {
-        return ingredient;
-      }
-    });
-    setNewRecipeIngredients(tempIngredients);
-  };
-
-  const addIngredientOnEnter = (event) => {
-    if (event.key === "Enter") {
-      setNewRecipeIngredients([newRecipeIngredient, ...newRecipeIngredients]);
-      setNewRecipeIngredient("");
-    }
-  };
+  const [inputList, setInputList] = useState([
+    { ingredient: "", ingredientRef: null },
+  ]);
 
   const addRecipeNotification = () => {
     store.addNotification({
@@ -43,6 +23,15 @@ function NewRecipe({ setRecipes, recipes }) {
       },
     });
   };
+
+  useEffect(() => {
+    let ingredients = inputList
+      .map((input, i) => {
+        return input.ingredient;
+      })
+      .filter(Boolean);
+    setNewRecipeIngredients(ingredients);
+  }, [inputList]);
 
   const addRecipe = (event) => {
     event.preventDefault();
@@ -58,30 +47,32 @@ function NewRecipe({ setRecipes, recipes }) {
     addRecipeNotification();
     setNewRecipeName("");
     setNewRecipeLink("");
-    setNewRecipeIngredient("");
     setNewRecipeIngredients([]);
+    setInputList([{ ingredient: "", ingredientRef: null }]);
   };
 
   return (
-    <div className="center pb5">
+    <div className="center pb6">
       <h2 className="tc">New Recipe</h2>
       <article className="center mw9 mw6-ns shadow-4 br3 hidden ba b--black-10 pa2 mv4">
-        <div className="tc pa1 cf ph2-ns mw9 ">
-          <input
-            name="recipeName"
-            placeholder="Recipe Name"
-            className={` ma1 pa1 input-reset ba bg-transparent br2 hover-bg-light-gray w-50-ns w-90 `}
-            onChange={(e) => setNewRecipeName(e.target.value)}
-            value={newRecipeName}
-          />
-          <input
-            name="recipeLink"
-            placeholder="Link"
-            className={` ma1 pa1 input-reset ba bg-transparent br2 hover-bg-light-gray w-50-ns w-90 `}
-            onChange={(e) => setNewRecipeLink(e.target.value)}
-            value={newRecipeLink}
-          />
-          <input
+        <div className="tc pa1 ph2-ns w-100 ">
+          <div>
+            <input
+              name="recipeName"
+              placeholder="Recipe Name"
+              className={` ma1 pa1 input-reset ba bg-transparent br2 hover-bg-light-gray w-50-ns w-90  `}
+              onChange={(e) => setNewRecipeName(e.target.value)}
+              value={newRecipeName}
+            />
+            <input
+              name="recipeLink"
+              placeholder="Link"
+              className={` ma1 pa1 input-reset ba bg-transparent br2 hover-bg-light-gray w-50-ns w-90 `}
+              onChange={(e) => setNewRecipeLink(e.target.value)}
+              value={newRecipeLink}
+            />
+          </div>
+          {/* <input
             name="recipeIngredient"
             placeholder="Ingredient"
             className={` ma1 pa1 input-reset ba bg-transparent br2 hover-bg-light-gray w-50-ns w-90 `}
@@ -94,9 +85,14 @@ function NewRecipe({ setRecipes, recipes }) {
             value="AddIngredient"
             inner="+"
             button={addToIngredients}
+          /> */}
+          <IngredientInput
+            setNewRecipeIngredients={setNewRecipeIngredients}
+            inputList={inputList}
+            setInputList={setInputList}
           />
         </div>
-        <div className="pa3 bt b--black-10 flex">
+        {/* <div className="pa3 bt b--black-10 flex">
           <form className="bn ph1 center w-80 ">
             {newRecipeIngredients.map((ingredient, i) => {
               return (
@@ -119,7 +115,7 @@ function NewRecipe({ setRecipes, recipes }) {
               );
             })}
           </form>
-        </div>
+        </div> */}
         <div className="center w-80">
           <Button
             className=" pv2 w-90"
