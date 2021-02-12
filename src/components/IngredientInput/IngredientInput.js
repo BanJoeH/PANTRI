@@ -1,10 +1,6 @@
 import { useEffect } from "react";
 
-const IngredientInput = ({
-  inputList,
-  setInputList,
-  setNewRecipeIngredients,
-}) => {
+const IngredientInput = ({ inputList, setInputList }) => {
   const handleInputChange = (e, index) => {
     const { name, value } = e.target;
     const list = [...inputList];
