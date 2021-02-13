@@ -1,12 +1,26 @@
 import { useState, useEffect } from "react";
 import IngredientInput from "../IngredientInput/IngredientInput.js";
 
+// let defaultState = {
+// if (oddbits.length > 0) {
+//   oddBits.map((item) => {
+//     return { ingredient: item, ingredientRef: null }
+// })} else {
+//   return [{ ingredient: "", ingredientRef: null }]
+// }
+// }
+
 const OddBits = ({ setOddBits, oddBits }) => {
-  const [inputList, setInputList] = useState(
-    oddBits.map((item) => {
-      return { ingredient: item, ingredientRef: null };
-    }) || [{ ingredient: "", ingredientRef: null }]
-  );
+  let defaultState = () => {
+    if (oddBits.length > 0) {
+      oddBits.map((item) => {
+        return { ingredient: item, ingredientRef: null };
+      });
+    } else {
+      return [{ ingredient: "", ingredientRef: null }];
+    }
+  };
+  const [inputList, setInputList] = useState(defaultState);
 
   useEffect(() => {
     let ingredients = inputList.map((input, i) => {

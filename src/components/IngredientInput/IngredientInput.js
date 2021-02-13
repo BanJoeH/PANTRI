@@ -26,6 +26,7 @@ const IngredientInput = ({ inputList, setInputList }) => {
 
   useEffect(() => {
     if (inputList[inputList.length - 1].ingredientRef) {
+      console.log(inputList[inputList.length - 1]);
       inputList[inputList.length - 1].ingredientRef.focus();
     }
   }, [inputList.length]);
