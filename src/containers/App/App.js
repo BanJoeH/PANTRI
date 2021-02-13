@@ -15,7 +15,7 @@ export default function App() {
     JSON.parse(localStorage.getItem("storedShopping")) || []
   );
   const [oddBits, setOddBits] = useState(
-    JSON.parse(localStorage.getItem("storedOdd")) || []
+    JSON.parse(localStorage.getItem("storedOdd")) || ["cheese"]
   );
   const [searchField, setSearchField] = useState("");
 

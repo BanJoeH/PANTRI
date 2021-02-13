@@ -12,22 +12,51 @@ import IngredientInput from "../IngredientInput/IngredientInput.js";
 
 const OddBits = ({ setOddBits, oddBits }) => {
   let defaultState = () => {
-    if (oddBits.length > 0) {
+    if (oddBits[0] !== "") {
       oddBits.map((item) => {
+        return [{ ingredient: item, ingredientRef: null }];
+      });
+    } else {
+      return [
+        [
+          {
+            ingredient: "",
+            ingredientRef: null,
+          },
+        ],
+      ];
+    }
+  };
+  const [inputList, setInputList] = useState([
+    {
+      ingredient: "",
+      ingredientRef: null,
+    },
+  ]);
+
+  useEffect(() => {
+    let defaultState = [];
+    if (oddBits[0] !== "") {
+      defaultState = oddBits.map((item) => {
         return { ingredient: item, ingredientRef: null };
       });
     } else {
-      return [{ ingredient: "", ingredientRef: null }];
+      return (defaultState = [
+        [
+          {
+            ingredient: "",
+            ingredientRef: null,
+          },
+        ],
+      ]);
     }
-  };
-  const [inputList, setInputList] = useState(defaultState);
 
-  useEffect(() => {
+    setInputList(defaultState);
     let ingredients = inputList.map((input, i) => {
       return input.ingredient;
     });
     setOddBits(ingredients);
-  }, [inputList]);
+  }, [inputList, oddBits]);
 
   return (
     <article className="center mw6 br3 ttc hidden shadow-4 ba b--black-10 mv4">
