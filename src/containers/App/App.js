@@ -17,6 +17,11 @@ export default function App() {
   const [oddBits, setOddBits] = useState(
     JSON.parse(localStorage.getItem("storedOdd")) || []
   );
+  const [searchField, setSearchField] = useState("");
+
+  const onSearchChange = (event) => {
+    setSearchField(event.target.value);
+  };
 
   useEffect(() => {
     localStorage.setItem("storedRecipes", JSON.stringify(recipes));
@@ -24,11 +29,15 @@ export default function App() {
     localStorage.setItem("storedOdd", JSON.stringify(oddBits));
   }, [recipes, shoppingList, oddBits]);
 
+  const filteredRecipes = recipes.filter((recipe) => {
+    return recipe.name.toLowerCase().includes(searchField.toLowerCase());
+  });
+
   const addToShoppingList = (event) => {
     event.preventDefault();
-    let recipesCopy = JSON.parse(JSON.stringify(recipes));
-    recipesCopy.forEach((recipe) => {
-      if (recipe.id === +event.target.value) {
+    let recipesCopy = JSON.parse(JSON.stringify(filteredRecipes));
+    recipesCopy.forEach((recipe, i) => {
+      if (recipe.id + "-" + i === event.target.value) {
         setShoppingList([...shoppingList, recipe]);
         store.addNotification({
           title: `${recipe.name}`,
@@ -42,12 +51,14 @@ export default function App() {
         });
       }
     });
+    setSearchField("");
   };
 
   const removeIngredientFromShoppingList = (event) => {
     event.preventDefault();
     let tempShoppingList = shoppingList.map((recipe, i) => {
-      if (recipe.id === +event.target.name) {
+      console.log(event.target);
+      if (i === +event.target.name) {
         let tempIngredientList = recipe.ingredients.filter((ingredient) => {
           if (ingredient !== event.target.value) {
             return ingredient;
@@ -64,22 +75,25 @@ export default function App() {
 
   const removeFromRecipes = (event) => {
     event.preventDefault();
+    let id = event.target.value.split("-")[0];
     let tempRecipes = recipes.filter((recipe) => {
-      if (recipe.id !== +event.target.value) {
+      if (recipe.id !== +id) {
         return recipe;
       }
     });
     setRecipes(tempRecipes);
+    setSearchField("");
   };
 
   const removeFromShoppingList = (event) => {
     event.preventDefault();
     let tempShoppingList = shoppingList.filter((recipe, i) => {
-      if (recipe.id !== +event.target.value) {
+      if (recipe.id + "-" + i !== event.target.value) {
         return recipe;
       }
     });
     setShoppingList(tempShoppingList);
+    setSearchField("");
   };
 
   return (
@@ -104,9 +118,11 @@ export default function App() {
           <Switch>
             <Route path="/recipes">
               <Recipes
-                recipes={recipes}
+                recipes={filteredRecipes}
                 cardButton={addToShoppingList}
                 removeFromRecipes={removeFromRecipes}
+                onSearchChange={onSearchChange}
+                searchField={searchField}
               />
             </Route>
             <Route path="/newrecipe">

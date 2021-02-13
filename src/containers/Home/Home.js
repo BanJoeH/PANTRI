@@ -14,19 +14,21 @@ function Home({ recipes, cardButton, ingredientButton, oddBits, setOddBits }) {
           <h4 className="tc center">Go to Recipes to add some!</h4>
         </div>
       ) : (
-        recipes.map((recipe, i) => {
-          return (
-            <Card
-              removeFromRecipes={cardButton}
-              recipe={recipe}
-              key={recipe + i}
-              button={cardButton}
-              buttonText="Done"
-              ingredientButton={ingredientButton}
-              recipeindex={i}
-            />
-          );
-        })
+        <div className="flex flex-wrap">
+          {recipes.map((recipe, i) => {
+            return (
+              <Card
+                removeFromRecipes={cardButton}
+                recipe={recipe}
+                key={recipe + i}
+                button={cardButton}
+                buttonText="Done"
+                ingredientButton={ingredientButton}
+                recipeIndex={i}
+              />
+            );
+          })}
+        </div>
       )}
     </div>
   );
