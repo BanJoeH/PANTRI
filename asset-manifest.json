@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/recipe-shopping-list-2/static/css/main.24590c13.chunk.css",
-    "main.js": "/recipe-shopping-list-2/static/js/main.815ab4db.chunk.js",
-    "main.js.map": "/recipe-shopping-list-2/static/js/main.815ab4db.chunk.js.map",
+    "main.js": "/recipe-shopping-list-2/static/js/main.d2befc98.chunk.js",
+    "main.js.map": "/recipe-shopping-list-2/static/js/main.d2befc98.chunk.js.map",
     "runtime-main.js": "/recipe-shopping-list-2/static/js/runtime-main.e6f10d90.js",
     "runtime-main.js.map": "/recipe-shopping-list-2/static/js/runtime-main.e6f10d90.js.map",
     "static/css/2.e31ccb6d.chunk.css": "/recipe-shopping-list-2/static/css/2.e31ccb6d.chunk.css",
@@ -18,6 +18,6 @@
     "static/css/2.e31ccb6d.chunk.css",
     "static/js/2.ef264b5d.chunk.js",
     "static/css/main.24590c13.chunk.css",
-    "static/js/main.815ab4db.chunk.js"
+    "static/js/main.d2befc98.chunk.js"
   ]
 }
