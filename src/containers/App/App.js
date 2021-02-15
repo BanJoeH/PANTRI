@@ -75,14 +75,18 @@ export default function App() {
 
   const removeFromRecipes = (event) => {
     event.preventDefault();
-    let id = event.target.value.split("-")[0];
-    let tempRecipes = recipes.filter((recipe) => {
-      if (recipe.id !== +id) {
-        return recipe;
-      }
-    });
-    setRecipes(tempRecipes);
-    setSearchField("");
+    if (
+      window.confirm("Are you sure you want to permanently delete this recipe?")
+    ) {
+      let id = event.target.value.split("-")[0];
+      let tempRecipes = recipes.filter((recipe) => {
+        if (recipe.id !== +id) {
+          return recipe;
+        }
+      });
+      setRecipes(tempRecipes);
+      setSearchField("");
+    }
   };
 
   const removeFromShoppingList = (event) => {

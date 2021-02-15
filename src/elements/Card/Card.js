@@ -11,7 +11,7 @@ function Card({
   recipeIndex,
 }) {
   return (
-    <article className="center mw6 br3 w-100 w-80-m w-50-ns ma2 pa2 ph4 hidden shadow-4 ttc ba b--black-10 mv4 ">
+    <article className="center mw6 br3 w-90 w-80-m w-50-ns ma2 pa2 ph4 hidden shadow-4 ttc ba b--black-10 mv4 ">
       <div className="bg-dark-gray ph3 br--bottom flex justify-between items-center">
         <h2 className="white dib mr3">{recipe.name}</h2>
         {recipe.link === "" ? (
@@ -33,7 +33,7 @@ function Card({
           onClick={(e) => removeFromRecipes(e)}
           className=" link bn white bg-transparent dib mr3"
         >
-          Delete
+          X
         </button>
       </div>
       <div className="pa3 bt b--black-10 flex">
