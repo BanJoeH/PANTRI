@@ -1,5 +1,4 @@
 import React from "react";
-import Button from "../Button/Button.js";
 
 function Card({
   recipe,
@@ -11,8 +10,8 @@ function Card({
   recipeIndex,
 }) {
   return (
-    <article className="center mw6 br3 w-90 w-80-m w-50-ns ma2 pa2 ph4 hidden shadow-4 ttc ba b--black-10 mv4 ">
-      <div className="bg-dark-gray ph3 br--bottom flex justify-between items-center">
+    <article className="center mw6 br3 w-90 w-80-m w-50-ns ma2 hidden shadow-4 ttc ba b--black-10 mv4 ">
+      <div className="bg-dark-gray ph4 br3 flex justify-between items-center">
         <h2 className="white dib mr3">{recipe.name}</h2>
         {recipe.link === "" ? (
           <div></div>
