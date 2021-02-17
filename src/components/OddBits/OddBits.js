@@ -34,7 +34,7 @@ const OddBits = ({ setOddBits, oddBits }) => {
   }, [inputList, oddBits]);
 
   return (
-    <article className="center mw6 br3 ttc hidden shadow-4 ba b--black-10 mv4">
+    <article className="center mw6 br3 ttc bg-nearwhite w-90 w-80-m w-50-ns hidden shadow-4 ba b--black-10 mv4">
       <div className="bg-dark-gray ph4 br3 flex br--bottom justify-between items-center">
         <h2 className="white dib mr3">Odd Bits</h2>
       </div>

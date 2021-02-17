@@ -18,13 +18,15 @@ function Home({
   return (
     <div className="center pb6">
       <FadeIn>
-        <h2 className="tc">Shopping List</h2>
+        <h2 className="tc w-90 w-80-m w-50-ns mw6 center pv3 bg-nearwhite shadow-4 br3">
+          Shopping List
+        </h2>
         {recipeIds.includes("sort") ? (
           <div></div>
         ) : (
-          <div className="tc w-20-ns center">
+          <div className="tc w-30-ns w-40-m w-90 center">
             <Button
-              className=" pv2"
+              className=" pointer pv3"
               value="AddRecipe"
               inner="Sort shopping list"
               button={sortShopping}

@@ -13,9 +13,11 @@ function Recipes({
   return (
     <div className="pb6">
       <FadeIn>
-        <h2 className="tc">Recipe List</h2>
-        <div className="tc w-100">
-          <div className="tc center w-50-ns w-100">
+        <h2 className="tc w-90 w-80-m w-50-ns mw6 center pv3 bg-nearwhite shadow-4 br3">
+          Recipe List
+        </h2>
+        <div className="center mw6 br3 bg-nearwhite w-90 w-80-m w-50-ns ma2 hidden shadow-4 ttc ba b--black-10 mv4">
+          <div className="">
             <SearchBox
               searchChange={onSearchChange}
               searchField={searchField}

@@ -28,7 +28,7 @@ function NewRecipe({ setRecipes, recipes }) {
   useEffect(() => {
     let ingredients = inputList
       .map((input, i) => {
-        return input.ingredient;
+        return input.ingredient.toLowerCase();
       })
       .filter(Boolean);
     setNewRecipeIngredients(ingredients);
@@ -40,8 +40,8 @@ function NewRecipe({ setRecipes, recipes }) {
       ...recipes,
       {
         id: recipes.length,
-        name: newRecipeName,
-        link: newRecipeLink,
+        name: newRecipeName.toLowerCase(),
+        link: newRecipeLink.toLowerCase(),
         ingredients: newRecipeIngredients,
       },
     ]);
@@ -55,8 +55,10 @@ function NewRecipe({ setRecipes, recipes }) {
   return (
     <div className="center pb6">
       <FadeIn>
-        <h2 className="tc">New Recipe</h2>
-        <article className="center mw9 mw6-ns shadow-4 br3 hidden ba b--black-10 pa2 mv4">
+        <h1 className="tc mw9 mw6-ns center pv3  bg-nearwhite shadow-4 br3">
+          New Recipe
+        </h1>
+        <article className="center mw9 mw6-ns bg-nearwhite shadow-4 br3 hidden ba b--black-10 pa2 mv4">
           <div className="tc pa1 ph2-ns w-100 ">
             <div className="ph2">
               <input
@@ -76,15 +78,13 @@ function NewRecipe({ setRecipes, recipes }) {
             </div>
 
             <IngredientInput
-              setNewRecipeIngredients={setNewRecipeIngredients}
               inputList={inputList}
               setInputList={setInputList}
             />
           </div>
-
-          <div className="center tc w-90">
+          <div className="center ph1 tc w-50-ns w-90">
             <Button
-              className=" pv2 w-90"
+              className="pv3 w-90"
               value="AddRecipe"
               inner="Add Recipe"
               button={addRecipe}

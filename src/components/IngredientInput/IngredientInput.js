@@ -51,7 +51,7 @@ const IngredientInput = ({ inputList, setInputList }) => {
             {inputList.length - 1 === i && (
               <button
                 onClick={handleAddClick}
-                className="ba bg-transparent b--light-silver br2 hover-bg-light-gray "
+                className="ba bg-transparent pointer b--light-silver br2 hover-bg-light-gray "
               >
                 +
               </button>
@@ -59,7 +59,7 @@ const IngredientInput = ({ inputList, setInputList }) => {
             {inputList.length !== 1 && (
               <button
                 onClick={() => handleRemoveClick(i)}
-                className="ba bg-transparent b--light-silver br2 hover-bg-light-gray "
+                className="ba bg-transparent pointer b--light-silver br2 hover-bg-light-gray "
               >
                 x
               </button>

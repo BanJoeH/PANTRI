@@ -64,12 +64,10 @@ export default function App() {
       .flat()
       .sort();
     let unique = [...new Set(ingredientList)];
-
     let duplicates = unique.map((value) => [
       value,
       ingredientList.filter((str) => str === value).length,
     ]);
-
     let formatted = duplicates.map((ingredient, i) => {
       return [ingredient[0] + "  X" + ingredient[1]];
     });
@@ -88,7 +86,7 @@ export default function App() {
     let tempShoppingList = shoppingList.map((recipe, i) => {
       if (i === +event.target.name) {
         let tempIngredientList = recipe.ingredients.filter(
-          (ingredient) => ingredient !== event.target.value
+          (ingredient, j) => ingredient + j !== event.target.value
         );
         recipe.ingredients = tempIngredientList;
         return recipe;
@@ -121,8 +119,8 @@ export default function App() {
   };
 
   return (
-    <FadeIn transitionDuration="1500">
-      <div className="relative min-h-90">
+    <FadeIn transitionDuration="1000">
+      <div className="relative min-h-90 bg">
         <ReactNotification />
         <Router>
           <div className="pb-3">
