@@ -6,16 +6,15 @@ function Card({
   buttonText,
   ingredientButton,
   removeFromRecipes,
-  className,
   recipeIndex,
+  editRecipe,
 }) {
+  const pathname = window.location.pathname;
   return (
     <article className="center mw6 br3 bg-nearwhite w-90 w-80-m w-50-ns ma2 hidden shadow-4 ttc ba b--black-10 mv4 ">
       <div className="bg-dark-gray ph4 br3 flex justify-between items-center">
         <h2 className="white dib mr3">{recipe.name}</h2>
-        {recipe.link === "" ? (
-          <div></div>
-        ) : (
+        {recipe.link === "" ? null : (
           <a
             className="link dim white dib mr3"
             target="_blank"
@@ -25,15 +24,25 @@ function Card({
             Recipe link
           </a>
         )}
-
-        <button
-          href="#"
-          value={recipe.id + "-" + recipeIndex}
-          onClick={(e) => removeFromRecipes(e)}
-          className=" link bn white pointer bg-transparent dib mr3"
-        >
-          X
-        </button>
+        <div>
+          {pathname === "/recipes" ? (
+            <button
+              value={recipe.id}
+              onClick={(e) => editRecipe(e)}
+              className="link bn white pointer bg-transparent dib mr3"
+            >
+              Edit
+            </button>
+          ) : null}
+          <button
+            href="#"
+            value={recipe.id + "-" + recipeIndex}
+            onClick={(e) => removeFromRecipes(e)}
+            className=" link bn white pointer bg-transparent dib mr3"
+          >
+            X
+          </button>
+        </div>
       </div>
       <div className="pa3 bt b--black-10 flex">
         <form className="bn ph1 tc center w-80 ">
@@ -46,14 +55,16 @@ function Card({
                 <div htmlFor={ingredient} className="lh-copy">
                   {ingredient}
                 </div>
-                <button
-                  className={`mr2 ba ph1 ${className}  b--moon-gray gray br2  tc bg-white hover-bg-near-white pointer`}
-                  onClick={ingredientButton}
-                  name={recipeIndex}
-                  value={ingredient + i}
-                >
-                  X
-                </button>
+                {pathname === "/" ? (
+                  <button
+                    className={`mr2 ba ph1   b--moon-gray gray br2  tc bg-white hover-bg-near-white pointer`}
+                    onClick={ingredientButton}
+                    name={recipeIndex}
+                    value={ingredient + i}
+                  >
+                    X
+                  </button>
+                ) : null}
               </div>
             );
           })}
@@ -65,9 +76,7 @@ function Card({
             >
               {buttonText}
             </button>
-          ) : (
-            <div></div>
-          )}
+          ) : null}
         </form>
       </div>
     </article>

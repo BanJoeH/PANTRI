@@ -21,9 +21,7 @@ function Home({
         <h2 className="tc w-90 w-80-m w-50-ns mw6 center pv3 bg-nearwhite shadow-4 br3">
           Shopping List
         </h2>
-        {recipeIds.includes("sort") ? (
-          <div></div>
-        ) : (
+        {recipeIds.includes("sort") ? null : (
           <div className="tc w-30-ns w-40-m w-90 center">
             <Button
               className=" pointer pv3"

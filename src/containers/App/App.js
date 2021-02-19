@@ -16,7 +16,7 @@ export default function App() {
     JSON.parse(localStorage.getItem("storedShopping")) || []
   );
   const [oddBits, setOddBits] = useState(
-    JSON.parse(localStorage.getItem("storedOdd")) || ["cheese"]
+    JSON.parse(localStorage.getItem("storedOdd")) || [""]
   );
   const [searchField, setSearchField] = useState("");
 
@@ -120,7 +120,7 @@ export default function App() {
 
   return (
     <FadeIn transitionDuration="1000">
-      <div className="relative min-h-90 bg">
+      <div className="flex flex-column justify-between min-vh-100 bg">
         <ReactNotification />
         <Router>
           <div className="pb-3">
@@ -146,6 +146,7 @@ export default function App() {
                   removeFromRecipes={removeFromRecipes}
                   onSearchChange={onSearchChange}
                   searchField={searchField}
+                  setRecipes={setRecipes}
                 />
               </Route>
               <Route path="/newrecipe">

@@ -28,7 +28,7 @@ const IngredientInput = ({ inputList, setInputList }) => {
     if (inputList[inputList.length - 1].ingredientRef) {
       inputList[inputList.length - 1].ingredientRef.focus();
     }
-  }, [inputList]);
+  }, [inputList.length]);
 
   return (
     // <div className=" w-100 center">

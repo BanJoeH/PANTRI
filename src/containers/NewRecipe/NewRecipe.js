@@ -34,12 +34,16 @@ function NewRecipe({ setRecipes, recipes }) {
     setNewRecipeIngredients(ingredients);
   }, [inputList]);
 
+  const ID = () => {
+    return Math.random().toString(36).substr(2, 9);
+  };
+
   const addRecipe = (event) => {
     event.preventDefault();
     setRecipes([
       ...recipes,
       {
-        id: recipes.length,
+        id: ID(),
         name: newRecipeName.toLowerCase(),
         link: newRecipeLink.toLowerCase(),
         ingredients: newRecipeIngredients,
