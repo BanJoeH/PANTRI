@@ -103,7 +103,7 @@ export default function App() {
       window.confirm("Are you sure you want to permanently delete this recipe?")
     ) {
       let id = event.target.value.split("-")[0];
-      let tempRecipes = recipes.filter((recipe) => recipe.id !== +id);
+      let tempRecipes = recipes.filter((recipe) => recipe.id !== id);
       setRecipes(tempRecipes);
       setSearchField("");
     }
