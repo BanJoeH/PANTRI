@@ -165,9 +165,7 @@ export default function App() {
             </Switch>
           </div>
         </Router>
-        <div className="bg-dark-gray absolute bottom-0 h3 pa3 w-100 tc white">
-          Made by Joe
-        </div>
+        <div className="bg-dark-gray h3 pa3 w-100 tc white">Made by Joe</div>
       </div>
     </FadeIn>
   );
