@@ -68,9 +68,9 @@ export default function App() {
       value,
       ingredientList.filter((str) => str === value).length,
     ]);
-    let formatted = duplicates.map((ingredient, i) => {
-      return [ingredient[0] + "  X" + ingredient[1]];
-    });
+    let formatted = duplicates.map((ingredient, i) => [
+      ingredient[0] + "  X" + ingredient[1],
+    ]);
 
     let temp = {
       id: "sort",

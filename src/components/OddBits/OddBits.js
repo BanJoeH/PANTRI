@@ -2,38 +2,16 @@ import { useState, useEffect } from "react";
 import IngredientInput from "../IngredientInput/IngredientInput.js";
 
 const OddBits = ({ setOddBits, oddBits }) => {
-  const [inputList, setInputList] = useState([
-    {
-      ingredient: "",
-      ingredientRef: null,
-    },
-  ]);
+  const [inputList, setInputList] = useState(
+    oddBits.map((item) => ({ ingredient: item, ingredientRef: null }))
+  );
 
   useEffect(() => {
-    let defaultState = [];
-    if (oddBits[0] !== "") {
-      defaultState = oddBits.map((item) => {
-        return { ingredient: item, ingredientRef: null };
-      });
-    } else {
-      return (defaultState = [
-        {
-          ingredient: "",
-          ingredientRef: null,
-        },
-      ]);
-    }
-
-    setInputList(defaultState);
-  }, [oddBits]);
-
-  // useEffect(() => {
-  //   let ingredients = inputList.map((input, i) => {
-  //     return input.ingredient;
-  //   });
-
-  //   setOddBits(ingredients);
-  // }, [inputList]);
+    let ingredients = inputList.map((input, i) => {
+      return input.ingredient;
+    });
+    setOddBits(ingredients);
+  }, [inputList]);
 
   return (
     <article className="center mw6 br3 ttc bg-nearwhite w-90 w-80-m w-50-ns hidden shadow-4 ba b--black-10 mv4">

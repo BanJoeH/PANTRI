@@ -71,7 +71,7 @@ function NewRecipe({ setRecipes, recipes }) {
                 className={` ma1 ph1 pv2 input-reset ba bg-transparent br2 hover-bg-light-gray w-50-ns w-90  `}
                 onChange={(e) => setNewRecipeName(e.target.value)}
                 value={newRecipeName}
-                autocomplete="off"
+                autoComplete="off"
               />
               <input
                 name="recipeLink"
@@ -79,7 +79,7 @@ function NewRecipe({ setRecipes, recipes }) {
                 className={` ma1 ph1 pv2 input-reset ba bg-transparent br2 hover-bg-light-gray w-50-ns w-90 `}
                 onChange={(e) => setNewRecipeLink(e.target.value)}
                 value={newRecipeLink}
-                autocomplete="off"
+                autoComplete="off"
               />
             </div>
 
