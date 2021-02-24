@@ -17,21 +17,23 @@ const OddBits = ({ setOddBits, oddBits }) => {
       });
     } else {
       return (defaultState = [
-        [
-          {
-            ingredient: "",
-            ingredientRef: null,
-          },
-        ],
+        {
+          ingredient: "",
+          ingredientRef: null,
+        },
       ]);
     }
 
     setInputList(defaultState);
-    let ingredients = inputList.map((input, i) => {
-      return input.ingredient;
-    });
-    setOddBits(ingredients);
-  }, [inputList, oddBits]);
+  }, [oddBits]);
+
+  // useEffect(() => {
+  //   let ingredients = inputList.map((input, i) => {
+  //     return input.ingredient;
+  //   });
+
+  //   setOddBits(ingredients);
+  // }, [inputList]);
 
   return (
     <article className="center mw6 br3 ttc bg-nearwhite w-90 w-80-m w-50-ns hidden shadow-4 ba b--black-10 mv4">

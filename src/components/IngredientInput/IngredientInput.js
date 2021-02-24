@@ -46,6 +46,7 @@ const IngredientInput = ({ inputList, setInputList }) => {
             onKeyDown={(e) => addIngredientOnEnter(e)}
             ref={(e) => (x.ingredientRef = e)}
             className="w-100 pr-5 pv2 br2 ph1 flex-grow-2hover-bg-light-gray bn input-reset "
+            autoComplete="off"
           />
           <div className="flex">
             {inputList.length - 1 === i && (

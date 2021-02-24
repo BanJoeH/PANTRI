@@ -111,6 +111,7 @@ function Recipes({
                   className={` ma1 ph1 pv2 input-reset ba bg-transparent br2 hover-bg-light-gray w-50-ns w-90  `}
                   onChange={inputEditChangeHandler}
                   value={editingRecipe.name}
+                  autocomplete="off"
                 />
                 <input
                   name="link"
@@ -118,6 +119,7 @@ function Recipes({
                   className={` ma1 ph1 pv2 input-reset ba bg-transparent br2 hover-bg-light-gray w-50-ns w-90 `}
                   onChange={inputEditChangeHandler}
                   value={editingRecipe.link}
+                  autocomplete="off"
                 />
               </div>
 
