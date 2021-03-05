@@ -30,11 +30,9 @@ export default function App() {
     localStorage.setItem("storedOdd", JSON.stringify(oddBits));
   }, [recipes, shoppingList, oddBits]);
 
-  const filteredRecipes = JSON.parse(JSON.stringify(recipes)).filter(
-    (recipe) => {
-      return recipe.name.toLowerCase().includes(searchField.toLowerCase());
-    }
-  );
+  const filteredRecipes = recipes.filter((recipe) => {
+    return recipe.name.toLowerCase().includes(searchField.toLowerCase());
+  });
 
   const addToShoppingList = (event) => {
     event.preventDefault();

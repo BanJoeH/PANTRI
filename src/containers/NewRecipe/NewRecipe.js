@@ -4,17 +4,24 @@ import Button from "../../elements/Button/Button.js";
 import IngredientInput from "../../components/IngredientInput/IngredientInput.js";
 import FadeIn from "react-fade-in";
 
+const ID = () => {
+  return Math.random().toString(36).substr(2, 9);
+};
+
 function NewRecipe({ setRecipes, recipes }) {
-  const [newRecipeName, setNewRecipeName] = useState("");
-  const [newRecipeLink, setNewRecipeLink] = useState("");
-  const [newRecipeIngredients, setNewRecipeIngredients] = useState([]);
   const [inputList, setInputList] = useState([
     { ingredient: "", ingredientRef: null },
   ]);
+  const [newRecipe, setNewRecipe] = useState({
+    id: ID(),
+    name: "",
+    link: "",
+    ingredients: [],
+  });
 
   const addRecipeNotification = () => {
     store.addNotification({
-      title: `${newRecipeName} added to recipes`,
+      title: `${newRecipe.name} added to recipes`,
       message: "Success",
       type: "success",
       insert: "bottom",
@@ -25,34 +32,26 @@ function NewRecipe({ setRecipes, recipes }) {
     });
   };
 
+  const handleChange = (event) => {
+    console.log(event);
+    const { name, value } = event.target;
+    setNewRecipe({ ...newRecipe, [name]: value });
+  };
+
   useEffect(() => {
     let ingredients = inputList
       .map((input, i) => {
         return input.ingredient.toLowerCase();
       })
       .filter(Boolean);
-    setNewRecipeIngredients(ingredients);
+    setNewRecipe({ ...newRecipe, ingredients: ingredients });
   }, [inputList]);
-
-  const ID = () => {
-    return Math.random().toString(36).substr(2, 9);
-  };
 
   const addRecipe = (event) => {
     event.preventDefault();
-    setRecipes([
-      ...recipes,
-      {
-        id: ID(),
-        name: newRecipeName.toLowerCase(),
-        link: newRecipeLink.toLowerCase(),
-        ingredients: newRecipeIngredients,
-      },
-    ]);
+    setRecipes([...recipes, newRecipe]);
     addRecipeNotification();
-    setNewRecipeName("");
-    setNewRecipeLink("");
-    setNewRecipeIngredients([]);
+    setNewRecipe({ id: ID(), name: "", link: "", ingredients: [] });
     setInputList([{ ingredient: "", ingredientRef: null }]);
   };
 
@@ -66,19 +65,18 @@ function NewRecipe({ setRecipes, recipes }) {
           <div className="tc pa1 ph2-ns w-100 ">
             <div className="ph2">
               <input
-                name="recipeName"
+                name="name"
                 placeholder="Recipe Name"
                 className={` ma1 ph1 pv2 input-reset ba bg-transparent br2 hover-bg-light-gray w-50-ns w-90  `}
-                onChange={(e) => setNewRecipeName(e.target.value)}
-                value={newRecipeName}
-                autoComplete="off"
+                onChange={handleChange}
+                value={newRecipe.name}
               />
               <input
-                name="recipeLink"
+                name="link"
                 placeholder="Link"
                 className={` ma1 ph1 pv2 input-reset ba bg-transparent br2 hover-bg-light-gray w-50-ns w-90 `}
-                onChange={(e) => setNewRecipeLink(e.target.value)}
-                value={newRecipeLink}
+                onChange={handleChange}
+                value={newRecipe.link}
                 autoComplete="off"
               />
             </div>
