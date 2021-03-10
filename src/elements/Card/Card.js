@@ -11,8 +11,8 @@ function Card({
 }) {
   const pathname = window.location.pathname;
   return (
-    <article className="center mw6 br3 bg-nearwhite w-90 w-80-m w-50-ns ma2 hidden shadow-4 ttc ba b--black-10 mv4 ">
-      <div className="bg-dark-gray ph4 br3 flex justify-between items-center">
+    <article className="center mw6 br3 bg-nearwhite w-90   hidden shadow-4 ttc ba b--black-10 mv4 ">
+      <div className="bg-dark-gray ph4 borrad--top flex justify-between items-center">
         <h2 className="white dib mr3">{recipe.name}</h2>
         {recipe.link === "" ? null : (
           <a

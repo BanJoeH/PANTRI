@@ -3,6 +3,7 @@ import Card from "../../elements/Card/Card.js";
 import OddBits from "../../components/OddBits/OddBits.js";
 import Button from "../../elements/Button/Button.js";
 import FadeIn from "react-fade-in";
+import Masonry from "react-masonry-css";
 
 function Home({
   recipes,
@@ -15,6 +16,11 @@ function Home({
   const recipeIds = recipes.map((recipe) => {
     return recipe.id;
   });
+  const breakpointColumnsObj = {
+    default: 3,
+    1400: 2,
+    1000: 1,
+  };
   return (
     <div className="center pb6">
       <FadeIn>
@@ -34,19 +40,23 @@ function Home({
         <OddBits setOddBits={setOddBits} oddBits={oddBits} />
 
         {recipes.length === 0 ? (
-          <div>
-            <h4 className="tc center">No recipes in your shopping list.</h4>
-            <h4 className="tc center">Go to Recipes to add some!</h4>
+          <div className="tc w-90 w-80-m w-50-ns mw6 center pv3 bg-nearwhite shadow-4 br3">
+            <h2 className="tc center">No recipes in your shopping list.</h2>
+            <h2 className="tc center">Go to Recipes to add some!</h2>
           </div>
         ) : (
           <FadeIn>
-            <div className="flex flex-wrap">
+            <Masonry
+              breakpointCols={breakpointColumnsObj}
+              className="my-masonry-grid"
+              columnClassName="my-masonry-grid_column"
+            >
               {recipes.map((recipe, i) => {
                 return (
                   <Card
                     removeFromRecipes={cardButton}
                     recipe={recipe}
-                    key={recipe + i}
+                    key={recipe.name + i}
                     button={cardButton}
                     buttonText="Done"
                     ingredientButton={ingredientButton}
@@ -54,7 +64,7 @@ function Home({
                   />
                 );
               })}
-            </div>
+            </Masonry>
           </FadeIn>
         )}
       </FadeIn>

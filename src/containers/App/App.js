@@ -7,6 +7,7 @@ import ReactNotification from "react-notifications-component";
 import { store } from "react-notifications-component";
 import "react-notifications-component/dist/theme.css";
 import FadeIn from "react-fade-in";
+import "./App.css";
 
 export default function App() {
   const [recipes, setRecipes] = useState(
@@ -119,8 +120,8 @@ export default function App() {
   };
 
   return (
-    <FadeIn transitionDuration="1000">
-      <div className="flex flex-column justify-between min-vh-100 bg">
+    <div className="flex flex-column justify-between min-vh-100 bg">
+      <FadeIn transitionDuration="500">
         <ReactNotification />
         <Router>
           <div className="pb-3">
@@ -165,8 +166,8 @@ export default function App() {
             </Switch>
           </div>
         </Router>
-        <div className="bg-dark-gray h3 pa3 w-100 tc white">Made by Joe</div>
-      </div>
-    </FadeIn>
+      </FadeIn>
+      <div className="bg-dark-gray h3 pa3 w-100 tc white">Made by Joe</div>
+    </div>
   );
 }

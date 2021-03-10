@@ -4,6 +4,7 @@ import SearchBox from "../../elements/SearchBox/SearchBox.js";
 import FadeIn from "react-fade-in";
 import Button from "../../elements/Button/Button.js";
 import IngredientInput from "../../components/IngredientInput/IngredientInput.js";
+import Masonry from "react-masonry-css";
 
 function Recipes({
   recipes,
@@ -25,6 +26,12 @@ function Recipes({
       ingredientRef: null,
     },
   ]);
+
+  const breakpointColumnsObj = {
+    default: 3,
+    1400: 2,
+    1000: 1,
+  };
 
   const inputEditChangeHandler = (event) => {
     setEditingRecipe((prevState) => ({
@@ -147,7 +154,11 @@ function Recipes({
           </div>
         </div>
         {recipes.length > 0 ? (
-          <div className="flex flex-wrap">
+          <Masonry
+            breakpointCols={breakpointColumnsObj}
+            className="my-masonry-grid"
+            columnClassName="my-masonry-grid_column"
+          >
             {recipes.map((recipe, i) => {
               return (
                 <Card
@@ -161,11 +172,11 @@ function Recipes({
                 />
               );
             })}
-          </div>
+          </Masonry>
         ) : (
-          <div>
-            <h4 className="tc center">No recipes in your recipe list.</h4>
-            <h4 className="tc center">Go to Add a recipe to add some!</h4>
+          <div className="tc w-90 w-80-m w-50-ns mw6 center pv3 bg-nearwhite shadow-4 br3">
+            <h2 className="tc center">No recipes in your recipe list.</h2>
+            <h2 className="tc center">Go to Add a recipe to add some!</h2>
           </div>
         )}
       </FadeIn>
