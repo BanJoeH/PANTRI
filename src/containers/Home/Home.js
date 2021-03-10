@@ -16,13 +16,23 @@ function Home({
   const recipeIds = recipes.map((recipe) => {
     return recipe.id;
   });
+
+  const numOfColumns = () => {
+    if (recipes.length === 1) {
+      return 1;
+    } else if (recipes.length === 2) {
+      return 2;
+    } else {
+      return 3;
+    }
+  };
   const breakpointColumnsObj = {
-    default: 3,
+    default: numOfColumns(),
     1400: 2,
     1000: 1,
   };
   return (
-    <div className="center pb6">
+    <div className="center">
       <FadeIn>
         <h2 className="tc w-90 w-80-m w-50-ns mw6 center pv3 bg-nearwhite shadow-4 br3">
           Shopping List

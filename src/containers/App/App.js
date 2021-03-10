@@ -120,11 +120,11 @@ export default function App() {
   };
 
   return (
-    <div className="flex flex-column justify-between min-vh-100 bg">
-      <FadeIn transitionDuration="500">
+    <FadeIn transitionDuration="500">
+      <div className="flex flex-column justify-between min-vh-100 bg">
         <ReactNotification />
         <Router>
-          <div className="pb-3">
+          <div className="flex-grow">
             <header className="bg-dark-gray w-100 ph3 pv3 pv4-ns ph4-m ph5-l">
               <nav className="f6 fw6 ttu tracked tc">
                 <Link className="link dim white pa2 dib mr3" to="/">
@@ -166,8 +166,10 @@ export default function App() {
             </Switch>
           </div>
         </Router>
-      </FadeIn>
-      <div className="bg-dark-gray h3 pa3 w-100 tc white">Made by Joe</div>
-    </div>
+        <div className="bg-dark-gray h4 flex justify-center pa3 w-100 items-center tc white">
+          Made by Joe
+        </div>
+      </div>
+    </FadeIn>
   );
 }

@@ -40,7 +40,7 @@ function Card({
             onClick={(e) => removeFromRecipes(e)}
             className=" link bn white pointer bg-transparent dib mr3"
           >
-            X
+            &#10005;
           </button>
         </div>
       </div>
@@ -49,7 +49,7 @@ function Card({
           {recipe.ingredients.map((ingredient, i) => {
             return (
               <div
-                className="items-center mb1 bb b--light-silver flex justify-between"
+                className="items-center mb1 bb bn-last b--light-silver flex justify-between"
                 key={`${ingredient}-${recipe.id}-${i}`}
               >
                 <div htmlFor={ingredient} className="lh-copy">
@@ -62,7 +62,7 @@ function Card({
                     name={recipeIndex}
                     value={ingredient + i}
                   >
-                    X
+                    &#10005;
                   </button>
                 ) : null}
               </div>

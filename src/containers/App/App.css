@@ -46,3 +46,7 @@ input[type="search"]::-webkit-search-results-decoration {
   background: grey;
   margin-bottom: 30px;
 }
+
+.flex-grow {
+  flex-grow: 1;
+}
