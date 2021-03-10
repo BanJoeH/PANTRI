@@ -1,24 +1,24 @@
 {
   "files": {
-    "main.css": "/PANTRI/static/css/main.867365fb.chunk.css",
-    "main.js": "/PANTRI/static/js/main.11e8ed82.chunk.js",
-    "main.js.map": "/PANTRI/static/js/main.11e8ed82.chunk.js.map",
+    "main.css": "/PANTRI/static/css/main.0ce1ed4c.chunk.css",
+    "main.js": "/PANTRI/static/js/main.94c0d595.chunk.js",
+    "main.js.map": "/PANTRI/static/js/main.94c0d595.chunk.js.map",
     "runtime-main.js": "/PANTRI/static/js/runtime-main.26b1252e.js",
     "runtime-main.js.map": "/PANTRI/static/js/runtime-main.26b1252e.js.map",
     "static/css/2.e8786f67.chunk.css": "/PANTRI/static/css/2.e8786f67.chunk.css",
-    "static/js/2.db90fd7e.chunk.js": "/PANTRI/static/js/2.db90fd7e.chunk.js",
-    "static/js/2.db90fd7e.chunk.js.map": "/PANTRI/static/js/2.db90fd7e.chunk.js.map",
+    "static/js/2.2db6e5e6.chunk.js": "/PANTRI/static/js/2.2db6e5e6.chunk.js",
+    "static/js/2.2db6e5e6.chunk.js.map": "/PANTRI/static/js/2.2db6e5e6.chunk.js.map",
     "index.html": "/PANTRI/index.html",
     "static/css/2.e8786f67.chunk.css.map": "/PANTRI/static/css/2.e8786f67.chunk.css.map",
-    "static/css/main.867365fb.chunk.css.map": "/PANTRI/static/css/main.867365fb.chunk.css.map",
-    "static/js/2.db90fd7e.chunk.js.LICENSE.txt": "/PANTRI/static/js/2.db90fd7e.chunk.js.LICENSE.txt",
+    "static/css/main.0ce1ed4c.chunk.css.map": "/PANTRI/static/css/main.0ce1ed4c.chunk.css.map",
+    "static/js/2.2db6e5e6.chunk.js.LICENSE.txt": "/PANTRI/static/js/2.2db6e5e6.chunk.js.LICENSE.txt",
     "static/media/index.css": "/PANTRI/static/media/food-doodle-2.45e9e031.png"
   },
   "entrypoints": [
     "static/js/runtime-main.26b1252e.js",
     "static/css/2.e8786f67.chunk.css",
-    "static/js/2.db90fd7e.chunk.js",
-    "static/css/main.867365fb.chunk.css",
-    "static/js/main.11e8ed82.chunk.js"
+    "static/js/2.2db6e5e6.chunk.js",
+    "static/css/main.0ce1ed4c.chunk.css",
+    "static/js/main.94c0d595.chunk.js"
   ]
 }
