@@ -1,7 +1,7 @@
 import React from "react";
-import Card from "../../elements/Card/Card.js";
-import OddBits from "../../components/OddBits/OddBits.js";
-import Button from "../../elements/Button/Button.js";
+import Card from "../../components/card/card.component.jsx";
+import OddBits from "../../components/oddbits/oddbits.component.jsx";
+import CustomButton from "../../components/custom-button/custom-button.component.jsx";
 import FadeIn from "react-fade-in";
 import Masonry from "react-masonry-css";
 
@@ -39,18 +39,19 @@ function Home({
         </h2>
         {recipeIds.includes("sort") || recipes.length === 0 ? null : (
           <div className="tc w-90 w-80-m w-50-ns mw6 center">
-            <Button
+            <CustomButton
               className=" pointer pv3"
               value="AddRecipe"
-              inner="Sort shopping list"
-              button={sortShopping}
-            />
+              onClick={sortShopping}
+            >
+              Sort shopping list
+            </CustomButton>
           </div>
         )}
         <OddBits setOddBits={setOddBits} oddBits={oddBits} />
 
         {recipes.length === 0 ? (
-          <div className="tc w-90 w-80-m w-50-ns mw6 center pv3 bg-nearwhite shadow-4 br3">
+          <div className="tc w-90 w-80-m w-50-ns mw6 mv3 center pv3 bg-nearwhite shadow-4 br3">
             <h2 className="tc center">No recipes in your shopping list.</h2>
             <h2 className="tc center">Go to Recipes to add some!</h2>
           </div>

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import IngredientInput from "../IngredientInput/IngredientInput.js";
+import IngredientInput from "../ingredient-input/ingredient-input.component.js";
 
 const OddBits = ({ setOddBits, oddBits }) => {
   const [inputList, setInputList] = useState(

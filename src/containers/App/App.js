@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import Home from "../Home/Home.js";
-import Recipes from "../Recipes/Recipes.js";
-import NewRecipe from "../NewRecipe/NewRecipe.js";
+import Home from "../home/home.component.js";
+import Recipes from "../recipes/recipes.component.js";
+import NewRecipe from "../new-recipe/new-recipe.component.js";
 import ReactNotification from "react-notifications-component";
 import { store } from "react-notifications-component";
 import "react-notifications-component/dist/theme.css";

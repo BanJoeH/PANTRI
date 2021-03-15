@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import { store } from "react-notifications-component";
-import Button from "../../elements/Button/Button.js";
-import IngredientInput from "../../components/IngredientInput/IngredientInput.js";
+import CustomButton from "../../components/custom-button/custom-button.component.jsx";
+import IngredientInput from "../../components/ingredient-input/ingredient-input.component.js";
+import CustomInput from "../../components/custom-input/custom-input.component";
 import FadeIn from "react-fade-in";
 
 const ID = () => {
@@ -64,18 +65,16 @@ function NewRecipe({ setRecipes, recipes }) {
         <article className="center mw9 mw6-ns bg-nearwhite shadow-4 br3 hidden ba b--black-10 pa2 mv4">
           <div className="tc pa1 ph2-ns w-100 ">
             <div className="ph2">
-              <input
+              <CustomInput
                 name="name"
                 placeholder="Recipe Name"
-                className={` ma1 ph1 pv2 input-reset ba bg-transparent br2 hover-bg-light-gray w-50-ns w-90  `}
-                onChange={handleChange}
+                handleChange={handleChange}
                 value={newRecipe.name}
               />
-              <input
+              <CustomInput
                 name="link"
                 placeholder="Link"
-                className={` ma1 ph1 pv2 input-reset ba bg-transparent br2 hover-bg-light-gray w-50-ns w-90 `}
-                onChange={handleChange}
+                handleChange={handleChange}
                 value={newRecipe.link}
                 autoComplete="off"
               />
@@ -87,12 +86,13 @@ function NewRecipe({ setRecipes, recipes }) {
             />
           </div>
           <div className="center ph1 tc w-50-ns w-90">
-            <Button
+            <CustomButton
               className="pv3 w-90"
               value="AddRecipe"
-              inner="Add Recipe"
-              button={addRecipe}
-            />
+              onClick={addRecipe}
+            >
+              Add Recipe
+            </CustomButton>
           </div>
         </article>
       </FadeIn>

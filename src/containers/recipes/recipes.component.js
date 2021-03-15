@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
-import Card from "../../elements/Card/Card.js";
-import SearchBox from "../../elements/SearchBox/SearchBox.js";
+import Card from "../../components/card/card.component.jsx";
+import SearchBox from "../../components/search-box/searchbox.component.js";
 import FadeIn from "react-fade-in";
-import Button from "../../elements/Button/Button.js";
-import IngredientInput from "../../components/IngredientInput/IngredientInput.js";
+import CustomButton from "../../components/custom-button/custom-button.component.jsx";
+import IngredientInput from "../../components/ingredient-input/ingredient-input.component.js";
 import Masonry from "react-masonry-css";
 
 function Recipes({
@@ -146,12 +146,13 @@ function Recipes({
               />
             </div>
             <div className="center ph1 tc w-50-ns w-90">
-              <Button
+              <CustomButton
                 className="pv3 w-90"
                 value="editRecipe"
-                inner="Done"
-                button={editRecipeDone}
-              />
+                Onclick={editRecipeDone}
+              >
+                Done
+              </CustomButton>
             </div>
           </article>
         )}
@@ -184,7 +185,7 @@ function Recipes({
             })}
           </Masonry>
         ) : (
-          <div className="tc w-90 w-80-m w-50-ns mw6 center pv3 bg-nearwhite shadow-4 br3">
+          <div className="tc w-90 w-80-m w-50-ns mv3 mw6 center pv3 bg-nearwhite shadow-4 br3">
             <h2 className="tc center">No recipes in your recipe list.</h2>
             <h2 className="tc center">Go to Add a recipe to add some!</h2>
           </div>
