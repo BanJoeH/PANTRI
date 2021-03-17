@@ -4,10 +4,8 @@ import IngredientList from "../ingredient-list/ingredient-list.component";
 function Card({
   recipe,
   button,
-  buttonText,
   ingredientButton,
   removeFromRecipes,
-  recipeIndex,
   editRecipe,
 }) {
   const pathname = window.location.pathname;
@@ -30,7 +28,7 @@ function Card({
           {pathname === "/recipes" ? (
             <button
               value={recipe.id}
-              onClick={(e) => editRecipe(e)}
+              onClick={editRecipe}
               className="link bn white pointer bg-transparent dib mr3"
             >
               Edit
@@ -38,7 +36,7 @@ function Card({
           ) : null}
           <button
             href="#"
-            value={recipe.id + "-" + recipeIndex}
+            value={recipe.id}
             onClick={(e) => removeFromRecipes(e)}
             className=" link bn white pointer bg-transparent dib mr3"
           >
@@ -49,18 +47,18 @@ function Card({
       <div className="pa3 bt b--black-10 flex">
         <form className="bn ph1 tc center w-80 ">
           <IngredientList
-            recipe={recipe}
+            recipeId={recipe.id}
+            ingredients={recipe.ingredients}
             pathname={pathname}
             ingredientButton={ingredientButton}
-            recipeIndex={recipeIndex}
           />
-          {recipe.ingredients.length > 0 ? (
+          {recipe.ingredients ? (
             <button
               className={`pv2 mb1 ph3 w-100 bg-white pointer hover-bg-near-white center tc ba b--moon-gray br2 shadow-4`}
               onClick={button}
-              value={recipe.id + "-" + recipeIndex}
+              value={recipe.id}
             >
-              {buttonText}
+              {pathname === "/" ? "Done" : "Add to Shopping List"}
             </button>
           ) : null}
         </form>

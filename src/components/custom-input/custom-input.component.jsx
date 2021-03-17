@@ -1,13 +1,22 @@
 import React from "react";
 
+import "./custom-input-styles.scss";
+
 const CustomInput = (props) => {
-  const { handleChange, ...otherProps } = props;
+  const { handleChange, label, ...otherProps } = props;
   return (
-    <input
-      onChange={handleChange}
-      {...otherProps}
-      className="ma1 ph1 pv2 input-reset ba bg-transparent br2 hover-bg-light-gray w-50-ns w-90 "
-    />
+    <div className="group">
+      <input onChange={handleChange} {...otherProps} className="form-input" />
+      {label ? (
+        <label
+          className={`${
+            otherProps.value.length ? "shrink" : ""
+          } form-input-label`}
+        >
+          {label}
+        </label>
+      ) : null}
+    </div>
   );
 };
 
