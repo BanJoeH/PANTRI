@@ -1,14 +1,16 @@
 {
   "files": {
     "main.css": "/PANTRI/static/css/main.76034910.chunk.css",
-    "main.js": "/PANTRI/static/js/main.5725bb0b.chunk.js",
-    "main.js.map": "/PANTRI/static/js/main.5725bb0b.chunk.js.map",
+    "main.js": "/PANTRI/static/js/main.b381cbc2.chunk.js",
+    "main.js.map": "/PANTRI/static/js/main.b381cbc2.chunk.js.map",
     "runtime-main.js": "/PANTRI/static/js/runtime-main.26b1252e.js",
     "runtime-main.js.map": "/PANTRI/static/js/runtime-main.26b1252e.js.map",
     "static/css/2.c49baa93.chunk.css": "/PANTRI/static/css/2.c49baa93.chunk.css",
     "static/js/2.35dfd2ed.chunk.js": "/PANTRI/static/js/2.35dfd2ed.chunk.js",
     "static/js/2.35dfd2ed.chunk.js.map": "/PANTRI/static/js/2.35dfd2ed.chunk.js.map",
     "index.html": "/PANTRI/index.html",
+    "service-worker.js": "/PANTRI/service-worker.js",
+    "service-worker.js.map": "/PANTRI/service-worker.js.map",
     "static/css/2.c49baa93.chunk.css.map": "/PANTRI/static/css/2.c49baa93.chunk.css.map",
     "static/css/main.76034910.chunk.css.map": "/PANTRI/static/css/main.76034910.chunk.css.map",
     "static/js/2.35dfd2ed.chunk.js.LICENSE.txt": "/PANTRI/static/js/2.35dfd2ed.chunk.js.LICENSE.txt",
@@ -19,6 +21,6 @@
     "static/css/2.c49baa93.chunk.css",
     "static/js/2.35dfd2ed.chunk.js",
     "static/css/main.76034910.chunk.css",
-    "static/js/main.5725bb0b.chunk.js"
+    "static/js/main.b381cbc2.chunk.js"
   ]
 }
