@@ -37,6 +37,7 @@ const IngredientInput = ({ inputList, setInputList, label }) => {
       <div key={i} className="ingredient-input-group">
         <div className="group">
           <input
+            id={x.ingredient + i}
             name="ingredient"
             label={label ? label : `Ingredient`}
             onChange={(e) => handleInputChange(e, i)}
@@ -48,6 +49,7 @@ const IngredientInput = ({ inputList, setInputList, label }) => {
           />
           {label ? (
             <label
+              htmlFor={x.ingredient + i}
               className={`${
                 x.ingredient.length ? "shrink" : ""
               } form-input-label`}
