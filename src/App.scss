@@ -15,6 +15,8 @@
     .nav {
       display: flex;
       justify-content: center;
+      align-items: baseline;
+      text-align: center;
       letter-spacing: 0.1em;
       text-transform: uppercase;
       font-weight: 500;
@@ -64,14 +66,7 @@
 
   .page-header {
     max-width: 500px;
-    width: 40%;
-
-    @media screen and (max-width: 1000px) {
-      width: 60%;
-    }
-    @media screen and (max-width: 700px) {
-      width: 90%;
-    }
+    width: 100%;
   }
   .recipes-empty {
     align-items: center;
@@ -89,7 +84,7 @@
     box-shadow: 4px 4px 8px 0px rgba(0, 0, 0, 0.2);
     display: flex;
     justify-content: center;
-    padding: 15px 15px;
+    padding: 15px 0;
     text-align: center;
     width: 100%;
   }

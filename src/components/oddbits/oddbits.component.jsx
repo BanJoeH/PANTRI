@@ -16,7 +16,7 @@ const OddBits = ({ setOddBits, oddBits }) => {
   return (
     <article className="card">
       <div className="card-header">
-        <h2>Odd Bits</h2>
+        <h2 className="card-title">Odd Bits</h2>
       </div>
       <div className="card-body ">
         <IngredientInput

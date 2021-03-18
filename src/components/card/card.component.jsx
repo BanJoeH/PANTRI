@@ -14,7 +14,7 @@ function Card({
   return (
     <article className="card">
       <div className="card-header">
-        <h2>{recipe.name}</h2>
+        <h2 className="card-title">{recipe.name}</h2>
         {!recipe.link ? null : (
           <a
             className="title-link"
@@ -22,10 +22,10 @@ function Card({
             rel="noopener noreferrer"
             href={recipe.link}
           >
-            Link to Recipe
+            Link
           </a>
         )}
-        <div>
+        <div className="card-header-buttons">
           {pathname === "/recipes" ? (
             <button
               value={recipe.id}

@@ -5,7 +5,6 @@ import { recipeAdded } from "../recipes/recipesSlice";
 import CustomButton from "../../components/custom-button/custom-button.component.jsx";
 import IngredientInput from "../../components/ingredient-input/ingredient-input.component.js";
 import CustomInput from "../../components/custom-input/custom-input.component";
-import FadeIn from "react-fade-in";
 
 const ID = () => {
   return Math.random().toString(36).substr(2, 9);
@@ -47,7 +46,7 @@ function NewRecipe() {
   };
 
   return (
-    <div className="page">
+    <div className="page fade-in">
       <div className="page-header">
         <h2 className="title">New Recipe</h2>
 
