@@ -47,41 +47,33 @@ function NewRecipe() {
   };
 
   return (
-    <div className="center pb6">
-      <FadeIn>
-        <h1 className="tc mw9 mw6-ns center pv3  bg-nearwhite shadow-4 br3">
-          New Recipe
-        </h1>
-        <div className="center mw9 mw6-ns bg-nearwhite shadow-4 br3 hidden ba b--black-10 pa2 mv4">
-          <div className="flex flex-column  center">
-            <CustomInput
-              name="name"
-              label="Recipe Name"
-              handleChange={handleChange}
-              value={newRecipe.name}
-            />
-            <CustomInput
-              name="link"
-              label="Link"
-              handleChange={handleChange}
-              value={newRecipe.link}
-              autoComplete="off"
-            />
-          </div>
+    <div className="page">
+      <div className="page-header">
+        <h2 className="title">New Recipe</h2>
 
+        <div className="card">
+          <h3>Add a new recipe here</h3>
+          <CustomInput
+            name="name"
+            label="Recipe Name"
+            handleChange={handleChange}
+            value={newRecipe.name}
+          />
+          <CustomInput
+            name="link"
+            label="Link"
+            handleChange={handleChange}
+            value={newRecipe.link}
+            autoComplete="off"
+          />
           <IngredientInput inputList={inputList} setInputList={setInputList} />
-
-          <div className="center ph1 tc w-50-ns w-90">
-            <CustomButton
-              className="pv3 w-100"
-              value="AddRecipe"
-              onClick={addRecipe}
-            >
-              Add Recipe
-            </CustomButton>
-          </div>
+          <CustomButton value="AddRecipe" onClick={addRecipe}>
+            Add Recipe
+          </CustomButton>
         </div>
-      </FadeIn>
+
+        <div className="center ph1 tc w-50-ns w-90"></div>
+      </div>
     </div>
   );
 }

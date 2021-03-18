@@ -1,0 +1,41 @@
+.ingredient-list {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-content: space-between;
+  margin: 10px;
+  width: 100%;
+
+  .ingredient {
+    display: flex;
+
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid grey;
+
+    padding: 5px 5px;
+    width: 100%;
+
+    &:last-child {
+      border: none;
+    }
+
+    .ingredient-button {
+      background-color: transparent;
+      border-radius: 0.5rem;
+      border: none;
+      color: rgb(87, 87, 87);
+      cursor: pointer;
+      display: flex;
+      flex-direction: row;
+      font-size: 20px;
+      font-weight: lighter;
+
+      justify-content: center;
+
+      &:hover {
+        background-color: rgb(245, 245, 245);
+      }
+    }
+  }
+}

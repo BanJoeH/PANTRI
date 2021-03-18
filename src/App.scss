@@ -1,0 +1,96 @@
+.app {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 100vh;
+  background-image: url(/assets/food-doodle-2.png);
+  background-repeat: repeat;
+  background-size: 20%;
+
+  .app-header {
+    background-color: #333333;
+    width: 100%;
+    padding: 25px 0;
+
+    .nav {
+      display: flex;
+      justify-content: center;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      font-weight: 500;
+
+      .nav-link {
+        text-decoration: none;
+        color: white;
+        padding: 0.5rem;
+        margin: 0 10px;
+        transition: all 0.5s;
+
+        &:hover {
+          color: rgba(255, 255, 255, 0.5);
+          transform: scale(1.1);
+        }
+      }
+    }
+  }
+}
+
+.body {
+  flex-grow: 1;
+}
+
+.fade-in {
+  animation: fadeIn ease 0.8s;
+  -webkit-animation: fadeIn ease 0.8s;
+  -moz-animation: fadeIn ease 0.8s;
+  -o-animation: fadeIn ease 0.8s;
+  -ms-animation: fadeIn ease 0.8s;
+}
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.page {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+
+  .page-header {
+    max-width: 500px;
+    width: 40%;
+
+    @media screen and (max-width: 1000px) {
+      width: 60%;
+    }
+    @media screen and (max-width: 700px) {
+      width: 90%;
+    }
+  }
+  .recipes-empty {
+    align-items: center;
+    background-color: white;
+    border-radius: 4px;
+    box-shadow: 4px 4px 8px 0px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    padding: 0 20px;
+  }
+  .title {
+    align-items: center;
+    background-color: white;
+    border-radius: 4px;
+    box-shadow: 4px 4px 8px 0px rgba(0, 0, 0, 0.2);
+    display: flex;
+    justify-content: center;
+    padding: 15px 15px;
+    text-align: center;
+    width: 100%;
+  }
+}

@@ -14,12 +14,16 @@ const OddBits = ({ setOddBits, oddBits }) => {
   }, [inputList]);
 
   return (
-    <article className="center mw6 br3 ttc bg-nearwhite w-90 w-80-m w-50-ns hidden shadow-4 ba b--black-10 mv4">
-      <div className="bg-dark-gray ph4 borrad--top flex  justify-between items-center">
-        <h2 className="white dib mr3">Odd Bits</h2>
+    <article className="card">
+      <div className="card-header">
+        <h2>Odd Bits</h2>
       </div>
-      <div className="pa3 bt flex flex-column b--black-10 center flex">
-        <IngredientInput inputList={inputList} setInputList={setInputList} />
+      <div className="card-body ">
+        <IngredientInput
+          inputList={inputList}
+          setInputList={setInputList}
+          label="Odd bit"
+        />
       </div>
     </article>
   );

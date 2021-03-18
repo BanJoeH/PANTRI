@@ -1,6 +1,8 @@
 import { useEffect } from "react";
 
-const IngredientInput = ({ inputList, setInputList }) => {
+import "./ingredient-input.stytles.scss";
+
+const IngredientInput = ({ inputList, setInputList, label }) => {
   const handleInputChange = (e, index) => {
     const { name, value } = e.target;
     const list = [...inputList];
@@ -30,46 +32,50 @@ const IngredientInput = ({ inputList, setInputList }) => {
     }
   }, [inputList.length]);
 
-  return (
-    // <div className=" w-100 center">
-    inputList.map((x, i) => {
-      return (
-        <div
-          key={i}
-          className="flex flex-row w-50-ns mv1 w-90 center b--gray ba bg-transparent br2  "
-        >
+  return inputList.map((x, i) => {
+    return (
+      <div key={i} className="ingredient-input-group">
+        <div className="group">
           <input
-            value={x.ingredient}
             name="ingredient"
-            placeholder="Ingredient"
+            label={label ? label : `Ingredient`}
             onChange={(e) => handleInputChange(e, i)}
+            value={x.ingredient}
             onKeyDown={(e) => addIngredientOnEnter(e)}
             ref={(e) => (x.ingredientRef = e)}
-            className="w-100 pr-5 pv2 br2 ph1 flex-grow-2hover-bg-light-gray bn input-reset "
             autoComplete="off"
+            className="form-input"
           />
-          <div className="flex">
-            {inputList.length - 1 === i && (
-              <button
-                onClick={handleAddClick}
-                className="ba bg-transparent pointer b--light-silver br2 hover-bg-light-gray "
-              >
-                +
-              </button>
-            )}
-            {inputList.length !== 1 && (
-              <button
-                onClick={() => handleRemoveClick(i)}
-                className="ba bg-transparent pointer b--light-silver br2 hover-bg-light-gray "
-              >
-                x
-              </button>
-            )}
-          </div>
+          {label ? (
+            <label
+              className={`${
+                x.ingredient.length ? "shrink" : ""
+              } form-input-label`}
+            >
+              {label}
+            </label>
+          ) : null}
         </div>
-      );
-    })
-    // </div>
-  );
+
+        <div className="button-group">
+          {inputList.length - 1 === i && (
+            <div className="ingredient-button">
+              <button onClick={handleAddClick} className="add">
+                &#10005;
+              </button>
+            </div>
+          )}
+          {inputList.length !== 1 && (
+            <button
+              onClick={() => handleRemoveClick(i)}
+              className="ingredient-button delete"
+            >
+              &#10005;
+            </button>
+          )}
+        </div>
+      </div>
+    );
+  });
 };
 export default IngredientInput;

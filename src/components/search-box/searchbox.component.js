@@ -1,12 +1,14 @@
 import React from "react";
+import CustomInput from "../custom-input/custom-input.component";
+
+import "./searchbox.styles.scss";
 
 const SearchBox = ({ searchField, searchChange }) => {
   return (
-    <div className="pa2 tc w-100 center pv2  bg-nearwhite shadow-4 br3">
-      <input
-        className="ma1 pa2 w-80-m input-reset ba bg-transparent br2 hover-bg-light-gray w-50-ns w-90"
+    <div className="searchbox">
+      <CustomInput
         type="search"
-        placeholder="Search Recipes"
+        label="Search Recipes"
         onChange={searchChange}
         value={searchField}
       />

@@ -1,36 +1,38 @@
 import React from "react";
 
+import "./ingredient-list.styles.scss";
+
 const IngredientList = ({
   recipeId,
   ingredients,
   pathname,
   ingredientButton,
-  recipeIndex,
 }) => {
-  return ingredients
-    ? ingredients.map((ingredient, i) => {
+  return ingredients ? (
+    <div className="ingredient-list">
+      {ingredients.map((ingredient, i) => {
         return (
-          <div
-            className="items-center mb1 bb bn-last b--light-silver flex justify-between"
-            key={recipeId + ingredient + i}
-          >
-            <div htmlFor={ingredient} className="lh-copy">
+          <div className="ingredient" key={recipeId + ingredient + i}>
+            <div htmlFor={ingredient} className="ingredient-text">
               {ingredient}
             </div>
             {pathname === "/" ? (
               <button
-                className={`mr2 ba ph1 b--moon-gray gray br2 tc bg-white hover-bg-near-white pointer`}
+                className="ingredient-button"
                 onClick={ingredientButton}
                 name={recipeId + " " + ingredient + " " + i}
                 value={ingredient + i}
               >
                 &#10005;
               </button>
-            ) : null}
+            ) : (
+              <div></div>
+            )}
           </div>
         );
-      })
-    : null;
+      })}
+    </div>
+  ) : null;
 };
 
 export default IngredientList;
