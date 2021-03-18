@@ -7,22 +7,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-.bg {
-  background-image: url(/src/assets/food-doodle-2.png);
-  background-repeat: repeat;
-  background-size: 20%;
-}
-.bg-nearwhite {
-  background-color: rgba(255, 255, 255, 1);
-}
-
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
-}
-.tag-remove::before {
-  content: "x";
-  color: #fff;
-  font-weight: 300;
-  font-family: Arial, sans-serif;
 }
