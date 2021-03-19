@@ -7,6 +7,7 @@
   box-shadow: 4px 4px 8px 0px rgba(0, 0, 0, 0.2);
   text-align: center;
   padding: 20px 0;
+  margin: 10px;
   font-size: 1rem;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
@@ -14,5 +15,15 @@
 
   &:hover {
     background-color: rgb(245, 245, 245);
+  }
+
+  &.google-sign-in {
+    background-color: #4285f4;
+    color: white;
+
+    &:hover {
+      background-color: #357ae8;
+      border: none;
+    }
   }
 }

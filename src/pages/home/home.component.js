@@ -5,13 +5,14 @@ import {
   shoppingListAdded,
   shoppingListRemoved,
   shoppingIngredientRemoved,
+  selectAllShoppingRecipes,
 } from "./shopping-listSlice";
 import OddBits from "../../components/oddbits/oddbits.component.jsx";
 import CustomButton from "../../components/custom-button/custom-button.component.jsx";
 import CardList from "../../components/cardList/card-list.component.jsx";
 
 function Home() {
-  const recipes = useSelector((state) => state.shoppingList);
+  const recipes = useSelector(selectAllShoppingRecipes);
   const dispatch = useDispatch();
   const [oddBits, setOddBits] = useState(
     JSON.parse(localStorage.getItem("storedOdd")) || [""]

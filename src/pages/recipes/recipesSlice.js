@@ -29,3 +29,5 @@ const { actions, reducer } = recipeSlice;
 export const { recipeAdded, recipeRemoved, recipeEdited } = actions;
 
 export default reducer;
+
+export const selectAllRecipes = (state) => state.recipes;

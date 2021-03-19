@@ -1,0 +1,20 @@
+.sign-up {
+  align-items: center;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 20px;
+  width: 40%;
+
+  @media screen and (max-width: 750px) {
+    width: 90%;
+  }
+
+  .sign-up-form {
+    display: flex;
+    flex-direction: column;
+    margin: 20px;
+    width: 90%;
+  }
+}

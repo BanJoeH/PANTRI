@@ -1,0 +1,27 @@
+.sign-in {
+  align-items: center;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 20px;
+  width: 40%;
+
+  @media screen and (max-width: 750px) {
+    width: 90%;
+  }
+
+  .sign-in-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 20px;
+    width: 90%;
+
+    .button-container {
+      display: flex;
+      flex-wrap: wrap;
+      width: 100%;
+    }
+  }
+}

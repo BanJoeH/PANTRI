@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { notification } from "../../App/app.utils";
 
-import { recipeEdited, recipeRemoved } from "./recipesSlice";
+import { recipeEdited, recipeRemoved, selectAllRecipes } from "./recipesSlice";
 import { shoppingListAdded } from "../home/shopping-listSlice";
 
 import CardList from "../../components/cardList/card-list.component";
@@ -26,7 +26,7 @@ const Recipes = () => {
   ]);
   const [searchField, setSearchField] = useState("");
 
-  const recipes = useSelector((state) => state.recipes);
+  const recipes = useSelector(selectAllRecipes);
   const dispatch = useDispatch();
 
   useEffect(() => {

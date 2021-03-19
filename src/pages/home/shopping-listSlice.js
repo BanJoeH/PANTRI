@@ -54,3 +54,5 @@ export const {
 } = actions;
 
 export default reducer;
+
+export const selectAllShoppingRecipes = (state) => state.shoppingList;
