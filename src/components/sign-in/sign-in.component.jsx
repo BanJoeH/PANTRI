@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { signInWithGoogle } from "../../firebase/firebase.utils";
+import { auth, signInWithGoogle } from "../../firebase/firebase.utils";
 import {
   loginUser,
   userSelector,
@@ -30,8 +30,16 @@ const SignIn = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
-    dispatch(loginUser(email, password));
+    try {
+      await auth.signInWithEmailAndPassword(email, password);
+      setUserCredentials({
+        email: "",
+        password: "",
+      });
+    } catch (error) {
+      console.log(error);
+    }
+    // dispatch(loginUser(email, password));
   };
 
   const handleChange = (event) => {

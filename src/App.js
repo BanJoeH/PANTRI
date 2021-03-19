@@ -36,9 +36,9 @@ export default function App() {
     };
   }, []);
 
-  useEffect(() => {
-    console.log("currentUser: ", currentUser);
-  }, [currentUser]);
+  // useEffect(() => {
+  //   console.log("currentUser: ", currentUser);
+  // }, [currentUser]);
 
   return (
     <div className="app fade-in">
