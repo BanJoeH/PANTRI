@@ -20,7 +20,7 @@ const IngredientList = ({
               <button
                 className="ingredient-button"
                 onClick={ingredientButton}
-                name={recipeId + " " + ingredient + " " + i}
+                name={recipeId + "&" + ingredient + "&" + i}
                 value={ingredient + i}
               >
                 &#10005;

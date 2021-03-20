@@ -1,11 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { auth, signInWithGoogle } from "../../firebase/firebase.utils";
-import {
-  loginUser,
-  userSelector,
-  clearState,
-} from "../../pages/sign-in-and-sign-up/userSlice.js";
+import { userSelector } from "../../pages/sign-in-and-sign-up/userSlice.js";
 import { useHistory } from "react-router-dom";
 
 import CustomInput from "../custom-input/custom-input.component";
@@ -32,6 +28,7 @@ const SignIn = () => {
     event.preventDefault();
     try {
       await auth.signInWithEmailAndPassword(email, password);
+
       setUserCredentials({
         email: "",
         password: "",
@@ -39,7 +36,6 @@ const SignIn = () => {
     } catch (error) {
       console.log(error);
     }
-    // dispatch(loginUser(email, password));
   };
 
   const handleChange = (event) => {
@@ -48,19 +44,17 @@ const SignIn = () => {
     setUserCredentials({ ...userCredentials, [name]: value });
   };
 
-  useEffect(() => {
-    return () => {
-      // dispatch(clearState());
-    };
-  }, []);
+  // useEffect(() => {
+  //   return () => {
+  //     // dispatch(clearState());
+  //   };
+  // }, []);
 
   useEffect(() => {
     if (isError) {
       console.log(errorMessage);
-      // dispatch(clearState());
     }
     if (isSuccess) {
-      // dispatch(clearState());
       history.push("/");
     }
   }, [isError, isSuccess]);

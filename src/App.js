@@ -3,7 +3,11 @@ import { Footer } from "./components/footer/footer.jsx";
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import ReactNotification from "react-notifications-component";
-import { auth, createUserProfileDocument } from "./firebase/firebase.utils";
+import {
+  auth,
+  createUserProfileDocument,
+  getUserRecipesRef,
+} from "./firebase/firebase.utils";
 
 import Home from "./pages/home/home.component.js";
 import Recipes from "./pages/recipes/recipes.component.js";
@@ -12,9 +16,16 @@ import SignInAndSignUpPage from "./pages/sign-in-and-sign-up/sign-in-and-sign-up
 
 import "./App.scss";
 import Header from "./components/header/header.component.jsx";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  clearUser,
+  setCurrentUser,
+  userSelector,
+} from "./pages/sign-in-and-sign-up/userSlice.js";
 
 export default function App() {
-  const [currentUser, setCurrentUser] = useState(null);
+  const dispatch = useDispatch();
+  const currentUser = useSelector(userSelector);
 
   useEffect(() => {
     const unsubsribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
@@ -22,23 +33,24 @@ export default function App() {
         const userRef = await createUserProfileDocument(userAuth);
 
         userRef.onSnapshot((snapShot) => {
-          setCurrentUser({
-            id: snapShot.id,
-            ...snapShot.data(),
-          });
+          const { displayName, email, createdAt } = snapShot.data();
+          dispatch(
+            setCurrentUser({
+              id: snapShot.id,
+              displayName,
+              email,
+              createdAt: createdAt.toDate().toString(),
+            })
+          );
         });
       } else {
-        setCurrentUser(null);
+        dispatch(clearUser());
       }
     });
     return () => {
       unsubsribeFromAuth();
     };
   }, []);
-
-  // useEffect(() => {
-  //   console.log("currentUser: ", currentUser);
-  // }, [currentUser]);
 
   return (
     <div className="app fade-in">

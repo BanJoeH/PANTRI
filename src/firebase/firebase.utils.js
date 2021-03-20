@@ -38,6 +38,30 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
   return userRef;
 };
 
+export const getUserRecipesRef = async (userId) => {
+  const recipesRef = firestore.collection(`users/${userId}/recipes`);
+  const snapShot = await recipesRef.get();
+  console.log(snapShot);
+
+  if (snapShot.empty) {
+    const recipescollectionRef = firestore.collection(
+      `users/${userId}/recipes`
+    );
+    //   .doc();
+    // await recipescollectionRef.set({
+    //   id: "test",
+    //   name: "testRecipe",
+    //   link: "https://google.com",
+    //   ingredients: ["ing1", "ing2", "ing3"],
+    // });
+    console.log(recipescollectionRef);
+    return recipescollectionRef;
+  } else {
+    console.log("snapshot docs0 ref", snapShot.docs[0].ref);
+    return snapShot.docs[0].ref;
+  }
+};
+
 firebase.initializeApp(config);
 
 export const auth = firebase.auth();

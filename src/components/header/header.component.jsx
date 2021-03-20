@@ -1,8 +1,11 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { auth } from "../../firebase/firebase.utils";
+import { auth, getUserRecipesRef } from "../../firebase/firebase.utils";
+import { userSelector } from "../../pages/sign-in-and-sign-up/userSlice";
 
-const Header = ({ currentUser }) => {
+const Header = () => {
+  const currentUser = useSelector(userSelector);
   return (
     <header className="app-header">
       <nav className="nav">
@@ -15,7 +18,7 @@ const Header = ({ currentUser }) => {
         <Link className="nav-link" to="/newrecipe">
           Add a recipe
         </Link>
-        {currentUser ? (
+        {currentUser.id ? (
           <div className="nav-link" onClick={() => auth.signOut()}>
             Sign Out
           </div>
@@ -24,6 +27,8 @@ const Header = ({ currentUser }) => {
             Sign In
           </Link>
         )}
+        {/*
+        <div onClick={() => getUserRecipesRef(currentUser.id)}>get recipes</div> */}
       </nav>
     </header>
   );

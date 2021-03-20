@@ -65,7 +65,11 @@ function NewRecipe() {
             value={newRecipe.link}
             autoComplete="off"
           />
-          <IngredientInput inputList={inputList} setInputList={setInputList} />
+          <IngredientInput
+            inputList={inputList}
+            setInputList={setInputList}
+            label="Ingredient"
+          />
           <CustomButton value="AddRecipe" onClick={addRecipe}>
             Add Recipe
           </CustomButton>
