@@ -27,7 +27,7 @@ const shoppingListSlice = createSlice({
       return shoppingList.filter((recipe) => recipe.id !== action.payload);
     },
     shoppingIngredientRemoved: (shoppingList, action) => {
-      let [recipeId, ingredientToRemove, index] = action.payload.split(" ");
+      let [recipeId, ingredientToRemove, index] = action.payload.split("&");
 
       let tempShoppingList = shoppingList.map((shoppingRecipe) => {
         if (shoppingRecipe.id === recipeId) {
