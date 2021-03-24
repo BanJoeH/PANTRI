@@ -1,26 +1,26 @@
 {
   "files": {
-    "main.css": "/PANTRI/static/css/main.41d067ef.chunk.css",
-    "main.js": "/PANTRI/static/js/main.e79b1d47.chunk.js",
-    "main.js.map": "/PANTRI/static/js/main.e79b1d47.chunk.js.map",
+    "main.css": "/PANTRI/static/css/main.e235b6cb.chunk.css",
+    "main.js": "/PANTRI/static/js/main.e0709135.chunk.js",
+    "main.js.map": "/PANTRI/static/js/main.e0709135.chunk.js.map",
     "runtime-main.js": "/PANTRI/static/js/runtime-main.26b1252e.js",
     "runtime-main.js.map": "/PANTRI/static/js/runtime-main.26b1252e.js.map",
     "static/css/2.c49baa93.chunk.css": "/PANTRI/static/css/2.c49baa93.chunk.css",
-    "static/js/2.78e19a94.chunk.js": "/PANTRI/static/js/2.78e19a94.chunk.js",
-    "static/js/2.78e19a94.chunk.js.map": "/PANTRI/static/js/2.78e19a94.chunk.js.map",
+    "static/js/2.30537b10.chunk.js": "/PANTRI/static/js/2.30537b10.chunk.js",
+    "static/js/2.30537b10.chunk.js.map": "/PANTRI/static/js/2.30537b10.chunk.js.map",
     "index.html": "/PANTRI/index.html",
     "service-worker.js": "/PANTRI/service-worker.js",
     "service-worker.js.map": "/PANTRI/service-worker.js.map",
     "static/css/2.c49baa93.chunk.css.map": "/PANTRI/static/css/2.c49baa93.chunk.css.map",
-    "static/css/main.41d067ef.chunk.css.map": "/PANTRI/static/css/main.41d067ef.chunk.css.map",
-    "static/js/2.78e19a94.chunk.js.LICENSE.txt": "/PANTRI/static/js/2.78e19a94.chunk.js.LICENSE.txt",
+    "static/css/main.e235b6cb.chunk.css.map": "/PANTRI/static/css/main.e235b6cb.chunk.css.map",
+    "static/js/2.30537b10.chunk.js.LICENSE.txt": "/PANTRI/static/js/2.30537b10.chunk.js.LICENSE.txt",
     "static/media/App.scss": "/PANTRI/static/media/food-doodle-2.45e9e031.png"
   },
   "entrypoints": [
     "static/js/runtime-main.26b1252e.js",
     "static/css/2.c49baa93.chunk.css",
-    "static/js/2.78e19a94.chunk.js",
-    "static/css/main.41d067ef.chunk.css",
-    "static/js/main.e79b1d47.chunk.js"
+    "static/js/2.30537b10.chunk.js",
+    "static/css/main.e235b6cb.chunk.css",
+    "static/js/main.e0709135.chunk.js"
   ]
 }
