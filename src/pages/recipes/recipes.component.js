@@ -23,7 +23,6 @@ const Recipes = () => {
     },
   ]);
   const [searchField, setSearchField] = useState("");
-  const [filteredRecipes, setFilteredRecipes] = useState([]);
 
   const { uid } = useSelector((state) => state.firebase.auth);
   useFirestoreConnect({
@@ -44,6 +43,16 @@ const Recipes = () => {
     .collection("recipes");
 
   const recipes = useSelector((state) => state.firestore.data.recipes);
+  let filteredRecipes = [];
+
+  console.log(recipes);
+  if (recipes) {
+    filteredRecipes = Object.values(recipes).filter((recipe) => {
+      if (recipe !== null) {
+        return recipe.name.toLowerCase().includes(searchField.toLowerCase());
+      }
+    });
+  }
 
   const onSearchChange = (event) => {
     setSearchField(event.target.value);
@@ -149,20 +158,20 @@ const Recipes = () => {
   }, [inputList]);
 
   useEffect(() => {
-    let defaultState = [];
+    let newState = [];
     if (editingRecipe.id) {
-      defaultState = editingRecipe.ingredients.map((ingredient) => {
+      newState = editingRecipe.ingredients.map((ingredient) => {
         return { ingredient: ingredient, ingredientRef: null };
       });
     } else {
-      return (defaultState = [
+      return (newState = [
         {
           ingredient: "",
           ingredientRef: null,
         },
       ]);
     }
-    setInputList(defaultState);
+    setInputList(newState);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [editingRecipe.ingredients.length]);
 
@@ -203,9 +212,9 @@ const Recipes = () => {
 
         <SearchBox searchChange={onSearchChange} searchField={searchField} />
       </div>
-      {recipes ? (
+      {filteredRecipes ? (
         <CardList
-          recipes={recipes}
+          recipes={filteredRecipes}
           removeFromRecipes={removeFromRecipes}
           cardButton={addToShoppingList}
           editRecipeCardButton={editRecipeCardButton}
