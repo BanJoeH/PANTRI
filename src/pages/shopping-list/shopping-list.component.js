@@ -1,13 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 
 import { useFirestoreConnect, useFirestore } from "react-redux-firebase";
 
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 import OddBits from "../../components/oddbits/oddbits.component.jsx";
-import CustomButton from "../../components/custom-button/custom-button.component.jsx";
 import CardList from "../../components/cardList/card-list.component.jsx";
-import Card from "../../components/card/card.component.jsx";
 import SortShopping from "../../components/sort-shopping/sort-shopping.component.jsx";
 
 function ShoppingList() {
@@ -24,13 +22,6 @@ function ShoppingList() {
     .collection("users")
     .doc(uid)
     .collection("shoppingList");
-
-  let recipeNames = [];
-  if (recipes) {
-    recipeNames = Object.values(recipes).map((recipe) => {
-      if (recipe !== null) return recipe.name;
-    });
-  }
 
   const removeRecipeFromShoppingList = (event) => {
     event.preventDefault();
@@ -51,14 +42,6 @@ function ShoppingList() {
       ingredients: firestore.FieldValue.arrayRemove(ingredient),
     });
   };
-
-  let sortShoppingRecipe = {};
-
-  // shoppingListCollectionRef.add(temp).then((docRef) => {
-  //   docRef.update({
-  //     id: docRef.id,
-  //   });
-  // });
 
   return (
     <div className="page fade-in">

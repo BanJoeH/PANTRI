@@ -51,7 +51,7 @@ function NewRecipe() {
         return input.ingredient.toLowerCase();
       })
       .filter(Boolean);
-    setNewRecipe({ ...newRecipe, ingredients: ingredients });
+    setNewRecipe((prevState) => ({ prevState, ingredients: ingredients }));
   }, [inputList]);
 
   return (

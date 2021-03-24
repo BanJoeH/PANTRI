@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { useFirestoreConnect, useFirestore } from "react-redux-firebase";
 import { notification } from "../../App/app.utils";
 
@@ -55,11 +55,6 @@ const Recipes = () => {
       [event.target.name]: event.target.value,
     }));
   };
-  // let filteredRecipes = [];
-  // if (recipes) {
-  //   filteredRecipes = Object.values(recipes).filter((recipe) => {
-  //     return recipe.name.toLowerCase().includes(searchField.toLowerCase());
-  //   });}
 
   const addToShoppingList = (event) => {
     event.preventDefault();
@@ -168,6 +163,7 @@ const Recipes = () => {
       ]);
     }
     setInputList(defaultState);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [editingRecipe.ingredients.length]);
 
   return (

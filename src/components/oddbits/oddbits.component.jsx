@@ -24,18 +24,6 @@ const OddBits = ({ uid }) => {
     }
   }, [oddBitsFirebase]);
 
-  // useEffect(() => {
-  //   let ingredients = inputList.map((input, i) => {
-  //     return input.ingredient;
-  //   });
-  //   firestore.collection("users").doc(uid).set(
-  //     {
-  //       oddBits: ingredients,
-  //     },
-  //     { merge: true }
-  //   );
-  // }, [inputList.length]);
-
   const lossOfFocus = () => {
     if (uid) {
       let ingredients = inputList.map((input, i) => {

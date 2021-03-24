@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 
 import { useSelector } from "react-redux";
 import {
@@ -26,9 +26,7 @@ export default function App() {
       if (userAuth) {
         const userRef = await createUserProfileDocument(userAuth);
 
-        userRef.onSnapshot((snapShot) => {
-          const { displayName, email, createdAt } = snapShot.data();
-        });
+        userRef.onSnapshot();
       }
     });
     return () => {

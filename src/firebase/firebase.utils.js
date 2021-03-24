@@ -63,9 +63,9 @@ firebase
   .firestore()
   .enablePersistence()
   .catch((err) => {
-    if (err.code == "failed-precondition") {
+    if (err.code === "failed-precondition") {
       console.log(err);
-    } else if (err.code == "unimplemented") {
+    } else if (err.code === "unimplemented") {
       console.log(err);
     }
   });

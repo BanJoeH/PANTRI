@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { auth } from "../../firebase/firebase.utils";
 
 import { useHistory } from "react-router-dom";
-import { useFirebase, isLoaded, isEmpty } from "react-redux-firebase";
+import { useFirebase } from "react-redux-firebase";
 
 import CustomInput from "../custom-input/custom-input.component";
 import CustomButton from "../custom-button/custom-button.component";

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import Card from "../card/card.component";
 import CustomButton from "../custom-button/custom-button.component";
 
@@ -18,6 +17,7 @@ const SortShopping = ({ recipes }) => {
 
   const removeIngredient = (event) => {
     event.preventDefault();
+    // eslint-disable-next-line no-unused-vars
     const [id, ingredientToRemove, index] = event.target.name.split("&");
 
     let temp = sortShoppingRecipe.ingredients.filter(

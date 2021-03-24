@@ -8,7 +8,7 @@ const SearchBox = ({ searchField, searchChange }) => {
     <div className="searchbox">
       <CustomInput
         type="search"
-        label="Search Recipes"
+        label="Search Recipes - NOT WORKING"
         onChange={searchChange}
         value={searchField}
       />
