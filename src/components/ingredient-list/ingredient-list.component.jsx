@@ -11,24 +11,26 @@ const IngredientList = ({
   return ingredients ? (
     <div className="ingredient-list">
       {ingredients.map((ingredient, i) => {
-        return (
-          <div className="ingredient" key={recipeId + ingredient + i}>
-            <div htmlFor={ingredient} className="ingredient-text">
-              {ingredient}
+        if (ingredient !== null) {
+          return (
+            <div className="ingredient" key={recipeId + ingredient + i}>
+              <div htmlFor={ingredient} className="ingredient-text">
+                {ingredient}
+              </div>
+              {pathname === "/PANTRI/shoppingList" ? (
+                <button
+                  className="ingredient-button"
+                  onClick={ingredientButton}
+                  name={recipeId + "&" + ingredient + "&" + i}
+                >
+                  &#10005;
+                </button>
+              ) : (
+                <div></div>
+              )}
             </div>
-            {pathname === "/PANTRI/shoppingList" ? (
-              <button
-                className="ingredient-button"
-                onClick={ingredientButton}
-                name={recipeId + "&" + ingredient + "&" + i}
-              >
-                &#10005;
-              </button>
-            ) : (
-              <div></div>
-            )}
-          </div>
-        );
+          );
+        }
       })}
     </div>
   ) : null;
