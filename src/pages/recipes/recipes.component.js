@@ -1,9 +1,7 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useFirestoreConnect, useFirestore } from "react-redux-firebase";
 import { notification } from "../../App/app.utils";
-
-import { recipeEdited, recipeRemoved, selectAllRecipes } from "./recipesSlice";
-import { shoppingListAdded } from "../home/shopping-listSlice";
 
 import CardList from "../../components/cardList/card-list.component";
 import SearchBox from "../../components/search-box/searchbox.component.js";
@@ -25,13 +23,27 @@ const Recipes = () => {
     },
   ]);
   const [searchField, setSearchField] = useState("");
+  const [filteredRecipes, setFilteredRecipes] = useState([]);
 
-  const recipes = useSelector(selectAllRecipes);
-  const dispatch = useDispatch();
+  const { uid } = useSelector((state) => state.firebase.auth);
+  useFirestoreConnect({
+    collection: `users/${uid}/recipes`,
+    storeAs: "recipes",
+  });
 
-  useEffect(() => {
-    localStorage.setItem("storedRecipes", JSON.stringify(recipes));
-  }, [recipes]);
+  const firestore = useFirestore();
+
+  const shoppingListCollectionRef = firestore
+    .collection("users")
+    .doc(uid)
+    .collection("shoppingList");
+
+  const recipesCollectionRef = firestore
+    .collection("users")
+    .doc(uid)
+    .collection("recipes");
+
+  const recipes = useSelector((state) => state.firestore.data.recipes);
 
   const onSearchChange = (event) => {
     setSearchField(event.target.value);
@@ -43,47 +55,79 @@ const Recipes = () => {
       [event.target.name]: event.target.value,
     }));
   };
-
-  const filteredRecipes = recipes.filter((recipe) => {
-    return recipe.name.toLowerCase().includes(searchField.toLowerCase());
-  });
+  // let filteredRecipes = [];
+  // if (recipes) {
+  //   filteredRecipes = Object.values(recipes).filter((recipe) => {
+  //     return recipe.name.toLowerCase().includes(searchField.toLowerCase());
+  //   });}
 
   const addToShoppingList = (event) => {
     event.preventDefault();
     let { value } = event.target;
-    recipes.find((recipe) => {
+    Object.values(recipes).find((recipe) => {
       if (recipe.id === value) {
-        dispatch(shoppingListAdded(recipe));
-        notification(recipe.name, "Added to your shopping list");
+        shoppingListCollectionRef.add(recipe).then((docRef) => {
+          docRef.update({
+            id: docRef.id,
+          });
+        });
+        notification(recipe.name, "Added to your shopping list", "success");
       }
     });
     setSearchField("");
   };
 
-  const removeFromRecipes = (event) => {
+  const removeFromRecipes = async (event) => {
     event.preventDefault();
 
     if (
       window.confirm("Are you sure you want to permanently delete this recipe?")
     ) {
-      let id = event.target.value.split(" ")[0];
-      dispatch(recipeRemoved(id));
+      let id = event.target.value;
+
+      recipesCollectionRef
+        .doc(id)
+        .delete()
+        .then(() => {
+          notification("", "Deleted", "danger");
+        })
+        .catch((error) => {
+          console.log("error removing document", error);
+        });
       setSearchField("");
     }
   };
 
   const editRecipeCardButton = (event) => {
     event.preventDefault();
-    console.log(event);
-    let recipeToEdit = recipes.find((item) => item.id === event.target.value);
+    let recipeToEdit = Object.values(recipes).find(
+      (item) => item.id === event.target.value
+    );
     setEditingRecipe(recipeToEdit);
   };
 
   const editRecipeDone = (event) => {
     event.preventDefault();
-    console.log(event);
-    dispatch(recipeEdited(editingRecipe));
-    notification(editingRecipe.name, "edited");
+
+    recipesCollectionRef
+      .doc(editingRecipe.id)
+      .delete()
+      .then(() => {
+        recipesCollectionRef
+          .add(editingRecipe)
+          .then((docRef) => {
+            docRef.update({
+              id: docRef.id,
+            });
+          })
+          .catch((error) => {
+            console.log("error adding replacing with new recipe", error);
+          });
+      })
+      .catch((error) => {
+        console.log("error removing old recipe", error);
+      });
+    notification(editingRecipe.name, "edited", "info");
     setEditingRecipe({
       id: "",
       name: "",
@@ -111,7 +155,7 @@ const Recipes = () => {
 
   useEffect(() => {
     let defaultState = [];
-    if (editingRecipe.id !== "") {
+    if (editingRecipe.id) {
       defaultState = editingRecipe.ingredients.map((ingredient) => {
         return { ingredient: ingredient, ingredientRef: null };
       });
@@ -163,9 +207,9 @@ const Recipes = () => {
 
         <SearchBox searchChange={onSearchChange} searchField={searchField} />
       </div>
-      {filteredRecipes.length ? (
+      {recipes ? (
         <CardList
-          recipes={filteredRecipes}
+          recipes={recipes}
           removeFromRecipes={removeFromRecipes}
           cardButton={addToShoppingList}
           editRecipeCardButton={editRecipeCardButton}

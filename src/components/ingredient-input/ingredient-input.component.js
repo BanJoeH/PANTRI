@@ -2,7 +2,12 @@ import { useEffect } from "react";
 
 import "./ingredient-input.stytles.scss";
 
-const IngredientInput = ({ inputList, setInputList, label }) => {
+const IngredientInput = ({
+  inputList,
+  setInputList,
+  lossOfFocus,
+  label = "Ingredient",
+}) => {
   const handleInputChange = (e, index) => {
     const { name, value } = e.target;
     const list = [...inputList];
@@ -46,6 +51,7 @@ const IngredientInput = ({ inputList, setInputList, label }) => {
             ref={(e) => (x.ingredientRef = e)}
             autoComplete="off"
             className="form-input"
+            onBlur={lossOfFocus}
           />
           {label ? (
             <label

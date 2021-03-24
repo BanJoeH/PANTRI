@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { auth, signInWithGoogle } from "../../firebase/firebase.utils";
-import { userSelector } from "../../pages/sign-in-and-sign-up/userSlice.js";
+import { useDispatch, useSelector } from "react-redux";
+import { auth } from "../../firebase/firebase.utils";
+
 import { useHistory } from "react-router-dom";
+import { useFirebase, isLoaded, isEmpty } from "react-redux-firebase";
 
 import CustomInput from "../custom-input/custom-input.component";
 import CustomButton from "../custom-button/custom-button.component";
@@ -10,32 +11,37 @@ import CustomButton from "../custom-button/custom-button.component";
 import "./sign-in.styles.scss";
 
 const SignIn = () => {
-  const dispatch = useDispatch();
+  const firebase = useFirebase();
   const history = useHistory();
+
+  const { uid } = useSelector((state) => state.firebase.auth);
 
   const [userCredentials, setUserCredentials] = useState({
     email: "",
     password: "",
+    error: false,
+    errorMessage: "",
   });
 
-  const { isFetching, isSuccess, isError, errorMessage } = useSelector(
-    userSelector
-  );
-
-  const { email, password } = userCredentials;
+  const { email, password, error, errorMessage } = userCredentials;
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    try {
-      await auth.signInWithEmailAndPassword(email, password);
 
-      setUserCredentials({
-        email: "",
-        password: "",
+    auth
+      .signInWithEmailAndPassword(email, password)
+      .then((userCredential) => {
+        console.log(userCredential);
+        setUserCredentials({ email: "", password: "", error: false });
+      })
+      .catch((error) => {
+        console.log(error);
+        setUserCredentials({
+          ...userCredentials,
+          error: true,
+          errorMessage: error.message,
+        });
       });
-    } catch (error) {
-      console.log(error);
-    }
   };
 
   const handleChange = (event) => {
@@ -44,20 +50,24 @@ const SignIn = () => {
     setUserCredentials({ ...userCredentials, [name]: value });
   };
 
-  // useEffect(() => {
-  //   return () => {
-  //     // dispatch(clearState());
-  //   };
-  // }, []);
+  const signInWithGoogle = () => {
+    firebase
+      .login({
+        provider: "google",
+        type: "popup",
+      })
+      .then(() => {
+        history.push("/PANTRI/");
+      });
+  };
 
   useEffect(() => {
-    if (isError) {
-      console.log(errorMessage);
+    if (uid) {
+      history.push("/PANTRI/shoppingList");
+    } else {
+      setUserCredentials((prevState) => ({ ...prevState, error: true }));
     }
-    if (isSuccess) {
-      history.push("/");
-    }
-  }, [isError, isSuccess]);
+  }, [uid, history]);
 
   return (
     <div className="sign-in">
@@ -79,9 +89,10 @@ const SignIn = () => {
           handleChange={handleChange}
           label="password"
         />
+        {error ? <div className="error">{errorMessage}</div> : null}
         <div className="button-container">
           <CustomButton type="submit"> Sign in </CustomButton>
-          <CustomButton onClick={signInWithGoogle} isGoogleSignIn>
+          <CustomButton type="button" onClick={signInWithGoogle} isGoogleSignIn>
             {" "}
             Sign in with Google{" "}
           </CustomButton>

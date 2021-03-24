@@ -15,7 +15,7 @@ function Card({
     <article className="card">
       <div className="card-header">
         <h2 className="card-title">{recipe.name}</h2>
-        {!recipe.link ? null : (
+        {recipe.link ? (
           <a
             className="title-link"
             target="_blank"
@@ -24,9 +24,9 @@ function Card({
           >
             Link
           </a>
-        )}
+        ) : null}
         <div className="card-header-buttons">
-          {pathname === "/recipes" ? (
+          {pathname === "/PANTRI/recipes" ? (
             <button
               value={recipe.id}
               onClick={editRecipe}
@@ -55,7 +55,9 @@ function Card({
           />
 
           <button className="card-button" onClick={button} value={recipe.id}>
-            {pathname === "/" ? "Done" : "Add to Shopping List"}
+            {pathname === "/PANTRI/shoppingList"
+              ? "Done"
+              : "Add to Shopping List"}
           </button>
         </div>
       ) : null}

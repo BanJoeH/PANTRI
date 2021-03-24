@@ -1,17 +1,54 @@
 import { useState, useEffect } from "react";
 import IngredientInput from "../ingredient-input/ingredient-input.component.js";
+import { useFirestoreConnect, useFirestore } from "react-redux-firebase";
+import { useSelector } from "react-redux";
 
-const OddBits = ({ setOddBits, oddBits }) => {
-  const [inputList, setInputList] = useState(
-    oddBits.map((item) => ({ ingredient: item, ingredientRef: null }))
+const OddBits = ({ uid }) => {
+  const oddBitsFirebase = useSelector(
+    (state) => state.firebase.profile.oddBits
   );
 
+  const firestore = useFirestore();
+  const [inputList, setInputList] = useState([
+    { ingredient: "", ingredientRef: null },
+  ]);
+
   useEffect(() => {
-    let ingredients = inputList.map((input, i) => {
-      return input.ingredient;
-    });
-    setOddBits(ingredients);
-  }, [inputList]);
+    if (oddBitsFirebase && oddBitsFirebase.length) {
+      setInputList(
+        Object.values(oddBitsFirebase).map((item) => ({
+          ingredient: item,
+          ingredientRef: null,
+        }))
+      );
+    }
+  }, [oddBitsFirebase]);
+
+  // useEffect(() => {
+  //   let ingredients = inputList.map((input, i) => {
+  //     return input.ingredient;
+  //   });
+  //   firestore.collection("users").doc(uid).set(
+  //     {
+  //       oddBits: ingredients,
+  //     },
+  //     { merge: true }
+  //   );
+  // }, [inputList.length]);
+
+  const lossOfFocus = () => {
+    if (uid) {
+      let ingredients = inputList.map((input, i) => {
+        return input.ingredient;
+      });
+      firestore.collection("users").doc(uid).set(
+        {
+          oddBits: ingredients,
+        },
+        { merge: true }
+      );
+    }
+  };
 
   return (
     <article className="card">
@@ -22,6 +59,7 @@ const OddBits = ({ setOddBits, oddBits }) => {
         <IngredientInput
           inputList={inputList}
           setInputList={setInputList}
+          lossOfFocus={lossOfFocus}
           label="Odd bit"
         />
       </div>

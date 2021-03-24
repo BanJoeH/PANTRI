@@ -1,6 +1,9 @@
 import firebase from "firebase/app";
 import "firebase/firestore";
 import "firebase/auth";
+import { createFirestoreInstance } from "redux-firestore";
+import store from "../App/store";
+import { actionTypes } from "redux-firestore";
 
 const config = {
   apiKey: "AIzaSyBBougi-iecxqTOOD2iahFN-yUfG5tKEMo",
@@ -12,6 +15,23 @@ const config = {
   measurementId: "G-5RVBRNC8RQ",
 };
 
+const rrfConfig = {
+  userProfile: "users",
+  useFirestoreForProfile: true,
+  onAuthStateChanged: (authData, firebase, dispatch) => {
+    if (!authData) {
+      dispatch({ type: actionTypes.CLEAR_DATA });
+    }
+  },
+};
+
+export const rrfProps = {
+  firebase,
+  config: rrfConfig,
+  dispatch: store.dispatch,
+  createFirestoreInstance, //since we are using Firestore
+};
+
 export const createUserProfileDocument = async (userAuth, additionalData) => {
   if (!userAuth) return;
 
@@ -21,13 +41,12 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
 
   if (!snapShot.exists) {
     const { displayName, email } = userAuth;
-    const createdAt = new Date();
 
     try {
       await userRef.set({
         displayName,
         email,
-        createdAt,
+
         ...additionalData,
       });
     } catch (error) {
@@ -38,43 +57,24 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
   return userRef;
 };
 
-export const getUserRecipesRef = async (userId) => {
-  const recipesRef = firestore.collection(`users/${userId}/recipes`);
-  const snapShot = await recipesRef.get();
-  console.log(snapShot);
-
-  if (snapShot.empty) {
-    const recipescollectionRef = firestore.collection(
-      `users/${userId}/recipes`
-    );
-    //   .doc();
-    // await recipescollectionRef.set({
-    //   id: "test",
-    //   name: "testRecipe",
-    //   link: "https://google.com",
-    //   ingredients: ["ing1", "ing2", "ing3"],
-    // });
-    console.log(recipescollectionRef);
-    return recipescollectionRef;
-  } else {
-    console.log("snapshot docs0 ref", snapShot.docs[0].ref);
-    return snapShot.docs[0].ref;
-  }
-};
-
 firebase.initializeApp(config);
+
+firebase
+  .firestore()
+  .enablePersistence()
+  .catch((err) => {
+    if (err.code == "failed-precondition") {
+      console.log(err);
+    } else if (err.code == "unimplemented") {
+      console.log(err);
+    }
+  });
 
 export const auth = firebase.auth();
 export const firestore = firebase.firestore();
 
-const provider = new firebase.auth.GoogleAuthProvider();
-provider.setCustomParameters({ prompt: "select_account" });
-export const signInWithGoogle = () => auth.signInWithPopup(provider);
+const googleProvider = new firebase.auth.GoogleAuthProvider();
+googleProvider.setCustomParameters({ prompt: "select_account" });
+export const signInWithGoogle = () => auth.signInWithPopup(googleProvider);
 
 export default firebase;
-
-// firestore.collection('users').doc("/users/rr8yqcJ9KGyQuDpuW8Ai").collection("recipes")
-
-// firestore.collection("/users/rr8yqcJ9KGyQuDpuW8Ai/recipes")
-
-// firestore.collection('users').doc("/users/rr8yqcJ9KGyQuDpuW8Ai").collection("shoppingList")

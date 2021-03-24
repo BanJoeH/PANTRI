@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useFirestore } from "react-redux-firebase";
+import { useSelector } from "react-redux";
 import { notification } from "../../App/app.utils";
-import { recipeAdded } from "../recipes/recipesSlice";
 import CustomButton from "../../components/custom-button/custom-button.component.jsx";
 import IngredientInput from "../../components/ingredient-input/ingredient-input.component.js";
 import CustomInput from "../../components/custom-input/custom-input.component";
@@ -15,17 +15,34 @@ function NewRecipe() {
     { ingredient: "", ingredientRef: null },
   ]);
   const [newRecipe, setNewRecipe] = useState({
-    id: ID(),
     name: "",
     link: "",
     ingredients: [],
   });
 
-  const dispatch = useDispatch();
+  const firestore = useFirestore();
+  const { uid } = useSelector((state) => state.firebase.auth);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
     setNewRecipe({ ...newRecipe, [name]: value });
+  };
+
+  const addNewRecipe = (event) => {
+    event.preventDefault();
+    firestore
+      .collection("users")
+      .doc(uid)
+      .collection("recipes")
+      .add(newRecipe)
+      .then((docRef) => {
+        docRef.update({
+          id: docRef.id,
+        });
+      });
+    notification(newRecipe.name, "Added to Recipes", "success");
+    setNewRecipe({ id: ID(), name: "", link: "", ingredients: [] });
+    setInputList([{ ingredient: "", ingredientRef: null }]);
   };
 
   useEffect(() => {
@@ -36,14 +53,6 @@ function NewRecipe() {
       .filter(Boolean);
     setNewRecipe({ ...newRecipe, ingredients: ingredients });
   }, [inputList]);
-
-  const addRecipe = (event) => {
-    event.preventDefault();
-    dispatch(recipeAdded(newRecipe));
-    notification(newRecipe.name, "Added to Recipes");
-    setNewRecipe({ id: ID(), name: "", link: "", ingredients: [] });
-    setInputList([{ ingredient: "", ingredientRef: null }]);
-  };
 
   return (
     <div className="page fade-in">
@@ -70,7 +79,8 @@ function NewRecipe() {
             setInputList={setInputList}
             label="Ingredient"
           />
-          <CustomButton value="AddRecipe" onClick={addRecipe}>
+
+          <CustomButton value="AddRecipe" onClick={addNewRecipe}>
             Add Recipe
           </CustomButton>
         </div>

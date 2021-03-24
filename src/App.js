@@ -1,32 +1,26 @@
-import { useEffect, useState } from "react";
-import { Footer } from "./components/footer/footer.jsx";
-import React from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import ReactNotification from "react-notifications-component";
-import {
-  auth,
-  createUserProfileDocument,
-  getUserRecipesRef,
-} from "./firebase/firebase.utils";
+import React, { useEffect, useState } from "react";
 
-import Home from "./pages/home/home.component.js";
+import { useSelector } from "react-redux";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  useHistory,
+} from "react-router-dom";
+import ReactNotification from "react-notifications-component";
+import { auth, createUserProfileDocument } from "./firebase/firebase.utils";
+
+import Header from "./components/header/header.component.jsx";
+import ShoppingList from "./pages/shopping-list/shopping-list.component.js";
 import Recipes from "./pages/recipes/recipes.component.js";
 import NewRecipe from "./pages/new-recipe/new-recipe.component.js";
 import SignInAndSignUpPage from "./pages/sign-in-and-sign-up/sign-in-and-sign-up.component.jsx";
+import Footer from "./components/footer/footer.jsx";
 
 import "./App.scss";
-import Header from "./components/header/header.component.jsx";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  clearUser,
-  setCurrentUser,
-  userSelector,
-} from "./pages/sign-in-and-sign-up/userSlice.js";
 
 export default function App() {
-  const dispatch = useDispatch();
-  const currentUser = useSelector(userSelector);
-
+  const { uid } = useSelector((state) => state.firebase.auth);
   useEffect(() => {
     const unsubsribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
       if (userAuth) {
@@ -34,41 +28,38 @@ export default function App() {
 
         userRef.onSnapshot((snapShot) => {
           const { displayName, email, createdAt } = snapShot.data();
-          dispatch(
-            setCurrentUser({
-              id: snapShot.id,
-              displayName,
-              email,
-              createdAt: createdAt.toDate().toString(),
-            })
-          );
         });
-      } else {
-        dispatch(clearUser());
       }
     });
     return () => {
       unsubsribeFromAuth();
     };
   }, []);
+  const history = useHistory();
+
+  useEffect(() => {
+    if (!uid) {
+      history.push(/PANTRI/);
+    }
+  }, [history, uid]);
 
   return (
     <div className="app fade-in">
       <ReactNotification />
       <Router>
-        <Header currentUser={currentUser} />
+        <Header />
         <div className="body">
           <Switch>
-            <Route path="/recipes">
+            <Route path="/PANTRI/recipes">
               <Recipes />
             </Route>
-            <Route path="/newrecipe">
+            <Route path="/PANTRI/newrecipe">
               <NewRecipe />
             </Route>
-            <Route exact path="/">
-              <Home />
+            <Route path="/PANTRI/shoppingList">
+              <ShoppingList />
             </Route>
-            <Route path="/signIn">
+            <Route exact path="/PANTRI/">
               <SignInAndSignUpPage />
             </Route>
           </Switch>

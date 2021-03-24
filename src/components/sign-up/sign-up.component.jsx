@@ -1,79 +1,73 @@
 import React, { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import {
-  signupUser,
-  userSelector,
-  // clearState,
-} from "../../pages/sign-in-and-sign-up/userSlice.js";
+import { useSelector } from "react-redux";
+import { auth } from "../../firebase/firebase.utils.js";
 import { useHistory } from "react-router-dom";
 
 import CustomButton from "../custom-button/custom-button.component";
 import CustomInput from "../custom-input/custom-input.component";
 
 import "./sign-up.styles.scss";
-import {
-  auth,
-  createUserProfileDocument,
-} from "../../firebase/firebase.utils.js";
 
 const SignUp = () => {
-  const dispatch = useDispatch();
-  const history = useHistory();
   const [userCredentials, setUserCredentials] = useState({
     displayName: "",
     email: "",
     password: "",
     confirmPassword: "",
+    error: false,
+    errorMessage: "",
   });
-  const { displayName, email, password, confirmPassword } = userCredentials;
-  const { isFetching, isSuccess, isError, errorMessage } = useSelector(
-    userSelector
-  );
+  const {
+    displayName,
+    email,
+    password,
+    confirmPassword,
+    error,
+    errorMessage,
+  } = userCredentials;
+
+  const history = useHistory();
+  const { uid } = useSelector((state) => state.firebase.auth);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     if (password !== confirmPassword) {
-      alert("passwords don't match");
+      setUserCredentials({
+        ...userCredentials,
+        error: true,
+        errorMessage: "Passwords don't match",
+      });
       return;
     }
-    try {
-      const { user } = await auth.createUserWithEmailAndPassword(
-        email,
-        password
-      );
 
-      await createUserProfileDocument(user, { displayName });
-
-      setUserCredentials({
-        displayName: "",
-        email: "",
-        password: "",
-        confirmPassword: "",
+    auth
+      .createUserWithEmailAndPassword(email, password)
+      .then((userCredential) => {
+        console.log(userCredential);
+        setUserCredentials({
+          displayName: "",
+          email: "",
+          password: "",
+          confirmPassword: "",
+          error: false,
+          errorMessage: "",
+        });
+      })
+      .catch((error) => {
+        setUserCredentials({
+          ...userCredentials,
+          error: true,
+          errorMessage: error.message,
+        });
       });
-    } catch (error) {
-      console.log(error);
-    }
-
-    // dispatch(signupUser({ displayName, email, password }));
   };
 
   useEffect(() => {
-    return () => {
-      // dispatch(clearState());
-    };
-  }, []);
-
-  useEffect(() => {
-    if (isSuccess) {
-      // dispatch(clearState());
-      history.push("/");
+    if (uid) {
+      history.push("/PANTRI/shoppingList");
     }
-    if (isError) {
-      console.log(errorMessage);
-      // dispatch(clearState());
-    }
-  }, [isSuccess, isError]);
+  }, [history, uid]);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -118,6 +112,7 @@ const SignUp = () => {
           label="Confirm Password"
           required
         />
+        {error ? <div className="error">{errorMessage}</div> : null}
         <CustomButton type="submit">Sign up</CustomButton>
       </form>
     </div>
