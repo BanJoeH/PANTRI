@@ -50,6 +50,7 @@ const SortShopping = ({ recipes }) => {
         };
       });
     }
+    reverseShowSort();
   };
 
   return (
@@ -62,10 +63,7 @@ const SortShopping = ({ recipes }) => {
           ingredientButton={removeIngredient}
         />
       ) : (
-        <CustomButton
-          value="Sort shopping"
-          onClick={(sortShopping, reverseShowSort)}
-        >
+        <CustomButton value="Sort shopping" onClick={sortShopping}>
           Sort Shopping
         </CustomButton>
       )}

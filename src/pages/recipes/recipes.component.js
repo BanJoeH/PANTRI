@@ -45,7 +45,6 @@ const Recipes = () => {
   const recipes = useSelector((state) => state.firestore.ordered.recipes);
   let filteredRecipes = [];
 
-  console.log(recipes);
   if (recipes) {
     filteredRecipes = recipes.filter((recipe) => {
       if (recipe !== null) {
