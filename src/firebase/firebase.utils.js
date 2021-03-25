@@ -59,16 +59,18 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
 
 firebase.initializeApp(config);
 
-firebase
-  .firestore()
-  .enablePersistence()
-  .catch((err) => {
-    if (err.code === "failed-precondition") {
-      console.log(err);
-    } else if (err.code === "unimplemented") {
-      console.log(err);
-    }
-  });
+export const enablePersistence = () => {
+  firebase
+    .firestore()
+    .enablePersistence()
+    .catch((err) => {
+      if (err.code === "failed-precondition") {
+        console.log(err);
+      } else if (err.code === "unimplemented") {
+        console.log(err);
+      }
+    });
+};
 
 export const auth = firebase.auth();
 export const firestore = firebase.firestore();

@@ -42,12 +42,12 @@ const Recipes = () => {
     .doc(uid)
     .collection("recipes");
 
-  const recipes = useSelector((state) => state.firestore.data.recipes);
+  const recipes = useSelector((state) => state.firestore.ordered.recipes);
   let filteredRecipes = [];
 
   console.log(recipes);
   if (recipes) {
-    filteredRecipes = Object.values(recipes).filter((recipe) => {
+    filteredRecipes = recipes.filter((recipe) => {
       if (recipe !== null) {
         return recipe.name.toLowerCase().includes(searchField.toLowerCase());
       }
@@ -68,8 +68,8 @@ const Recipes = () => {
   const addToShoppingList = (event) => {
     event.preventDefault();
     let { value } = event.target;
-    Object.values(recipes).find((recipe) => {
-      if (recipe.id === value) {
+    recipes.find((recipe) => {
+      if (recipe.id !== null && recipe.id === value) {
         shoppingListCollectionRef.add(recipe).then((docRef) => {
           docRef.update({
             id: docRef.id,
@@ -104,9 +104,7 @@ const Recipes = () => {
 
   const editRecipeCardButton = (event) => {
     event.preventDefault();
-    let recipeToEdit = Object.values(recipes).find(
-      (item) => item.id === event.target.value
-    );
+    let recipeToEdit = recipes.find((item) => item.id === event.target.value);
     setEditingRecipe(recipeToEdit);
   };
 

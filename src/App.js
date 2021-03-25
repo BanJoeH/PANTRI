@@ -9,6 +9,7 @@ import {
 } from "react-router-dom";
 import ReactNotification from "react-notifications-component";
 import { auth, createUserProfileDocument } from "./firebase/firebase.utils";
+import CookieConsent from "react-cookie-consent";
 
 import Header from "./components/header/header.component.jsx";
 import ShoppingList from "./pages/shopping-list/shopping-list.component.js";
@@ -63,6 +64,17 @@ export default function App() {
           </Switch>
         </div>
       </Router>
+      <CookieConsent
+        location="bottom"
+        buttonText="Gimmie dem cookies"
+        overlay
+        style={{ padding: "5px" }}
+      >
+        We use cookies to store you're recipes to save data usage!{" "}
+        <div style={{ fontSize: "10px", margin: "5px 0" }}>
+          Decline at your peril!
+        </div>
+      </CookieConsent>
       <Footer />
     </div>
   );

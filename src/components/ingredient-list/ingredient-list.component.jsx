@@ -30,7 +30,7 @@ const IngredientList = ({
               )}
             </div>
           );
-        }
+        } else return null;
       })}
     </div>
   ) : null;

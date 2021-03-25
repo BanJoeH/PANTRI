@@ -32,9 +32,8 @@ function CardList({
         className="masonry-grid"
         columnClassName="masonry-grid_column"
       >
-        {Object.values(recipes).map((recipe) => {
-          if (recipe === null) return;
-          else {
+        {recipes.map((recipe) => {
+          if (recipe !== null) {
             return (
               <Card
                 removeFromRecipes={removeFromRecipes}
@@ -45,7 +44,7 @@ function CardList({
                 ingredientButton={ingredientButton}
               />
             );
-          }
+          } else return null;
         })}
       </Masonry>
     </div>

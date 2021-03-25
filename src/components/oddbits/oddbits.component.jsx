@@ -4,9 +4,7 @@ import { useFirestore } from "react-redux-firebase";
 import { useSelector } from "react-redux";
 
 const OddBits = ({ uid }) => {
-  const oddBitsFirebase = useSelector(
-    (state) => state.firebase.profile.oddBits
-  );
+  const oddBits = useSelector((state) => state.firebase.profile.oddBits);
 
   const firestore = useFirestore();
   const [inputList, setInputList] = useState([
@@ -14,15 +12,15 @@ const OddBits = ({ uid }) => {
   ]);
 
   useEffect(() => {
-    if (oddBitsFirebase && oddBitsFirebase.length) {
+    if (oddBits && oddBits.length) {
       setInputList(
-        Object.values(oddBitsFirebase).map((item) => ({
+        oddBits.map((item) => ({
           ingredient: item,
           ingredientRef: null,
         }))
       );
     }
-  }, [oddBitsFirebase]);
+  }, [oddBits]);
 
   const lossOfFocus = () => {
     if (uid) {

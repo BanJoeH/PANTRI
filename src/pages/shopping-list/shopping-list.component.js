@@ -16,7 +16,7 @@ function ShoppingList() {
   });
 
   const firestore = useFirestore();
-  const recipes = useSelector((state) => state.firestore.data.shoppingList);
+  const recipes = useSelector((state) => state.firestore.ordered.shoppingList);
 
   const shoppingListCollectionRef = firestore
     .collection("users")

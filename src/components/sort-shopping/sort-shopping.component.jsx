@@ -26,9 +26,9 @@ const SortShopping = ({ recipes }) => {
     setSortShoppingRecipe({ ...sortShoppingRecipe, ingredients: temp });
   };
 
-  useEffect(() => {
+  const sortShopping = () => {
     if (recipes) {
-      let ingredientList = Object.values(recipes)
+      let ingredientList = recipes
         .map((recipe) => {
           return recipe.ingredients;
         })
@@ -50,10 +50,10 @@ const SortShopping = ({ recipes }) => {
         };
       });
     }
-  }, [recipes]);
+  };
 
   return (
-    <div>
+    <>
       {showSort ? (
         <Card
           recipe={sortShoppingRecipe}
@@ -62,11 +62,14 @@ const SortShopping = ({ recipes }) => {
           ingredientButton={removeIngredient}
         />
       ) : (
-        <CustomButton value="Sort shopping" onClick={reverseShowSort}>
+        <CustomButton
+          value="Sort shopping"
+          onClick={(sortShopping, reverseShowSort)}
+        >
           Sort Shopping
         </CustomButton>
       )}
-    </div>
+    </>
   );
 };
 

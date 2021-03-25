@@ -51,7 +51,7 @@ function NewRecipe() {
         return input.ingredient.toLowerCase();
       })
       .filter(Boolean);
-    setNewRecipe((prevState) => ({ prevState, ingredients: ingredients }));
+    setNewRecipe({ ...newRecipe, ingredients: ingredients });
   }, [inputList]);
 
   return (
@@ -72,7 +72,6 @@ function NewRecipe() {
             label="Link"
             handleChange={handleChange}
             value={newRecipe.link}
-            autoComplete="off"
           />
           <IngredientInput
             inputList={inputList}
