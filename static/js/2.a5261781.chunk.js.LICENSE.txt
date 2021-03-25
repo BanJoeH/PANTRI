@@ -34,6 +34,8 @@ See the Apache Version 2.0 License for specific language governing permissions
 and limitations under the License.
 ***************************************************************************** */
 
+/*! For license information please see index.js.LICENSE.txt */
+
 /**
   * @license
   * Copyright 2017 Google LLC
