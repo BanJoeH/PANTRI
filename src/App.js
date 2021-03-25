@@ -6,6 +6,7 @@ import {
   Switch,
   Route,
   useHistory,
+  Redirect,
 } from "react-router-dom";
 import ReactNotification from "react-notifications-component";
 import { auth, createUserProfileDocument } from "./firebase/firebase.utils";
@@ -21,7 +22,7 @@ import Footer from "./components/footer/footer.jsx";
 import "./App.scss";
 
 export default function App() {
-  const { uid } = useSelector((state) => state.firebase.auth);
+  const { isEmpty } = useSelector((state) => state.firebase.auth);
   useEffect(() => {
     const unsubsribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
       if (userAuth) {
@@ -37,10 +38,10 @@ export default function App() {
   const history = useHistory();
 
   useEffect(() => {
-    if (!uid) {
+    if (isEmpty) {
       history.push(/PANTRI/);
     }
-  }, [history, uid]);
+  }, [history, isEmpty]);
 
   return (
     <div className="app fade-in">
@@ -50,32 +51,33 @@ export default function App() {
         <div className="body">
           <Switch>
             <Route path="/PANTRI/recipes">
-              <Recipes />
+              {isEmpty ? <Redirect to="/PANTRI/" /> : <Recipes />}
             </Route>
             <Route path="/PANTRI/newrecipe">
-              <NewRecipe />
+              {isEmpty ? <Redirect to="/PANTRI/" /> : <NewRecipe />}
             </Route>
             <Route path="/PANTRI/shoppingList">
-              <ShoppingList />
+              {isEmpty ? <Redirect to="/PANTRI/" /> : <ShoppingList />}
             </Route>
             <Route exact path="/PANTRI/">
               <SignInAndSignUpPage />
             </Route>
           </Switch>
         </div>
+
+        <CookieConsent
+          location="bottom"
+          buttonText="Gimmie dem cookies"
+          overlay
+          style={{ padding: "5px" }}
+        >
+          We use cookies to store you're recipes to save data usage!{" "}
+          <div style={{ fontSize: "10px", margin: "5px 0" }}>
+            Decline at your peril!
+          </div>
+        </CookieConsent>
+        <Footer />
       </Router>
-      <CookieConsent
-        location="bottom"
-        buttonText="Gimmie dem cookies"
-        overlay
-        style={{ padding: "5px" }}
-      >
-        We use cookies to store you're recipes to save data usage!{" "}
-        <div style={{ fontSize: "10px", margin: "5px 0" }}>
-          Decline at your peril!
-        </div>
-      </CookieConsent>
-      <Footer />
     </div>
   );
 }
