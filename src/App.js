@@ -74,11 +74,9 @@ export default function App() {
           buttonText="Gimmie dem cookies"
           overlay
           style={{ padding: "5px" }}
+          debug={true}
         >
-          We use cookies to store you're recipes to save data usage!{" "}
-          <div style={{ fontSize: "10px", margin: "5px 0" }}>
-            Decline at your peril!
-          </div>
+          We use cookies to store you're recipes to save data usage!
         </CookieConsent>
         <Footer />
       </Router>

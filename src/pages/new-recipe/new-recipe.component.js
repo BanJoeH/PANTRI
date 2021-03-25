@@ -52,6 +52,7 @@ function NewRecipe() {
       })
       .filter(Boolean);
     setNewRecipe({ ...newRecipe, ingredients: ingredients });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inputList]);
 
   return (
