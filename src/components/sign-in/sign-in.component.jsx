@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { auth } from "../../firebase/firebase.utils";
 
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { useFirebase } from "react-redux-firebase";
 
 import CustomInput from "../custom-input/custom-input.component";
@@ -30,8 +30,7 @@ const SignIn = () => {
 
     auth
       .signInWithEmailAndPassword(email, password)
-      .then((userCredential) => {
-        console.log(userCredential);
+      .then(() => {
         setUserCredentials({ email: "", password: "", error: false });
       })
       .catch((error) => {
@@ -39,7 +38,7 @@ const SignIn = () => {
         setUserCredentials({
           ...userCredentials,
           error: true,
-          errorMessage: error.message,
+          errorMessage: "Email or Password incorrect",
         });
       });
   };
@@ -50,7 +49,8 @@ const SignIn = () => {
     setUserCredentials({ ...userCredentials, [name]: value });
   };
 
-  const signInWithGoogle = () => {
+  const signInWithGoogle = (event) => {
+    event.preventDefault();
     firebase
       .login({
         provider: "google",
@@ -98,6 +98,14 @@ const SignIn = () => {
           </CustomButton>
         </div>
       </form>
+      <Link
+        type="button"
+        onClick={() => {
+          history.push("/PANTRI/forgotPassword");
+        }}
+      >
+        Forgot Password?
+      </Link>
     </div>
   );
 };

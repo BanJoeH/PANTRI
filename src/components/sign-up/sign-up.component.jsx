@@ -76,10 +76,10 @@ const SignUp = () => {
   };
 
   return (
-    <div className="sign-up">
+    <div className="sign-in">
       <h2 className="title">I do not have a account</h2>
       <span>Sign up with your email and password</span>
-      <form className="sign-up-form" onSubmit={handleSubmit}>
+      <form className="sign-in-form" onSubmit={handleSubmit}>
         <CustomInput
           type="text"
           name="displayName"

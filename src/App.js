@@ -20,6 +20,7 @@ import SignInAndSignUpPage from "./pages/sign-in-and-sign-up/sign-in-and-sign-up
 import Footer from "./components/footer/footer.jsx";
 
 import "./App.scss";
+import ForgotPassword from "./pages/forgot-password/forgot-password.component";
 
 export default function App() {
   const { isEmpty } = useSelector((state) => state.firebase.auth);
@@ -61,6 +62,9 @@ export default function App() {
             </Route>
             <Route exact path="/PANTRI/">
               <SignInAndSignUpPage />
+            </Route>
+            <Route path="/PANTRI/forgotpassword">
+              <ForgotPassword />
             </Route>
           </Switch>
         </div>

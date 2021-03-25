@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Card from "../card/card.component";
 import CustomButton from "../custom-button/custom-button.component";
 
