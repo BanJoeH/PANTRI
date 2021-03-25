@@ -72,9 +72,7 @@ export default function App() {
         <CookieConsent
           location="bottom"
           buttonText="Gimmie dem cookies"
-          overlay
           style={{ padding: "5px" }}
-          debug={true}
         >
           We use cookies to store you're recipes to save data usage!
         </CookieConsent>
