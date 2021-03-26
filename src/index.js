@@ -7,7 +7,7 @@ import store from "./App/store";
 import { Provider } from "react-redux";
 import { ReactReduxFirebaseProvider } from "react-redux-firebase";
 import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter as Router } from "react-router-dom";
 import { rrfProps } from "./firebase/firebase.utils";
 import MenuProvider from "react-flexible-sliding-menu";
 import SlideMenu from "./components/slide-menu/slide-menu.component";
@@ -16,11 +16,11 @@ ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <ReactReduxFirebaseProvider {...rrfProps}>
-        <BrowserRouter>
+        <Router>
           <MenuProvider MenuComponent={SlideMenu}>
             <App />
           </MenuProvider>
-        </BrowserRouter>
+        </Router>
       </ReactReduxFirebaseProvider>
     </Provider>
   </React.StrictMode>,

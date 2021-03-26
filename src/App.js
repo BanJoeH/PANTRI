@@ -40,37 +40,36 @@ export default function App() {
   return (
     <div className="app fade-in">
       <ReactNotification />
-      <Router>
-        <Header />
-        <div className="body">
-          <Switch>
-            <Route path="/PANTRI/recipes">
-              {isEmpty ? <Redirect to="/PANTRI/" /> : <Recipes />}
-            </Route>
-            <Route path="/PANTRI/newrecipe">
-              {isEmpty ? <Redirect to="/PANTRI/" /> : <NewRecipe />}
-            </Route>
-            <Route path="/PANTRI/shoppingList">
-              {isEmpty ? <Redirect to="/PANTRI/" /> : <ShoppingList />}
-            </Route>
-            <Route exact path="/PANTRI/">
-              <SignInAndSignUpPage />
-            </Route>
-            <Route path="/PANTRI/forgotpassword">
-              <ForgotPassword />
-            </Route>
-          </Switch>
-        </div>
 
-        <CookieConsent
-          location="bottom"
-          buttonText="Gimmie dem cookies"
-          style={{ padding: "5px" }}
-        >
-          We use cookies to store your recipes to save data usage!
-        </CookieConsent>
-        <Footer />
-      </Router>
+      <Header />
+      <div className="body">
+        <Switch>
+          <Route path="/PANTRI/recipes">
+            {isEmpty ? <Redirect to="/PANTRI/" /> : <Recipes />}
+          </Route>
+          <Route path="/PANTRI/newrecipe">
+            {isEmpty ? <Redirect to="/PANTRI/" /> : <NewRecipe />}
+          </Route>
+          <Route path="/PANTRI/shoppingList">
+            {isEmpty ? <Redirect to="/PANTRI/" /> : <ShoppingList />}
+          </Route>
+          <Route exact path="/PANTRI/">
+            <SignInAndSignUpPage />
+          </Route>
+          <Route path="/PANTRI/forgotpassword">
+            <ForgotPassword />
+          </Route>
+        </Switch>
+      </div>
+
+      <CookieConsent
+        location="bottom"
+        buttonText="Gimmie dem cookies"
+        style={{ padding: "5px" }}
+      >
+        We use cookies to store your recipes to save data usage!
+      </CookieConsent>
+      <Footer />
     </div>
   );
 }

@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { auth } from "../../firebase/firebase.utils";
 
@@ -7,23 +7,43 @@ import "./slide-menu.styles.scss";
 
 const SlideMenu = () => {
   const { isEmpty } = useSelector((state) => state.firebase.auth);
-
+  const history = useHistory();
   return (
     <header className="slide-in-menu">
       <nav className="slide-in-nav">
-        <Link className="nav-link" to="/PANTRI/shoppingList">
+        <div
+          className="nav-link"
+          onClick={() => {
+            history.push("/PANTRI/shoppingList");
+          }}
+        >
           Shopping list
-        </Link>
-        <Link className="nav-link" to="/PANTRI/recipes">
+        </div>
+        <div
+          className="nav-link"
+          onClick={() => {
+            history.push("/PANTRI/recipes");
+          }}
+        >
           Recipes
-        </Link>
-        <Link className="nav-link" to="/PANTRI/newrecipe">
+        </div>
+        <div
+          className="nav-link"
+          onClick={() => {
+            history.push("/PANTRI/newrecipe");
+          }}
+        >
           Add a recipe
-        </Link>
+        </div>
         {isEmpty ? (
-          <Link className="nav-link" to="/PANTRI/">
+          <div
+            className="nav-link"
+            onClick={() => {
+              history.push("/PANTRI/");
+            }}
+          >
             Sign In
-          </Link>
+          </div>
         ) : (
           <div className="nav-link" onClick={() => auth.signOut()}>
             Sign Out
