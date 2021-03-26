@@ -45,7 +45,7 @@ const Recipes = () => {
   const recipes = useSelector((state) => state.firestore.ordered.recipes);
   let filteredRecipes = [];
 
-  if (recipes) {
+  if (recipes && recipes.length) {
     filteredRecipes = recipes.filter((recipe) => {
       if (recipe !== null) {
         return recipe.name.toLowerCase().includes(searchField.toLowerCase());
@@ -209,7 +209,7 @@ const Recipes = () => {
 
         <SearchBox searchChange={onSearchChange} searchField={searchField} />
       </div>
-      {filteredRecipes ? (
+      {filteredRecipes && filteredRecipes.length ? (
         <CardList
           recipes={filteredRecipes}
           removeFromRecipes={removeFromRecipes}
@@ -217,9 +217,11 @@ const Recipes = () => {
           editRecipeCardButton={editRecipeCardButton}
         />
       ) : searchField.length ? (
-        <h2 className="title">Recipe not found.</h2>
+        <div className="card">
+          <h2>Recipe not found.</h2>
+        </div>
       ) : (
-        <div className="recipes-empty">
+        <div className="card">
           <h2>No recipes in your recipe list.</h2>
           <h2>Go to Add a recipe to add some!</h2>
         </div>

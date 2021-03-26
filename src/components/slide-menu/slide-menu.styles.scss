@@ -1,0 +1,19 @@
+.slide-in-menu {
+  display: flex;
+  flex-direction: column;
+  background-color: #333333;
+  width: 50vw;
+  height: 100vh;
+
+  .slide-in-nav {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: baseline;
+    text-align: center;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 500;
+    margin: 30px 20px;
+  }
+}

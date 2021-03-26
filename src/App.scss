@@ -11,6 +11,7 @@
     background-color: #333333;
     width: 100%;
     padding: 25px 0;
+    min-height: 80px;
 
     .nav {
       display: flex;
@@ -20,6 +21,10 @@
       letter-spacing: 0.1em;
       text-transform: uppercase;
       font-weight: 500;
+    }
+    .small-screen {
+      width: 100%;
+      align-items: flex-end;
     }
   }
 }

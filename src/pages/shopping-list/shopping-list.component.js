@@ -50,7 +50,7 @@ function ShoppingList() {
         <OddBits uid={uid} />
         <SortShopping recipes={recipes} />
       </div>
-      {recipes ? (
+      {recipes && recipes.length ? (
         <CardList
           recipes={recipes}
           removeFromRecipes={removeRecipeFromShoppingList}
@@ -58,7 +58,7 @@ function ShoppingList() {
           ingredientButton={removeIngredientFromShoppingList}
         />
       ) : (
-        <div className="recipes-empty">
+        <div className="card">
           <h2>No recipes in your shopping list.</h2>
           <h2>Go to Recipes to add some!</h2>
         </div>

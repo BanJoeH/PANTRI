@@ -5,7 +5,6 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  useHistory,
   Redirect,
 } from "react-router-dom";
 import ReactNotification from "react-notifications-component";
@@ -24,6 +23,7 @@ import ForgotPassword from "./pages/forgot-password/forgot-password.component";
 
 export default function App() {
   const { isEmpty } = useSelector((state) => state.firebase.auth);
+
   useEffect(() => {
     const unsubsribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
       if (userAuth) {
@@ -36,13 +36,6 @@ export default function App() {
       unsubsribeFromAuth();
     };
   }, []);
-  const history = useHistory();
-
-  useEffect(() => {
-    if (isEmpty) {
-      history.push(/PANTRI/);
-    }
-  }, [history, isEmpty]);
 
   return (
     <div className="app fade-in">
