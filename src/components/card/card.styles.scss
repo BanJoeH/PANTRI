@@ -10,7 +10,6 @@
   width: 100%;
   max-width: 500px;
   overflow: hidden;
-  text-transform: capitalize;
 
   .card-header {
     display: flex;
@@ -24,6 +23,7 @@
 
     .card-title {
       padding: 0 20px;
+      text-transform: capitalize;
 
       @media screen and (max-width: 450px) {
         padding: 0 0 0 5px;
@@ -62,6 +62,7 @@
     width: 80%;
     align-items: center;
     justify-content: space-between;
+    text-transform: capitalize;
 
     .card-button {
       background-color: white;

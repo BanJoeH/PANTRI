@@ -48,7 +48,7 @@ function ShoppingList() {
       <div className="page-header">
         <h2 className="title">Shopping List</h2>
         <OddBits uid={uid} />
-        <SortShopping recipes={recipes} />
+        {recipes && recipes.length ? <SortShopping recipes={recipes} /> : null}
       </div>
       {recipes && recipes.length ? (
         <CardList
