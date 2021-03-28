@@ -18,7 +18,7 @@ const SortShopping = ({ recipes }) => {
   const removeIngredient = (event) => {
     event.preventDefault();
     // eslint-disable-next-line no-unused-vars
-    const [id, ingredientToRemove, index] = event.target.name.split("&");
+    const [id, ingredientToRemove] = event.target.name.split("&");
 
     let temp = sortShoppingRecipe.ingredients.filter(
       (ingredient) => ingredient !== ingredientToRemove

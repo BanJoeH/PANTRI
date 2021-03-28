@@ -1,20 +1,19 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { useSelector } from "react-redux";
 import { auth } from "../../firebase/firebase.utils";
 import { MenuContext } from "react-flexible-sliding-menu";
 import { useWindowSize } from "../../App/app.utils";
 import { Link } from "react-router-dom";
+import BurgerMenuContext from "../../App/context";
 import "./header.styles.scss";
 
 const Header = () => {
   const { isEmpty } = useSelector((state) => state.firebase.auth);
-  const { toggleMenu } = useContext(MenuContext);
   const size = useWindowSize();
-  const [toggleBurger, setToggleBurger] = useState(false);
+  const { toggleMenu } = useContext(MenuContext);
+  const burgerMenu = useContext(BurgerMenuContext);
 
-  const toggleBurgerMenu = () => {
-    setToggleBurger(!toggleBurger);
-  };
+  console.log(toggleMenu);
 
   return (
     <header className="app-header">
@@ -42,15 +41,15 @@ const Header = () => {
       ) : (
         <div className="small-screen">
           <div
-            class="burger-container"
+            className="burger-container"
             onClick={() => {
-              toggleBurgerMenu();
+              burgerMenu.toggleBurgerMenu();
               toggleMenu();
             }}
           >
-            <div class={toggleBurger ? "bar1 change" : "bar1"}></div>
-            <div class={toggleBurger ? "bar2 change" : "bar2"}></div>
-            <div class={toggleBurger ? "bar3 change" : "bar3"}></div>
+            <div className={burgerMenu.showMenu ? "bar1 change" : "bar1"}></div>
+            <div className={burgerMenu.showMenu ? "bar2 change" : "bar2"}></div>
+            <div className={burgerMenu.showMenu ? "bar3 change" : "bar3"}></div>
           </div>
         </div>
       )}

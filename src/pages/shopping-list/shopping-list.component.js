@@ -36,7 +36,7 @@ function ShoppingList() {
 
   const removeIngredientFromShoppingList = (event) => {
     event.preventDefault();
-    const [id, ingredient, index] = event.target.name.split("&");
+    const [id, ingredient] = event.target.name.split("&");
 
     shoppingListCollectionRef.doc(id).update({
       ingredients: firestore.FieldValue.arrayRemove(ingredient),

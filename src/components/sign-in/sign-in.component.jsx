@@ -98,12 +98,7 @@ const SignIn = () => {
           </CustomButton>
         </div>
       </form>
-      <Link
-        type="button"
-        onClick={() => {
-          history.push("/PANTRI/forgotPassword");
-        }}
-      >
+      <Link type="button" to="/PANTRI/forgotPassword">
         Forgot Password?
       </Link>
     </div>
