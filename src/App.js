@@ -44,7 +44,7 @@ export default function App() {
 
   return (
     <BurgerMenuContext.Provider value={{ showMenu, toggleBurgerMenu }}>
-      <MenuProvider MenuComponent={SlideMenu} width={"200px"}>
+      <MenuProvider MenuComponent={SlideMenu} width={"80vw"}>
         <div className="app fade-in">
           <ReactNotification />
           <Header />
