@@ -7,14 +7,16 @@ import "./footer.styles.scss";
 const Footer = () => {
   return (
     <div className="footer">
-      <ul className="social-section large-screen">
+      <ul className="social-section">
         <li className="social github">
           <a href="https://github.com/BanJoeH/">
             <img src={github} alt="gitHub link" />
           </a>
         </li>
         <li className="nav-link">
-          <a href="https://joescript.io">Made by Joe</a>
+          <a href="https://joescript.io" className="social">
+            Made by Joe
+          </a>
         </li>
         <li className="social">
           <a href="https://www.linkedin.com/in/joescript/">
