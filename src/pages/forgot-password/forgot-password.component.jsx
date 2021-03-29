@@ -43,7 +43,7 @@ const ForgotPassword = () => {
     }
   }, [errorMessage, history]);
   return (
-    <div className="page">
+    <div className="page fade-in">
       <div className="sign-in">
         <h2>Forgotten Password</h2>
         <CustomInput

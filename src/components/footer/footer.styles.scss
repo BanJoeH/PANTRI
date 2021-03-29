@@ -8,4 +8,36 @@
   color: white;
   text-align: center;
   margin-top: 30px;
+
+  .social-section {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    list-style-type: none;
+
+    text-align: center;
+    width: 30%;
+
+    .social {
+      margin: 5px;
+      width: 30px;
+    }
+    .social.github {
+      border-radius: 100px;
+    }
+  }
+
+  .social > a > img {
+    border-radius: 9px;
+    transition: all, 0.5s;
+    border-radius: 5px;
+    border: none;
+    object-fit: cover;
+    width: 100%;
+
+    &:hover {
+      background-color: white;
+      transform: scale(1.2);
+    }
+  }
 }

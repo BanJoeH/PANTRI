@@ -18,6 +18,7 @@ import Footer from "./components/footer/footer.jsx";
 import ForgotPassword from "./pages/forgot-password/forgot-password.component";
 
 import "./App.scss";
+import ContactPage from "./pages/contact/contact.component";
 
 export default function App() {
   const [showMenu, setShowMenu] = useState(false);
@@ -43,7 +44,7 @@ export default function App() {
 
   return (
     <BurgerMenuContext.Provider value={{ showMenu, toggleBurgerMenu }}>
-      <MenuProvider MenuComponent={SlideMenu}>
+      <MenuProvider MenuComponent={SlideMenu} width={"200px"}>
         <div className="app fade-in">
           <ReactNotification />
           <Header />
@@ -63,6 +64,9 @@ export default function App() {
               </Route>
               <Route path="/PANTRI/forgotpassword">
                 <ForgotPassword />
+              </Route>
+              <Route path="/PANTRI/contact">
+                <ContactPage />
               </Route>
             </Switch>
           </div>

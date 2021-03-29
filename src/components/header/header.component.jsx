@@ -6,6 +6,7 @@ import { useWindowSize } from "../../App/app.utils";
 import { Link } from "react-router-dom";
 import BurgerMenuContext from "../../App/context";
 import "./header.styles.scss";
+import logo from "../../assets/P Pantri white.png";
 
 const Header = () => {
   const { isEmpty } = useSelector((state) => state.firebase.auth);
@@ -13,33 +14,39 @@ const Header = () => {
   const { toggleMenu } = useContext(MenuContext);
   const burgerMenu = useContext(BurgerMenuContext);
 
-  console.log(toggleMenu);
-
   return (
     <header className="app-header">
       {size.width > 575 ? (
         <nav className="nav">
-          <Link className="nav-link" to="/PANTRI/shoppingList">
-            Shopping list
-          </Link>
-          <Link className="nav-link" to="/PANTRI/recipes">
-            Recipes
-          </Link>
-          <Link className="nav-link" to="/PANTRI/newrecipe">
-            Add a recipe
-          </Link>
-          {isEmpty ? (
-            <Link className="nav-link" to="/PANTRI/">
-              Sign In
+          <img src={logo} alt="logo" className="logo" />
+
+          <div className="nav-group">
+            <Link className="nav-link" to="/PANTRI/shoppingList">
+              Shopping list
             </Link>
-          ) : (
-            <div className="nav-link" onClick={() => auth.signOut()}>
-              Sign Out
-            </div>
-          )}
+            <Link className="nav-link" to="/PANTRI/recipes">
+              Recipes
+            </Link>
+            <Link className="nav-link" to="/PANTRI/newrecipe">
+              Add a recipe
+            </Link>
+            <Link className="nav-link" to="/PANTRI/contact">
+              Contact
+            </Link>
+            {isEmpty ? (
+              <Link className="nav-link" to="/PANTRI/">
+                Sign In
+              </Link>
+            ) : (
+              <div className="nav-link" onClick={() => auth.signOut()}>
+                Sign Out
+              </div>
+            )}
+          </div>
         </nav>
       ) : (
         <div className="small-screen">
+          <img src={logo} alt="logo" className="logo" />
           <div
             className="burger-container"
             onClick={() => {
