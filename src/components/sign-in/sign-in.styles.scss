@@ -1,6 +1,8 @@
+@import "../../_globals.scss";
+
 .sign-in {
   align-items: center;
-  background-color: white;
+  background-color: $secondary-color;
   display: flex;
   flex-direction: column;
   justify-content: center;

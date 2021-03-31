@@ -1,3 +1,5 @@
+@import "../../_globals.scss";
+
 $sub-color: grey;
 $main-color: black;
 
@@ -18,7 +20,7 @@ $main-color: black;
 
   .form-input {
     background: none;
-    background-color: white;
+    background-color: $secondary-color;
     color: $main-color;
     font-size: 18px;
     line-height: 1;

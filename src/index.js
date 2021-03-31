@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import "./index.css";
+import "./index.scss";
 import "react-notifications-component/dist/theme.css";
 import App from "./App";
 import store from "./App/store";

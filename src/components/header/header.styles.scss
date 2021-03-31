@@ -1,3 +1,5 @@
+@import "../../_globals.scss";
+
 .burger-container {
   display: inline-block;
   cursor: pointer;
@@ -10,7 +12,7 @@
   .bar3 {
     width: 34px;
     height: 4px;
-    background-color: white;
+    background-color: $secondary-color;
     margin: 7px 0;
     transition: 0.4s;
   }
