@@ -1,13 +1,13 @@
 @import "../../_globals.scss";
 
 .footer {
-  background-color: $main-color;
+  background-color: $dark-0;
   height: 80px;
   display: flex;
   justify-content: space-evenly;
   align-items: center;
   width: 100%;
-  color: $secondary-color;
+  color: $dark-primary-text;
   text-align: center;
   margin-top: 30px;
 
@@ -32,7 +32,7 @@
     width: 100%;
 
     &:hover {
-      background-color: $secondary-color;
+      background-color: $dark-secondary-text;
       transform: scale(1.2);
     }
   }

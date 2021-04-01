@@ -2,15 +2,23 @@
 
 .sign-in {
   align-items: center;
-  background-color: $secondary-color;
+  background-color: $dark-0;
+  color: $dark-secondary-text;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  text-align: center;
   margin: 20px;
   width: 40%;
 
   @media screen and (max-width: 750px) {
     width: 90%;
+  }
+  h2 {
+    color: $dark-primary-text;
+    font-weight: 600;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
   }
 
   .sign-in-form {

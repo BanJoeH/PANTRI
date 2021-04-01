@@ -1,6 +1,7 @@
 import React from "react";
 import IngredientList from "../ingredient-list/ingredient-list.component";
 import "./card.styles.scss";
+import CustomButton from "../custom-button/custom-button.component";
 
 function Card({
   recipe,
@@ -54,11 +55,11 @@ function Card({
             ingredientButton={ingredientButton}
           />
 
-          <button className="card-button" onClick={button} value={recipe.id}>
+          <CustomButton onClick={button} value={recipe.id}>
             {pathname === "/PANTRI/shoppingList"
               ? "Done"
               : "Add to Shopping List"}
-          </button>
+          </CustomButton>
         </div>
       ) : null}
     </article>

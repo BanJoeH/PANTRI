@@ -6,8 +6,6 @@ import { useHistory } from "react-router-dom";
 import CustomButton from "../custom-button/custom-button.component";
 import CustomInput from "../custom-input/custom-input.component";
 
-import "./sign-up.styles.scss";
-
 const SignUp = () => {
   const [userCredentials, setUserCredentials] = useState({
     displayName: "",

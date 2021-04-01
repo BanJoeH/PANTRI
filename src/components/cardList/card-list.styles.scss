@@ -1,18 +1,18 @@
 @import "../../_globals.scss";
 
 .card-list {
-  width: 100%;
+  width: 95%;
 
   .masonry-grid {
     display: flex;
-    margin-left: -20px;
+    margin-left: -10px;
     width: 100%;
 
     .masonry-grid_column {
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding-left: 30px; /* gutter size */
+      padding-left: 20px; /* gutter size */
       background-clip: padding-box;
     }
   }

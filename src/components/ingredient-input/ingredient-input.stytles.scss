@@ -1,3 +1,5 @@
+@import "../../_globals.scss";
+
 .ingredient-input-group {
   display: flex;
   flex-direction: row;
@@ -15,7 +17,7 @@
       background-color: transparent;
       border-radius: 0.5rem;
       border: none;
-      color: rgb(87, 87, 87);
+      color: $dark-secondary-text;
       cursor: pointer;
       display: flex;
       flex-direction: row;
@@ -27,12 +29,12 @@
       margin: 0 2px;
 
       &:hover {
-        background-color: rgb(245, 245, 245);
+        background-color: $dark-1;
       }
     }
     .add {
       position: relative;
-
+      color: $dark-secondary-text;
       border: none;
       transform: rotate(45deg);
       font-size: 18px;

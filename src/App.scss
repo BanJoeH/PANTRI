@@ -1,7 +1,8 @@
 @import "./_globals.scss";
 
 .app {
-  background-image: url(/assets/food-doodle-2.png);
+  background-image: url(/assets/background-dark.png);
+  background-color: $dark-0;
   background-repeat: repeat;
   background-size: 30vmin;
   display: flex;
@@ -10,7 +11,7 @@
   min-height: 100vh;
 
   .app-header {
-    background-color: $main-color;
+    background-color: $dark-0;
     min-height: 80px;
     padding: 10px 0;
     width: 100%;
@@ -47,7 +48,7 @@
   }
 }
 .nav-link {
-  color: $secondary-color;
+  color: $dark-primary-text;
   font-weight: 600;
   letter-spacing: 0.1em;
   margin: 0 10px;
@@ -65,7 +66,7 @@
   }
 }
 a {
-  color: $secondary-color;
+  color: $dark-primary-text;
   text-decoration: none;
   transition: all 0.5s;
   &:hover {
@@ -115,7 +116,7 @@ a {
   }
   .recipes-empty {
     align-items: center;
-    background-color: $secondary-color;
+    background-color: $dark-0;
     border-radius: 4px;
     box-shadow: 4px 4px 8px 0px rgba(0, 0, 0, 0.2);
     display: flex;
@@ -124,14 +125,31 @@ a {
   }
   .title {
     align-items: center;
-    background-color: $secondary-color;
+    background-color: $dark-0;
+    color: $dark-primary-text;
     border-radius: 4px;
     box-shadow: 4px 4px 8px 0px rgba(0, 0, 0, 0.2);
     display: flex;
     font-weight: 600;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
     justify-content: center;
     padding: 15px 0;
     text-align: center;
     width: 100%;
   }
+}
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  border: none;
+  -webkit-text-fill-color: $dark-primary-text;
+  -webkit-box-shadow: 0 0 0px 1000px $dark-0 inset;
+  transition: background-color 5000s ease-in-out 0s;
 }

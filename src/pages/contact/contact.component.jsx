@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import emailjs from "emailjs-com";
+import { useHistory } from "react-router";
 
 import { notification } from "../../App/app.utils";
 
-import "./contact.styles.scss";
 import CustomInput from "../../components/custom-input/custom-input.component";
 import CustomButton from "../../components/custom-button/custom-button.component";
-import { useHistory } from "react-router";
 
 const ContactPage = () => {
   const history = useHistory();
