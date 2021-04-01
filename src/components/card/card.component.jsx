@@ -56,7 +56,7 @@ function Card({
         </div>
       </div>
       {showBody ? (
-        <div className="card-body">
+        <div className="card-body fade-in">
           {recipe.ingredients.length ? (
             <IngredientList
               recipeId={recipe.id}

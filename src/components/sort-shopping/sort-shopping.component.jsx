@@ -11,7 +11,7 @@ const SortShopping = ({ recipes }) => {
     ingredients: [],
   });
 
-  const reverseShowSort = () => {
+  const togleShowSort = () => {
     setShowSort(!showSort);
   };
 
@@ -50,7 +50,7 @@ const SortShopping = ({ recipes }) => {
         };
       });
     }
-    reverseShowSort();
+    togleShowSort();
   };
 
   return (
@@ -58,14 +58,16 @@ const SortShopping = ({ recipes }) => {
       {showSort ? (
         <Card
           recipe={sortShoppingRecipe}
-          removeFromRecipes={reverseShowSort}
-          button={reverseShowSort}
+          removeFromRecipes={togleShowSort}
+          button={togleShowSort}
           ingredientButton={removeIngredient}
         />
       ) : (
-        <CustomButton value="Sort shopping" onClick={sortShopping}>
-          Sort Shopping
-        </CustomButton>
+        <div style={{ margin: "0 5%" }}>
+          <CustomButton value="Sort shopping" onClick={sortShopping}>
+            Sort Shopping
+          </CustomButton>
+        </div>
       )}
     </>
   );

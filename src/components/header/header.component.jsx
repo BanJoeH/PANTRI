@@ -18,7 +18,7 @@ const Header = () => {
     <header className="app-header">
       {size.width > 575 ? (
         <nav className="nav">
-          <img src={logo} alt="logo" className="logo" />
+          <img src={logo} alt="logo" className="logo" width="250" height="80" />
 
           <div className="nav-group">
             <Link className="nav-link" to="/PANTRI/shoppingList">
@@ -46,7 +46,7 @@ const Header = () => {
         </nav>
       ) : (
         <div className="small-screen">
-          <img src={logo} alt="logo" className="logo" />
+          <img src={logo} alt="logo" className="logo" width="250" height="80" />
           <div
             className="burger-container"
             onClick={() => {

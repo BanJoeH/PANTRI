@@ -10,7 +10,7 @@ const Footer = () => {
       <ul className="social-section">
         <li className="social github">
           <a href="https://github.com/BanJoeH/">
-            <img src={github} alt="gitHub link" />
+            <img src={github} alt="gitHub link" width="30" height="30" />
           </a>
         </li>
         <li className="nav-link">
@@ -20,7 +20,7 @@ const Footer = () => {
         </li>
         <li className="social">
           <a href="https://www.linkedin.com/in/joescript/">
-            <img src={linkedin} alt="LinkedIn link" />
+            <img src={linkedin} alt="LinkedIn link" width="30" height="30" />
           </a>
         </li>
       </ul>

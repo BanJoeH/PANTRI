@@ -24,7 +24,7 @@ const SlideMenu = () => {
     >
       <nav className="slide-in-nav">
         <div className="slide-in-nav-group">
-          <img src={logo} alt="logo" className="logo" />
+          <img src={logo} alt="logo" className="logo" width="250" height="80" />
         </div>
         <div className="slide-in-nav-group">
           <div

@@ -27,13 +27,19 @@
 
     .card-title {
       margin: 0;
-      font-weight: 600;
+      border-radius: 0.5rem;
+      font-weight: 500;
       letter-spacing: 0.07em;
       text-transform: uppercase;
       cursor: pointer;
+      transition: all 0.5s;
 
       @media screen and (max-width: 450px) {
         font-size: 20px;
+      }
+      &:hover {
+        background-color: $dark-1;
+        transform: scale(1.1);
       }
     }
 
@@ -47,7 +53,7 @@
       background-color: transparent;
       transition: all 0.5s;
 
-      padding: 0 8px;
+      padding: 0 7px;
 
       &:hover {
         background-color: $dark-1;
