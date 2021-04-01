@@ -61,7 +61,7 @@ function NewRecipe() {
         <h2 className="title">New Recipe</h2>
 
         <div className="card">
-          <h3>Add a new recipe here</h3>
+          <h3 className="new-recipe-title">Add a new recipe here</h3>
           <CustomInput
             name="name"
             label="Recipe Name"
