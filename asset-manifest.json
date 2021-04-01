@@ -1,8 +1,8 @@
 {
   "files": {
-    "main.css": "/PANTRI/static/css/main.0265dccf.chunk.css",
-    "main.js": "/PANTRI/static/js/main.34b09f96.chunk.js",
-    "main.js.map": "/PANTRI/static/js/main.34b09f96.chunk.js.map",
+    "main.css": "/PANTRI/static/css/main.2a9fca04.chunk.css",
+    "main.js": "/PANTRI/static/js/main.7a9467ba.chunk.js",
+    "main.js.map": "/PANTRI/static/js/main.7a9467ba.chunk.js.map",
     "runtime-main.js": "/PANTRI/static/js/runtime-main.26b1252e.js",
     "runtime-main.js.map": "/PANTRI/static/js/runtime-main.26b1252e.js.map",
     "static/css/2.c49baa93.chunk.css": "/PANTRI/static/css/2.c49baa93.chunk.css",
@@ -12,7 +12,7 @@
     "service-worker.js": "/PANTRI/service-worker.js",
     "service-worker.js.map": "/PANTRI/service-worker.js.map",
     "static/css/2.c49baa93.chunk.css.map": "/PANTRI/static/css/2.c49baa93.chunk.css.map",
-    "static/css/main.0265dccf.chunk.css.map": "/PANTRI/static/css/main.0265dccf.chunk.css.map",
+    "static/css/main.2a9fca04.chunk.css.map": "/PANTRI/static/css/main.2a9fca04.chunk.css.map",
     "static/js/2.5ea5d54a.chunk.js.LICENSE.txt": "/PANTRI/static/js/2.5ea5d54a.chunk.js.LICENSE.txt",
     "static/media/P Pantri white.4f814cd3.png": "/PANTRI/static/media/P Pantri white.4f814cd3.png",
     "static/media/App.scss": "/PANTRI/static/media/background-dark.654cf2d9.png",
@@ -22,7 +22,7 @@
     "static/js/runtime-main.26b1252e.js",
     "static/css/2.c49baa93.chunk.css",
     "static/js/2.5ea5d54a.chunk.js",
-    "static/css/main.0265dccf.chunk.css",
-    "static/js/main.34b09f96.chunk.js"
+    "static/css/main.2a9fca04.chunk.css",
+    "static/js/main.7a9467ba.chunk.js"
   ]
 }
