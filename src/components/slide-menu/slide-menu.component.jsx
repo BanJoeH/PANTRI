@@ -43,14 +43,6 @@ const SlideMenu = () => {
           >
             Recipes
           </div>
-          <div
-            className="nav-link"
-            onClick={() => {
-              history.push("/PANTRI/newrecipe");
-            }}
-          >
-            Add a recipe
-          </div>
         </div>
         <div className="slide-in-nav-group">
           {isEmpty ? (

@@ -19,6 +19,8 @@ function NewRecipe() {
     link: "",
     ingredients: [],
   });
+  const [error, setError] = useState(false);
+  const [showNewRecipeCard, setShowNewRecipeCard] = useState(false);
 
   const firestore = useFirestore();
   const { uid } = useSelector((state) => state.firebase.auth);
@@ -30,19 +32,25 @@ function NewRecipe() {
 
   const addNewRecipe = (event) => {
     event.preventDefault();
-    firestore
-      .collection("users")
-      .doc(uid)
-      .collection("recipes")
-      .add(newRecipe)
-      .then((docRef) => {
-        docRef.update({
-          id: docRef.id,
+    if (!newRecipe.name) {
+      setError(true);
+    } else {
+      firestore
+        .collection("users")
+        .doc(uid)
+        .collection("recipes")
+        .add(newRecipe)
+        .then((docRef) => {
+          docRef.update({
+            id: docRef.id,
+          });
         });
-      });
-    notification(newRecipe.name, "Added to Recipes", "success");
-    setNewRecipe({ id: ID(), name: "", link: "", ingredients: [] });
-    setInputList([{ ingredient: "", ingredientRef: null }]);
+      notification(newRecipe.name, "Added to Recipes", "success");
+      setNewRecipe({ id: ID(), name: "", link: "", ingredients: [] });
+      setInputList([{ ingredient: "", ingredientRef: null }]);
+      setError(false);
+      setShowNewRecipeCard(!showNewRecipeCard);
+    }
   };
 
   useEffect(() => {
@@ -56,18 +64,27 @@ function NewRecipe() {
   }, [inputList]);
 
   return (
-    <div className="page fade-in">
-      <div className="page-header">
-        <h2 className="title">New Recipe</h2>
-
+    <>
+      {!showNewRecipeCard ? (
+        <CustomButton
+          value="newRecipe"
+          onClick={() => {
+            setShowNewRecipeCard(!showNewRecipeCard);
+          }}
+        >
+          Add a Recipe
+        </CustomButton>
+      ) : (
         <div className="card">
-          <h3 className="new-recipe-title">Add a new recipe here</h3>
+          <h3 className="new-recipe-title">Add a new recipe</h3>
           <CustomInput
             name="name"
             label="Recipe Name"
             handleChange={handleChange}
             value={newRecipe.name}
+            required
           />
+          {error ? <div className="error">Recipe name Required</div> : null}
           <CustomInput
             name="link"
             label="Link"
@@ -79,15 +96,23 @@ function NewRecipe() {
             setInputList={setInputList}
             label="Ingredient"
           />
-
-          <CustomButton value="AddRecipe" onClick={addNewRecipe}>
-            Add Recipe
-          </CustomButton>
+          <div className="new-recipe-button-group">
+            <CustomButton value="AddRecipe" onClick={addNewRecipe}>
+              Add Recipe
+            </CustomButton>
+            <CustomButton
+              value="Cancel"
+              onClick={() => {
+                setShowNewRecipeCard(false);
+                setError(false);
+              }}
+            >
+              Cancel
+            </CustomButton>
+          </div>
         </div>
-
-        <div className="center ph1 tc w-50-ns w-90"></div>
-      </div>
-    </div>
+      )}
+    </>
   );
 }
 

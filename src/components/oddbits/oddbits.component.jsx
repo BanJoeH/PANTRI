@@ -12,7 +12,7 @@ const OddBits = ({ uid }) => {
   ]);
 
   useEffect(() => {
-    if (oddBits && oddBits.length) {
+    if (oddBits?.length) {
       setInputList(
         oddBits.map((item) => ({
           ingredient: item,

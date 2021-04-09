@@ -27,9 +27,6 @@ const Header = () => {
             <Link className="nav-link" to="/PANTRI/recipes">
               Recipes
             </Link>
-            <Link className="nav-link" to="/PANTRI/newrecipe">
-              Add a recipe
-            </Link>
             <Link className="nav-link" to="/PANTRI/contact">
               Contact
             </Link>

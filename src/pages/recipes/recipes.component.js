@@ -1,13 +1,12 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useSelector } from "react-redux";
 import { useFirestoreConnect, useFirestore } from "react-redux-firebase";
 import { notification } from "../../App/app.utils";
 
 import CardList from "../../components/cardList/card-list.component";
 import SearchBox from "../../components/search-box/searchbox.component.js";
-import CustomButton from "../../components/custom-button/custom-button.component.jsx";
-import IngredientInput from "../../components/ingredient-input/ingredient-input.component.js";
-import CustomInput from "../../components/custom-input/custom-input.component";
+import NewRecipe from "../new-recipe/new-recipe.component";
+import EditRecipe from "../../components/edit-recipe/edit-recipe.component";
 
 const Recipes = () => {
   const [editingRecipe, setEditingRecipe] = useState({
@@ -16,20 +15,12 @@ const Recipes = () => {
     link: "",
     ingredients: [],
   });
-  const [inputList, setInputList] = useState([
-    {
-      ingredient: "",
-      ingredientRef: null,
-    },
-  ]);
   const [searchField, setSearchField] = useState("");
-
   const { uid } = useSelector((state) => state.firebase.auth);
   useFirestoreConnect({
     collection: `users/${uid}/recipes`,
     storeAs: "recipes",
   });
-
   const firestore = useFirestore();
 
   const shoppingListCollectionRef = firestore
@@ -45,9 +36,9 @@ const Recipes = () => {
   const recipes = useSelector((state) => state.firestore.ordered.recipes);
   let filteredRecipes = [];
 
-  if (recipes && recipes.length) {
+  if (recipes?.length) {
     filteredRecipes = recipes.filter((recipe) => {
-      if (recipe !== null) {
+      if (recipe?.name) {
         return recipe.name.toLowerCase().includes(searchField.toLowerCase());
       }
     });
@@ -57,17 +48,10 @@ const Recipes = () => {
     setSearchField(event.target.value);
   };
 
-  const inputEditChangeHandler = (event) => {
-    setEditingRecipe((prevState) => ({
-      ...prevState,
-      [event.target.name]: event.target.value,
-    }));
-  };
-
   const addToShoppingList = (event) => {
     event.preventDefault();
     let { value } = event.target;
-    recipes.find((recipe) => {
+    recipes.forEach((recipe) => {
       if (recipe.id !== null && recipe.id === value) {
         shoppingListCollectionRef.add(recipe).then((docRef) => {
           docRef.update({
@@ -107,109 +91,38 @@ const Recipes = () => {
     setEditingRecipe(recipeToEdit);
   };
 
-  const editRecipeDone = (event) => {
+  const updateRecipe = (event) => {
     event.preventDefault();
-
     recipesCollectionRef
       .doc(editingRecipe.id)
-      .delete()
-      .then(() => {
-        recipesCollectionRef
-          .add(editingRecipe)
-          .then((docRef) => {
-            docRef.update({
-              id: docRef.id,
-            });
-          })
-          .catch((error) => {
-            console.log("error adding replacing with new recipe", error);
-          });
-      })
-      .catch((error) => {
-        console.log("error removing old recipe", error);
-      });
-    notification(editingRecipe.name, "edited", "info");
-    setEditingRecipe({
-      id: "",
-      name: "",
-      link: "",
-      ingredients: [],
-    });
-    setInputList([
-      {
-        ingredient: "",
-        ingredientRef: null,
-      },
-    ]);
-  };
-
-  useEffect(() => {
-    setEditingRecipe((prevState) => ({
-      ...prevState,
-      ingredients: inputList
-        .map((item) => {
-          return item.ingredient;
+      .update(editingRecipe)
+      .then(notification(editingRecipe.name, "edited", "info"))
+      .then(
+        setEditingRecipe({
+          id: "",
+          name: "",
+          link: "",
+          ingredients: [],
         })
-        .filter(Boolean),
-    }));
-  }, [inputList]);
-
-  useEffect(() => {
-    let newState = [];
-    if (editingRecipe.id) {
-      newState = editingRecipe.ingredients.map((ingredient) => {
-        return { ingredient: ingredient, ingredientRef: null };
+      )
+      .catch((error) => {
+        console.log("error updating recipe", error);
       });
-    } else {
-      return (newState = [
-        {
-          ingredient: "",
-          ingredientRef: null,
-        },
-      ]);
-    }
-    setInputList(newState);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [editingRecipe.ingredients.length]);
+  };
 
   return (
     <div className="page fade-in">
       <div className="page-header">
         <h2 className="title">Recipe List</h2>
-        {editingRecipe.id === "" ? null : (
-          <article className="card">
-            <h2>Edit Recipe</h2>
-
-            <div className="card-body">
-              <CustomInput
-                name="name"
-                label="Recipe Name"
-                handleChange={inputEditChangeHandler}
-                value={editingRecipe.name}
-                autoComplete="off"
-              />
-              <CustomInput
-                name="link"
-                label="Link"
-                handleChange={inputEditChangeHandler}
-                value={editingRecipe.link}
-                autoComplete="off"
-              />
-              <IngredientInput
-                inputList={inputList}
-                setInputList={setInputList}
-              />
-            </div>
-
-            <CustomButton value="editRecipe" onClick={editRecipeDone}>
-              Done
-            </CustomButton>
-          </article>
-        )}
-
+        <EditRecipe
+          editingRecipe={editingRecipe}
+          setEditingRecipe={setEditingRecipe}
+          updateRecipe={updateRecipe}
+        />
+        <NewRecipe />
         <SearchBox searchChange={onSearchChange} searchField={searchField} />
       </div>
-      {filteredRecipes && filteredRecipes.length ? (
+      {filteredRecipes?.length ? (
         <CardList
           recipes={filteredRecipes}
           removeFromRecipes={removeFromRecipes}
