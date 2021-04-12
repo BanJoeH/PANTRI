@@ -6,9 +6,9 @@ import CustomButton from "../../components/custom-button/custom-button.component
 import IngredientInput from "../../components/ingredient-input/ingredient-input.component.js";
 import CustomInput from "../../components/custom-input/custom-input.component";
 
-const ID = () => {
-  return Math.random().toString(36).substr(2, 9);
-};
+// const ID = () => {
+//   return Math.random().toString(36).substr(2, 9);
+// };
 
 function NewRecipe() {
   const [inputList, setInputList] = useState([
@@ -46,7 +46,7 @@ function NewRecipe() {
           });
         });
       notification(newRecipe.name, "Added to Recipes", "success");
-      setNewRecipe({ id: ID(), name: "", link: "", ingredients: [] });
+      setNewRecipe({ name: "", link: "", ingredients: [] });
       setInputList([{ ingredient: "", ingredientRef: null }]);
       setError(false);
       setShowNewRecipeCard(!showNewRecipeCard);
@@ -63,56 +63,52 @@ function NewRecipe() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inputList]);
 
-  return (
-    <>
-      {!showNewRecipeCard ? (
+  return !showNewRecipeCard ? (
+    <CustomButton
+      value="newRecipe"
+      onClick={() => {
+        setShowNewRecipeCard(!showNewRecipeCard);
+      }}
+    >
+      Add a Recipe
+    </CustomButton>
+  ) : (
+    <div className="card">
+      <h3 className="new-recipe-title">Add a new recipe</h3>
+      <CustomInput
+        name="name"
+        label="Recipe Name"
+        handleChange={handleChange}
+        value={newRecipe.name}
+        required
+      />
+      {error ? <div className="error">Recipe name Required</div> : null}
+      <CustomInput
+        name="link"
+        label="Link"
+        handleChange={handleChange}
+        value={newRecipe.link}
+      />
+      <IngredientInput
+        inputList={inputList}
+        setInputList={setInputList}
+        label="Ingredient"
+      />
+      <div className="new-recipe-button-group">
+        <CustomButton value="AddRecipe" onClick={addNewRecipe}>
+          Add Recipe
+        </CustomButton>
         <CustomButton
-          value="newRecipe"
+          value="Cancel"
           onClick={() => {
-            setShowNewRecipeCard(!showNewRecipeCard);
+            setShowNewRecipeCard(false);
+            setError(false);
           }}
         >
-          Add a Recipe
+          Cancel
         </CustomButton>
-      ) : (
-        <div className="card">
-          <h3 className="new-recipe-title">Add a new recipe</h3>
-          <CustomInput
-            name="name"
-            label="Recipe Name"
-            handleChange={handleChange}
-            value={newRecipe.name}
-            required
-          />
-          {error ? <div className="error">Recipe name Required</div> : null}
-          <CustomInput
-            name="link"
-            label="Link"
-            handleChange={handleChange}
-            value={newRecipe.link}
-          />
-          <IngredientInput
-            inputList={inputList}
-            setInputList={setInputList}
-            label="Ingredient"
-          />
-          <div className="new-recipe-button-group">
-            <CustomButton value="AddRecipe" onClick={addNewRecipe}>
-              Add Recipe
-            </CustomButton>
-            <CustomButton
-              value="Cancel"
-              onClick={() => {
-                setShowNewRecipeCard(false);
-                setError(false);
-              }}
-            >
-              Cancel
-            </CustomButton>
-          </div>
-        </div>
-      )}
-    </>
+      </div>
+    </div>
   );
 }
 

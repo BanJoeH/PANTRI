@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, lazy, Suspense } from "react";
 
 import { useSelector } from "react-redux";
 import { Switch, Route, Redirect } from "react-router-dom";
@@ -10,15 +10,24 @@ import BurgerMenuContext from "./App/context";
 import ReactNotification from "react-notifications-component";
 import CookieConsent from "react-cookie-consent";
 import Header from "./components/header/header.component.jsx";
-import ShoppingList from "./pages/shopping-list/shopping-list.component.js";
-import Recipes from "./pages/recipes/recipes.component.js";
-import NewRecipe from "./pages/new-recipe/new-recipe.component.js";
-import SignInAndSignUpPage from "./pages/sign-in-and-sign-up/sign-in-and-sign-up.component.jsx";
 import Footer from "./components/footer/footer.jsx";
-import ForgotPassword from "./pages/forgot-password/forgot-password.component";
 
 import "./App.scss";
-import ContactPage from "./pages/contact/contact.component";
+
+const ShoppingList = lazy(() =>
+  import("./pages/shopping-list/shopping-list.component.js")
+);
+const Recipes = lazy(() => import("./pages/recipes/recipes.component.js"));
+const NewRecipe = lazy(() =>
+  import("./pages/new-recipe/new-recipe.component.js")
+);
+const SignInAndSignUpPage = lazy(() =>
+  import("./pages/sign-in-and-sign-up/sign-in-and-sign-up.component.jsx")
+);
+const ForgotPassword = lazy(() =>
+  import("./pages/forgot-password/forgot-password.component")
+);
+const ContactPage = lazy(() => import("./pages/contact/contact.component"));
 
 export default function App() {
   const [showMenu, setShowMenu] = useState(false);
@@ -48,26 +57,45 @@ export default function App() {
         <div className="app fade-in">
           <ReactNotification />
           <Header />
+
           <div className="body">
             <Switch>
               <Route path="/PANTRI/recipes">
-                {isEmpty ? <Redirect to="/PANTRI/" /> : <Recipes />}
+                {isEmpty ? (
+                  <Redirect to="/PANTRI/" />
+                ) : (
+                  <Suspense fallback={<div>...loading</div>}>
+                    <Recipes />
+                  </Suspense>
+                )}
               </Route>
               <Route path="/PANTRI/newrecipe">
-                {isEmpty ? <Redirect to="/PANTRI/" /> : <NewRecipe />}
+                {isEmpty ? (
+                  <Redirect to="/PANTRI/" />
+                ) : (
+                  <Suspense fallback={<div>...loading</div>}>
+                    <NewRecipe />
+                  </Suspense>
+                )}
               </Route>
               <Route path="/PANTRI/shoppingList">
-                {isEmpty ? <Redirect to="/PANTRI/" /> : <ShoppingList />}
+                {isEmpty ? (
+                  <Redirect to="/PANTRI/" />
+                ) : (
+                  <Suspense fallback={<div>...loading</div>}>
+                    <ShoppingList />
+                  </Suspense>
+                )}
               </Route>
-              <Route exact path="/PANTRI/">
-                <SignInAndSignUpPage />
-              </Route>
-              <Route path="/PANTRI/forgotpassword">
-                <ForgotPassword />
-              </Route>
-              <Route path="/PANTRI/contact">
-                <ContactPage />
-              </Route>
+              <Suspense fallback={<div>...loading</div>}>
+                <Route exact path="/PANTRI/" component={SignInAndSignUpPage} />
+
+                <Route
+                  path="/PANTRI/forgotpassword"
+                  component={ForgotPassword}
+                />
+                <Route path="/PANTRI/contact" component={ContactPage} />
+              </Suspense>
             </Switch>
           </div>
 

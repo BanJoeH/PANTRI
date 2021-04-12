@@ -48,39 +48,32 @@ const EditRecipe = ({ editingRecipe, setEditingRecipe, updateRecipe }) => {
     }));
   };
 
-  return (
-    <>
-      {editingRecipe.id === "" ? null : (
-        <article className="card">
-          <h2>Edit Recipe</h2>
+  return !editingRecipe.id ? null : (
+    <article className="card">
+      <h2>Edit Recipe</h2>
 
-          <div className="card-body">
-            <CustomInput
-              name="name"
-              label="Recipe Name"
-              handleChange={inputEditChangeHandler}
-              value={editingRecipe.name}
-              autoComplete="off"
-            />
-            <CustomInput
-              name="link"
-              label="Link"
-              handleChange={inputEditChangeHandler}
-              value={editingRecipe.link}
-              autoComplete="off"
-            />
-            <IngredientInput
-              inputList={inputList}
-              setInputList={setInputList}
-            />
-          </div>
+      <div className="card-body">
+        <CustomInput
+          name="name"
+          label="Recipe Name"
+          handleChange={inputEditChangeHandler}
+          value={editingRecipe.name}
+          autoComplete="off"
+        />
+        <CustomInput
+          name="link"
+          label="Link"
+          handleChange={inputEditChangeHandler}
+          value={editingRecipe.link}
+          autoComplete="off"
+        />
+        <IngredientInput inputList={inputList} setInputList={setInputList} />
+      </div>
 
-          <CustomButton value="editRecipe" onClick={updateRecipe}>
-            Done
-          </CustomButton>
-        </article>
-      )}
-    </>
+      <CustomButton value="editRecipe" onClick={updateRecipe}>
+        Done
+      </CustomButton>
+    </article>
   );
 };
 

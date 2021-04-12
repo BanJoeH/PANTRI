@@ -106,6 +106,7 @@ const Recipes = () => {
         })
       )
       .catch((error) => {
+        notification("ERROR", "error updating recipe", "info");
         console.log("error updating recipe", error);
       });
   };
