@@ -60,6 +60,13 @@
         transform: scale(1.1);
       }
     }
+    .rotate {
+      transform: rotate(45deg);
+
+      &:hover {
+        transform: rotate(45deg) scale(1.1);
+      }
+    }
     .card-header-buttons {
       display: flex;
       flex-wrap: nowrap;

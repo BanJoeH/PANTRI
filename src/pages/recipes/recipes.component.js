@@ -7,6 +7,7 @@ import CardList from "../../components/cardList/card-list.component";
 import SearchBox from "../../components/search-box/searchbox.component.js";
 import NewRecipe from "../new-recipe/new-recipe.component";
 import EditRecipe from "../../components/edit-recipe/edit-recipe.component";
+import useDebounce from "../../App/useDebounce.utils";
 
 const Recipes = () => {
   const [editingRecipe, setEditingRecipe] = useState({
@@ -16,12 +17,15 @@ const Recipes = () => {
     ingredients: [],
   });
   const [searchField, setSearchField] = useState("");
+  const debouncedSearchTerm = useDebounce(searchField, 200);
+
+  const firestore = useFirestore();
   const { uid } = useSelector((state) => state.firebase.auth);
+  const recipes = useSelector((state) => state.firestore.ordered.recipes);
   useFirestoreConnect({
     collection: `users/${uid}/recipes`,
     storeAs: "recipes",
   });
-  const firestore = useFirestore();
 
   const shoppingListCollectionRef = firestore
     .collection("users")
@@ -33,13 +37,14 @@ const Recipes = () => {
     .doc(uid)
     .collection("recipes");
 
-  const recipes = useSelector((state) => state.firestore.ordered.recipes);
   let filteredRecipes = [];
 
   if (recipes?.length) {
     filteredRecipes = recipes.filter((recipe) => {
       if (recipe?.name) {
-        return recipe.name.toLowerCase().includes(searchField.toLowerCase());
+        return recipe.name
+          .toLowerCase()
+          .includes(debouncedSearchTerm.toLowerCase());
       }
     });
   }
@@ -66,7 +71,6 @@ const Recipes = () => {
 
   const removeFromRecipes = async (event) => {
     event.preventDefault();
-
     if (
       window.confirm("Are you sure you want to permanently delete this recipe?")
     ) {

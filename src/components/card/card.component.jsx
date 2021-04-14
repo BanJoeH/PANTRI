@@ -37,13 +37,22 @@ function Card({
             </a>
           ) : null}
           {pathname === "/PANTRI/recipes" ? (
-            <button
-              value={recipe.id}
-              onClick={editRecipe}
-              className="title-link"
-            >
-              Edit
-            </button>
+            <>
+              <button
+                value={recipe.id}
+                onClick={button}
+                className="rotate title-link"
+              >
+                &#10005;
+              </button>
+              <button
+                value={recipe.id}
+                onClick={editRecipe}
+                className="title-link"
+              >
+                Edit
+              </button>
+            </>
           ) : null}
           <button
             href="#"

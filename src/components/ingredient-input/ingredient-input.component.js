@@ -44,7 +44,7 @@ const IngredientInput = ({
           <input
             id={x.ingredient + i}
             name="ingredient"
-            label={label ? label : `Ingredient`}
+            label={label}
             onChange={(e) => handleInputChange(e, i)}
             value={x.ingredient}
             onKeyDown={(e) => addIngredientOnEnter(e)}
@@ -53,16 +53,15 @@ const IngredientInput = ({
             className="form-input"
             onBlur={lossOfFocus}
           />
-          {label ? (
-            <label
-              htmlFor={x.ingredient + i}
-              className={`${
-                x.ingredient.length ? "shrink" : ""
-              } form-input-label`}
-            >
-              {label}
-            </label>
-          ) : null}
+
+          <label
+            htmlFor={x.ingredient + i}
+            className={`${
+              x.ingredient.length ? "shrink" : ""
+            } form-input-label`}
+          >
+            {label}
+          </label>
         </div>
 
         <div className="button-group">
