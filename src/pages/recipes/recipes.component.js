@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useFirestoreConnect, useFirestore } from "react-redux-firebase";
 import { notification } from "../../App/app.utils";
+import { removeFromRecipes } from "./recipes.utils";
 
 import CardList from "../../components/cardList/card-list.component";
 import SearchBox from "../../components/search-box/searchbox.component.js";
@@ -22,6 +23,12 @@ const Recipes = () => {
   const firestore = useFirestore();
   const { uid } = useSelector((state) => state.firebase.auth);
   const recipes = useSelector((state) => state.firestore.ordered.recipes);
+  const isloading = useSelector(
+    (state) => state.firestore.status.requesting.recipes
+  );
+  const loaded = useSelector(
+    (state) => state.firestore.status.requested.recipes
+  );
   useFirestoreConnect({
     collection: `users/${uid}/recipes`,
     storeAs: "recipes",
@@ -37,70 +44,52 @@ const Recipes = () => {
     .doc(uid)
     .collection("recipes");
 
-  let filteredRecipes = [];
-
-  if (recipes?.length) {
-    filteredRecipes = recipes.filter((recipe) => {
-      if (recipe?.name) {
-        return recipe.name
-          .toLowerCase()
-          .includes(debouncedSearchTerm.toLowerCase());
-      }
-    });
-  }
+  const filteredRecipes = (list) => {
+    let recipes = [];
+    if (list) {
+      recipes = list.filter((recipe) => {
+        if (recipe.name) {
+          return recipe.name
+            .toLowerCase()
+            .includes(debouncedSearchTerm.toLowerCase());
+        }
+      });
+    }
+    return recipes;
+  };
 
   const onSearchChange = (event) => {
     setSearchField(event.target.value);
   };
 
-  const addToShoppingList = (event) => {
+  const addToShoppingList = (event, list, ref) => {
     event.preventDefault();
     let { value } = event.target;
-    recipes.forEach((recipe) => {
-      if (recipe.id !== null && recipe.id === value) {
-        shoppingListCollectionRef.add(recipe).then((docRef) => {
+    list.forEach((item) => {
+      if (item.id && item.id === value) {
+        ref.add(item).then((docRef) => {
           docRef.update({
             id: docRef.id,
           });
         });
-        notification(recipe.name, "Added to your shopping list", "success");
+        notification(item.name, "Added to your shopping list", "success");
       }
     });
     setSearchField("");
   };
 
-  const removeFromRecipes = async (event) => {
+  const editRecipeCardButton = (event, list) => {
     event.preventDefault();
-    if (
-      window.confirm("Are you sure you want to permanently delete this recipe?")
-    ) {
-      let id = event.target.value;
-
-      recipesCollectionRef
-        .doc(id)
-        .delete()
-        .then(() => {
-          notification("", "Deleted", "danger");
-        })
-        .catch((error) => {
-          console.log("error removing document", error);
-        });
-      setSearchField("");
-    }
-  };
-
-  const editRecipeCardButton = (event) => {
-    event.preventDefault();
-    let recipeToEdit = recipes.find((item) => item.id === event.target.value);
+    let recipeToEdit = list.find((item) => item.id === event.target.value);
     setEditingRecipe(recipeToEdit);
   };
 
-  const updateRecipe = (event) => {
+  const updateRecipe = (event, item, ref) => {
     event.preventDefault();
-    recipesCollectionRef
-      .doc(editingRecipe.id)
-      .update(editingRecipe)
-      .then(notification(editingRecipe.name, "edited", "info"))
+    ref
+      .doc(item.id)
+      .update(item)
+      .then(notification(item.name, "edited", "info"))
       .then(
         setEditingRecipe({
           id: "",
@@ -115,6 +104,10 @@ const Recipes = () => {
       });
   };
 
+  useEffect(() => {
+    setSearchField("");
+  }, [recipes]);
+
   return (
     <div className="page fade-in">
       <div className="page-header">
@@ -122,19 +115,27 @@ const Recipes = () => {
         <EditRecipe
           editingRecipe={editingRecipe}
           setEditingRecipe={setEditingRecipe}
-          updateRecipe={updateRecipe}
+          updateRecipe={(e) => {
+            updateRecipe(e, editingRecipe, recipesCollectionRef);
+          }}
         />
         <NewRecipe />
         <SearchBox searchChange={onSearchChange} searchField={searchField} />
       </div>
-      {filteredRecipes?.length ? (
+      {!isloading && loaded && filteredRecipes.length ? (
         <CardList
-          recipes={filteredRecipes}
-          removeFromRecipes={removeFromRecipes}
-          cardButton={addToShoppingList}
-          editRecipeCardButton={editRecipeCardButton}
+          recipes={filteredRecipes(recipes)}
+          removeFromRecipes={(e) => {
+            removeFromRecipes(e, recipesCollectionRef);
+          }}
+          cardButton={(e) => {
+            addToShoppingList(e, recipes, shoppingListCollectionRef);
+          }}
+          editRecipeCardButton={(e) => {
+            editRecipeCardButton(e, recipes);
+          }}
         />
-      ) : searchField.length ? (
+      ) : searchField ? (
         <div className="card">
           <h2>Recipe not found.</h2>
         </div>

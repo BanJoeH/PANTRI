@@ -31,6 +31,7 @@ const ContactPage = lazy(() => import("./pages/contact/contact.component"));
 
 export default function App() {
   const [showMenu, setShowMenu] = useState(false);
+  const isLoaded = useSelector((state) => state.firebase.auth.isLoaded);
 
   const toggleBurgerMenu = () => {
     setShowMenu(!showMenu);
@@ -52,63 +53,69 @@ export default function App() {
   }, []);
 
   return (
-    <BurgerMenuContext.Provider value={{ showMenu, toggleBurgerMenu }}>
-      <MenuProvider MenuComponent={SlideMenu} width={"80vw"}>
-        <div className="app fade-in">
-          <ReactNotification />
-          <Header />
+    isLoaded && (
+      <BurgerMenuContext.Provider value={{ showMenu, toggleBurgerMenu }}>
+        <MenuProvider MenuComponent={SlideMenu} width={"80vw"}>
+          <div className="app">
+            <ReactNotification />
+            <Header />
 
-          <div className="body">
-            <Switch>
-              <Route path="/PANTRI/recipes">
-                {isEmpty ? (
-                  <Redirect to="/PANTRI/" />
-                ) : (
-                  <Suspense fallback={<div>...loading</div>}>
-                    <Recipes />
-                  </Suspense>
-                )}
-              </Route>
-              <Route path="/PANTRI/newrecipe">
-                {isEmpty ? (
-                  <Redirect to="/PANTRI/" />
-                ) : (
-                  <Suspense fallback={<div>...loading</div>}>
-                    <NewRecipe />
-                  </Suspense>
-                )}
-              </Route>
-              <Route path="/PANTRI/shoppingList">
-                {isEmpty ? (
-                  <Redirect to="/PANTRI/" />
-                ) : (
-                  <Suspense fallback={<div>...loading</div>}>
-                    <ShoppingList />
-                  </Suspense>
-                )}
-              </Route>
-              <Suspense fallback={<div>...loading</div>}>
-                <Route exact path="/PANTRI/" component={SignInAndSignUpPage} />
+            <div className="body">
+              <Switch>
+                <Route path="/PANTRI/recipes">
+                  {isEmpty ? (
+                    <Redirect to="/PANTRI/" />
+                  ) : (
+                    <Suspense fallback={<div>...loading</div>}>
+                      <Recipes />
+                    </Suspense>
+                  )}
+                </Route>
+                <Route path="/PANTRI/newrecipe">
+                  {isEmpty ? (
+                    <Redirect to="/PANTRI/" />
+                  ) : (
+                    <Suspense fallback={<div>...loading</div>}>
+                      <NewRecipe />
+                    </Suspense>
+                  )}
+                </Route>
+                <Route path="/PANTRI/shoppingList">
+                  {isEmpty ? (
+                    <Redirect to="/PANTRI/" />
+                  ) : (
+                    <Suspense fallback={<div>...loading</div>}>
+                      <ShoppingList />
+                    </Suspense>
+                  )}
+                </Route>
+                <Suspense fallback={<div>...loading</div>}>
+                  <Route
+                    exact
+                    path="/PANTRI/"
+                    component={SignInAndSignUpPage}
+                  />
 
-                <Route
-                  path="/PANTRI/forgotpassword"
-                  component={ForgotPassword}
-                />
-                <Route path="/PANTRI/contact" component={ContactPage} />
-              </Suspense>
-            </Switch>
+                  <Route
+                    path="/PANTRI/forgotpassword"
+                    component={ForgotPassword}
+                  />
+                  <Route path="/PANTRI/contact" component={ContactPage} />
+                </Suspense>
+              </Switch>
+            </div>
+
+            <CookieConsent
+              location="bottom"
+              buttonText="Gimmie dem cookies"
+              style={{ padding: "5px" }}
+            >
+              We use cookies to store your recipes to save data usage!
+            </CookieConsent>
+            <Footer />
           </div>
-
-          <CookieConsent
-            location="bottom"
-            buttonText="Gimmie dem cookies"
-            style={{ padding: "5px" }}
-          >
-            We use cookies to store your recipes to save data usage!
-          </CookieConsent>
-          <Footer />
-        </div>
-      </MenuProvider>
-    </BurgerMenuContext.Provider>
+        </MenuProvider>
+      </BurgerMenuContext.Provider>
+    )
   );
 }

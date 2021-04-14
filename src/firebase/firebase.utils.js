@@ -63,6 +63,7 @@ export const enablePersistence = () => {
   firebase
     .firestore()
     .enablePersistence()
+
     .catch((err) => {
       if (err.code === "failed-precondition") {
         console.log(err);
@@ -71,6 +72,8 @@ export const enablePersistence = () => {
       }
     });
 };
+
+firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);
 
 export const auth = firebase.auth();
 export const firestore = firebase.firestore();
