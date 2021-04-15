@@ -3,8 +3,9 @@ import IngredientInput from "../ingredient-input/ingredient-input.component.js";
 import { useFirestore } from "react-redux-firebase";
 import { useSelector } from "react-redux";
 
-const OddBits = ({ uid }) => {
+const OddBits = () => {
   const oddBits = useSelector((state) => state.firebase.profile.oddBits);
+  const { uid } = useSelector((state) => state.firebase.auth);
 
   const firestore = useFirestore();
   const [inputList, setInputList] = useState([

@@ -1,7 +1,7 @@
 import React, { useEffect, useState, lazy, Suspense } from "react";
 
 import { useSelector } from "react-redux";
-import { Switch, Route, Redirect } from "react-router-dom";
+import { Switch, Route, Redirect, useHistory } from "react-router-dom";
 import { auth, createUserProfileDocument } from "./firebase/firebase.utils";
 import MenuProvider from "react-flexible-sliding-menu";
 import SlideMenu from "./components/slide-menu/slide-menu.component";
@@ -18,9 +18,7 @@ const ShoppingList = lazy(() =>
   import("./pages/shopping-list/shopping-list.component.js")
 );
 const Recipes = lazy(() => import("./pages/recipes/recipes.component.js"));
-const NewRecipe = lazy(() =>
-  import("./pages/new-recipe/new-recipe.component.js")
-);
+
 const SignInAndSignUpPage = lazy(() =>
   import("./pages/sign-in-and-sign-up/sign-in-and-sign-up.component.jsx")
 );
@@ -37,8 +35,6 @@ export default function App() {
     setShowMenu(!showMenu);
   };
 
-  const { isEmpty } = useSelector((state) => state.firebase.auth);
-
   useEffect(() => {
     const unsubsribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
       if (userAuth) {
@@ -51,6 +47,13 @@ export default function App() {
       unsubsribeFromAuth();
     };
   }, []);
+  const history = useHistory();
+  const { isEmpty } = useSelector((state) => state.firebase.auth);
+  useEffect(() => {
+    if (isEmpty) {
+      history.push("/PANTRI/");
+    }
+  }, [isEmpty, history]);
 
   return (
     isLoaded && (
@@ -71,15 +74,7 @@ export default function App() {
                     </Suspense>
                   )}
                 </Route>
-                <Route path="/PANTRI/newrecipe">
-                  {isEmpty ? (
-                    <Redirect to="/PANTRI/" />
-                  ) : (
-                    <Suspense fallback={<div>...loading</div>}>
-                      <NewRecipe />
-                    </Suspense>
-                  )}
-                </Route>
+
                 <Route path="/PANTRI/shoppingList">
                   {isEmpty ? (
                     <Redirect to="/PANTRI/" />

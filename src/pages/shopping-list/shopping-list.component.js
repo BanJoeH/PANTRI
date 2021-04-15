@@ -47,7 +47,7 @@ function ShoppingList() {
     <div className="page fade-in">
       <div className="page-header">
         <h2 className="title">Shopping List</h2>
-        <OddBits uid={uid} />
+        <OddBits />
         {recipes?.length ? <SortShopping recipes={recipes} /> : null}
       </div>
       {recipes?.length ? (

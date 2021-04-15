@@ -35,7 +35,7 @@
       transition: all 0.5s;
 
       @media screen and (max-width: 450px) {
-        font-size: 20px;
+        font-size: 14px;
       }
       &:hover {
         background-color: $dark-1;
@@ -54,6 +54,9 @@
       transition: all 0.5s;
 
       padding: 0 7px;
+      @media screen and (max-width: 450px) {
+        font-size: 14px;
+      }
 
       &:hover {
         background-color: $dark-1;
@@ -81,6 +84,9 @@
     align-items: center;
     justify-content: space-between;
     text-transform: capitalize;
+    @media screen and (max-width: 450px) {
+      font-size: 12px;
+    }
   }
   .new-recipe-button-group {
     width: 98%;

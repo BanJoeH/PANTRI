@@ -53,23 +53,19 @@ const SortShopping = ({ recipes }) => {
     togleShowSort();
   };
 
-  return (
-    <>
-      {showSort ? (
-        <Card
-          recipe={sortShoppingRecipe}
-          removeFromRecipes={togleShowSort}
-          button={togleShowSort}
-          ingredientButton={removeIngredient}
-        />
-      ) : (
-        <div style={{ margin: "0 5%" }}>
-          <CustomButton value="Sort shopping" onClick={sortShopping}>
-            Sort Shopping
-          </CustomButton>
-        </div>
-      )}
-    </>
+  return showSort ? (
+    <Card
+      recipe={sortShoppingRecipe}
+      removeFromRecipes={togleShowSort}
+      button={togleShowSort}
+      ingredientButton={removeIngredient}
+    />
+  ) : (
+    <div style={{ margin: "0 5%" }}>
+      <CustomButton value="Sort shopping" onClick={sortShopping}>
+        Sort Shopping
+      </CustomButton>
+    </div>
   );
 };
 

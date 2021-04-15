@@ -64,14 +64,16 @@ function NewRecipe() {
   }, [inputList]);
 
   return !showNewRecipeCard ? (
-    <CustomButton
-      value="newRecipe"
-      onClick={() => {
-        setShowNewRecipeCard(!showNewRecipeCard);
-      }}
-    >
-      Add a Recipe
-    </CustomButton>
+    <div style={{ margin: "0 5%" }}>
+      <CustomButton
+        value="newRecipe"
+        onClick={() => {
+          setShowNewRecipeCard(!showNewRecipeCard);
+        }}
+      >
+        Add a Recipe
+      </CustomButton>
+    </div>
   ) : (
     <div className="card">
       <h3 className="new-recipe-title">Add a new recipe</h3>
