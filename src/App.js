@@ -1,7 +1,7 @@
 import React, { useEffect, useState, lazy, Suspense } from "react";
 
 import { useSelector } from "react-redux";
-import { Switch, Route, Redirect, useHistory } from "react-router-dom";
+import { Switch, Route, Redirect } from "react-router-dom";
 import { auth, createUserProfileDocument } from "./firebase/firebase.utils";
 import MenuProvider from "react-flexible-sliding-menu";
 import SlideMenu from "./components/slide-menu/slide-menu.component";
@@ -47,13 +47,8 @@ export default function App() {
       unsubsribeFromAuth();
     };
   }, []);
-  const history = useHistory();
+
   const { isEmpty } = useSelector((state) => state.firebase.auth);
-  useEffect(() => {
-    if (isEmpty) {
-      history.push("/PANTRI/");
-    }
-  }, [isEmpty, history]);
 
   return (
     isLoaded && (

@@ -17,10 +17,9 @@ const ForgotPassword = () => {
     setUserEmail(value);
   };
 
-  const resetPassword = (event) => {
-    event.preventDefault();
+  const resetPassword = (email) => {
     auth
-      .sendPasswordResetEmail(userEmail)
+      .sendPasswordResetEmail(email)
       .then(() => {
         setErrorMessage("Check your inbox for password reset");
         setError(true);
@@ -35,6 +34,11 @@ const ForgotPassword = () => {
         }
         setError(true);
       });
+  };
+
+  const handleClick = (e) => {
+    e.preventDefault();
+    resetPassword(userEmail);
   };
 
   useEffect(() => {
@@ -54,7 +58,7 @@ const ForgotPassword = () => {
           label="email"
         />
         {error ? <div className="error">{errorMessage}</div> : null}
-        <CustomButton type="button" onClick={resetPassword}>
+        <CustomButton type="button" onClick={handleClick}>
           {" "}
           Reset Password{" "}
         </CustomButton>

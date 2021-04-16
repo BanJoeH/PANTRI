@@ -15,42 +15,50 @@ const SortShopping = ({ recipes }) => {
     setShowSort(!showSort);
   };
 
-  const removeIngredient = (event) => {
-    event.preventDefault();
-    // eslint-disable-next-line no-unused-vars
-    const [id, ingredientToRemove] = event.target.name.split("&");
+  const handleRemoveIngredientClick = (e) => {
+    e.preventDefault();
+    const ingredients = sortShoppingRecipe.ingredients;
+    removeIngredient(e, ingredients);
+  };
 
-    let temp = sortShoppingRecipe.ingredients.filter(
+  const removeIngredient = (event, ingredients) => {
+    const ingredientToRemove = event.target.name.split("&")[1];
+
+    const temp = ingredients.filter(
       (ingredient) => ingredient !== ingredientToRemove
     );
     setSortShoppingRecipe({ ...sortShoppingRecipe, ingredients: temp });
   };
 
-  const sortShopping = () => {
-    if (recipes) {
-      let ingredientList = recipes
-        .map((recipe) => {
-          return recipe.ingredients;
-        })
-        .flat()
-        .sort();
-      let unique = [...new Set(ingredientList)];
-      let duplicates = unique.map((value) => [
-        value,
-        ingredientList.filter((str) => str === value).length,
-      ]);
-      let formatted = duplicates
-        .map((ingredient, i) => [ingredient[0] + "  X" + ingredient[1]])
-        .flat();
-
-      setSortShoppingRecipe((state) => {
-        return {
-          ...state,
-          ingredients: formatted,
-        };
-      });
-    }
+  const handleSortClick = (e) => {
+    e.preventDefault();
+    const formattedIngredients = sortAllIngredients(recipes);
+    setSortShoppingRecipe((state) => {
+      return {
+        ...state,
+        ingredients: formattedIngredients,
+      };
+    });
     togleShowSort();
+  };
+
+  const sortAllIngredients = (recipes) => {
+    const ingredientListSorted = recipes
+      .map((recipe) => {
+        return recipe.ingredients;
+      })
+      .flat()
+      .sort();
+    const unique = [...new Set(ingredientListSorted)];
+    const duplicates = unique.map((value) => [
+      value,
+      ingredientListSorted.filter((str) => str === value).length,
+    ]);
+    const formatted = duplicates.map(
+      (ingredient) => ingredient[0] + "  X" + ingredient[1]
+    );
+
+    return formatted;
   };
 
   return showSort ? (
@@ -58,11 +66,11 @@ const SortShopping = ({ recipes }) => {
       recipe={sortShoppingRecipe}
       removeFromRecipes={togleShowSort}
       button={togleShowSort}
-      ingredientButton={removeIngredient}
+      ingredientButton={handleRemoveIngredientClick}
     />
   ) : (
     <div style={{ margin: "0 5%" }}>
-      <CustomButton value="Sort shopping" onClick={sortShopping}>
+      <CustomButton value="Sort shopping" onClick={handleSortClick}>
         Sort Shopping
       </CustomButton>
     </div>

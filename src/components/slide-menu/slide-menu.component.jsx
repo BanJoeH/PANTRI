@@ -14,14 +14,19 @@ const SlideMenu = () => {
   const { toggleMenu } = useContext(MenuContext);
   const burgerMenu = useContext(BurgerMenuContext);
 
+  const handleMenuClick = (e) => {
+    e.preventDefault();
+    toggleMenu();
+    burgerMenu.toggleBurgerMenu();
+  };
+
+  const handleNavClick = (e, route) => {
+    e.preventDefault();
+    history.push(route);
+  };
+
   return (
-    <header
-      className="slide-in-menu"
-      onClick={() => {
-        toggleMenu();
-        burgerMenu.toggleBurgerMenu();
-      }}
-    >
+    <header className="slide-in-menu" onClick={handleMenuClick}>
       <nav className="slide-in-nav">
         <div className="slide-in-nav-group">
           <img src={logo} alt="logo" className="logo" width="250" height="80" />
@@ -29,17 +34,13 @@ const SlideMenu = () => {
         <div className="slide-in-nav-group">
           <div
             className="nav-link"
-            onClick={() => {
-              history.push("/PANTRI/shoppingList");
-            }}
+            onClick={(e) => handleNavClick(e, "/PANTRI/shoppingList")}
           >
             Shopping list
           </div>
           <div
             className="nav-link"
-            onClick={() => {
-              history.push("/PANTRI/recipes");
-            }}
+            onClick={(e) => handleNavClick(e, "/PANTRI/recipes")}
           >
             Recipes
           </div>
@@ -48,9 +49,7 @@ const SlideMenu = () => {
           {isEmpty ? (
             <div
               className="nav-link"
-              onClick={() => {
-                history.push("/PANTRI/");
-              }}
+              onClick={(e) => handleNavClick(e, "/PANTRI/")}
             >
               Sign In
             </div>
@@ -61,9 +60,7 @@ const SlideMenu = () => {
           )}
           <div
             className="nav-link"
-            onClick={() => {
-              history.push("/PANTRI/contact");
-            }}
+            onClick={(e) => handleNavClick(e, "/PANTRI/contact")}
           >
             Contact Us
           </div>

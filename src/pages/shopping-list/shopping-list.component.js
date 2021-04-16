@@ -3,6 +3,10 @@ import React from "react";
 import { useFirestoreConnect, useFirestore } from "react-redux-firebase";
 
 import { useSelector } from "react-redux";
+import {
+  removeRecipeFromShoppingList,
+  removeIngredientFromShoppingList,
+} from "./shopping-list.utils";
 
 import OddBits from "../../components/oddbits/oddbits.component.jsx";
 import CardList from "../../components/cardList/card-list.component.jsx";
@@ -23,24 +27,21 @@ function ShoppingList() {
     .doc(uid)
     .collection("shoppingList");
 
-  const removeRecipeFromShoppingList = (event) => {
-    event.preventDefault();
-    let id = event.target.value;
-    shoppingListCollectionRef
-      .doc(id)
-      .delete()
-      .catch((error) => {
-        console.log("error removing document", error);
-      });
+  const handleRemoveRecipeFromShoppingListClick = (e) => {
+    e.preventDefault();
+    const id = e.target.value;
+    removeRecipeFromShoppingList(id, shoppingListCollectionRef);
   };
 
-  const removeIngredientFromShoppingList = (event) => {
-    event.preventDefault();
-    const [id, ingredient] = event.target.name.split("&");
-
-    shoppingListCollectionRef.doc(id).update({
-      ingredients: firestore.FieldValue.arrayRemove(ingredient),
-    });
+  const handleRemoveIngredientFromShoppingListItemClick = (e) => {
+    e.preventDefault();
+    const [id, ingredient] = e.target.name.split("&");
+    removeIngredientFromShoppingList(
+      id,
+      ingredient,
+      shoppingListCollectionRef,
+      firestore
+    );
   };
 
   return (
@@ -53,9 +54,9 @@ function ShoppingList() {
       {recipes?.length ? (
         <CardList
           recipes={recipes}
-          removeFromRecipes={removeRecipeFromShoppingList}
-          cardButton={removeRecipeFromShoppingList}
-          ingredientButton={removeIngredientFromShoppingList}
+          removeFromRecipes={handleRemoveRecipeFromShoppingListClick}
+          cardButton={handleRemoveRecipeFromShoppingListClick}
+          ingredientButton={handleRemoveIngredientFromShoppingListItemClick}
         />
       ) : (
         <div className="card">

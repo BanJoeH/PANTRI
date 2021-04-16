@@ -22,8 +22,7 @@ const ContactPage = () => {
     setUserInput({ ...userInput, [name]: value });
   };
 
-  const onSubmit = async (event) => {
-    event.preventDefault();
+  const sendContactForm = async ({ name, email, msg }) => {
     const templateParams = {
       name: name,
       email: email,
@@ -44,7 +43,11 @@ const ContactPage = () => {
           console.log(error);
         }
       );
+  };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    sendContactForm(userInput);
     setUserInput({
       name: "",
       email: "",
@@ -61,7 +64,7 @@ const ContactPage = () => {
         <h2>Contact Us</h2>
         <h4>Any questions, comments or feature requests?</h4>
 
-        <form className="sign-in-form" onSubmit={onSubmit}>
+        <form className="sign-in-form" onSubmit={handleSubmit}>
           <CustomInput
             className="form-input"
             name="name"

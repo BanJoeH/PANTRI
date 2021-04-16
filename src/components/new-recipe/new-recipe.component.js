@@ -2,14 +2,14 @@ import { useState, useEffect } from "react";
 import { useFirestore } from "react-redux-firebase";
 import { useSelector } from "react-redux";
 import { notification } from "../../App/app.utils";
-import CustomButton from "../../components/custom-button/custom-button.component.jsx";
-import IngredientInput from "../../components/ingredient-input/ingredient-input.component.js";
-import CustomInput from "../../components/custom-input/custom-input.component";
+import { addNewRecipe } from "./new-recipe.utils";
+import CustomButton from "../custom-button/custom-button.component.jsx";
+import IngredientInput from "../ingredient-input/ingredient-input.component.js";
+import CustomInput from "../custom-input/custom-input.component";
 
 // const ID = () => {
 //   return Math.random().toString(36).substr(2, 9);
 // };
-
 function NewRecipe() {
   const [inputList, setInputList] = useState([
     { ingredient: "", ingredientRef: null },
@@ -24,31 +24,26 @@ function NewRecipe() {
 
   const firestore = useFirestore();
   const { uid } = useSelector((state) => state.firebase.auth);
+  const recipesCollectionRef = firestore
+    .collection("users")
+    .doc(uid)
+    .collection("recipes");
 
   const handleChange = (event) => {
     const { name, value } = event.target;
     setNewRecipe({ ...newRecipe, [name]: value });
   };
 
-  const addNewRecipe = (event) => {
-    event.preventDefault();
+  const handleAddNewRecipeClick = (e) => {
+    e.preventDefault();
     if (!newRecipe.name) {
       setError(true);
     } else {
-      firestore
-        .collection("users")
-        .doc(uid)
-        .collection("recipes")
-        .add(newRecipe)
-        .then((docRef) => {
-          docRef.update({
-            id: docRef.id,
-          });
-        });
+      addNewRecipe(newRecipe, recipesCollectionRef);
+      setError(false);
       notification(newRecipe.name, "Added to Recipes", "success");
       setNewRecipe({ name: "", link: "", ingredients: [] });
       setInputList([{ ingredient: "", ingredientRef: null }]);
-      setError(false);
       setShowNewRecipeCard(!showNewRecipeCard);
     }
   };
@@ -84,7 +79,7 @@ function NewRecipe() {
         value={newRecipe.name}
         required
       />
-      {error ? <div className="error">Recipe name Required</div> : null}
+      {error ? <div className="error">Recipe name required</div> : null}
       <CustomInput
         name="link"
         label="Link"
@@ -97,7 +92,7 @@ function NewRecipe() {
         label="Ingredient"
       />
       <div className="new-recipe-button-group">
-        <CustomButton value="AddRecipe" onClick={addNewRecipe}>
+        <CustomButton value="AddRecipe" onClick={handleAddNewRecipeClick}>
           Add Recipe
         </CustomButton>
         <CustomButton

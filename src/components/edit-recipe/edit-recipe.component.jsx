@@ -41,11 +41,21 @@ const EditRecipe = ({ editingRecipe, setEditingRecipe, updateRecipe }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [editingRecipe.ingredients.length]);
 
-  const inputEditChangeHandler = (event) => {
+  const handleInputEditChange = (event) => {
     setEditingRecipe((prevState) => ({
       ...prevState,
       [event.target.name]: event.target.value,
     }));
+  };
+
+  const handleCancelClick = (e) => {
+    e.preventDefault();
+    setEditingRecipe({
+      id: "",
+      name: "",
+      ingredients: [],
+      link: "",
+    });
   };
 
   return !editingRecipe.id ? null : (
@@ -56,23 +66,27 @@ const EditRecipe = ({ editingRecipe, setEditingRecipe, updateRecipe }) => {
         <CustomInput
           name="name"
           label="Recipe Name"
-          handleChange={inputEditChangeHandler}
+          handleChange={handleInputEditChange}
           value={editingRecipe.name}
           autoComplete="off"
         />
         <CustomInput
           name="link"
           label="Link"
-          handleChange={inputEditChangeHandler}
+          handleChange={handleInputEditChange}
           value={editingRecipe.link}
           autoComplete="off"
         />
         <IngredientInput inputList={inputList} setInputList={setInputList} />
       </div>
-
-      <CustomButton value="editRecipe" onClick={updateRecipe}>
-        Done
-      </CustomButton>
+      <div className="new-recipe-button-group">
+        <CustomButton value="editRecipe" onClick={updateRecipe}>
+          Done
+        </CustomButton>
+        <CustomButton value="Cancel" onClick={handleCancelClick}>
+          Cancel
+        </CustomButton>
+      </div>
     </article>
   );
 };

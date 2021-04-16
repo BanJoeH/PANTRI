@@ -1,6 +1,6 @@
 import React from "react";
 
-import "./custom-input-styles.scss";
+import "./custom-input.styles.scss";
 
 const CustomInput = (props) => {
   const { handleChange, label, ...otherProps } = props;

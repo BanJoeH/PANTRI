@@ -1,12 +1,18 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useSelector } from "react-redux";
 import { useFirestoreConnect, useFirestore } from "react-redux-firebase";
 import { notification } from "../../App/app.utils";
-import { removeFromRecipes } from "./recipes.utils";
+import {
+  removeFromRecipes,
+  filteredRecipes,
+  updateRecipe,
+  addToShoppingList,
+  editRecipeCardButton,
+} from "./recipes.utils";
 
 import CardList from "../../components/cardList/card-list.component";
 import SearchBox from "../../components/search-box/searchbox.component.js";
-import NewRecipe from "../new-recipe/new-recipe.component";
+import NewRecipe from "../../components/new-recipe/new-recipe.component";
 import EditRecipe from "../../components/edit-recipe/edit-recipe.component";
 import useDebounce from "../../App/useDebounce.utils";
 
@@ -29,6 +35,7 @@ const Recipes = () => {
   const loaded = useSelector(
     (state) => state.firestore.status.requested.recipes
   );
+  const recipesFiltered = filteredRecipes(recipes, debouncedSearchTerm);
   useFirestoreConnect({
     collection: `users/${uid}/recipes`,
     storeAs: "recipes",
@@ -44,69 +51,54 @@ const Recipes = () => {
     .doc(uid)
     .collection("recipes");
 
-  const filteredRecipes = (list) => {
-    let recipes = [];
-    if (list) {
-      recipes = list.filter((recipe) => {
-        if (recipe.name) {
-          return recipe.name
-            .toLowerCase()
-            .includes(debouncedSearchTerm.toLowerCase());
-        }
-      });
+  const handleRemoveFromRecipesClick = (e) => {
+    e.preventDefault();
+    if (
+      window.confirm("Are you sure you want to permanently delete this recipe?")
+    ) {
+      const recipeId = e.target.value;
+      removeFromRecipes(recipeId, recipesCollectionRef);
     }
-    return recipes;
   };
 
   const onSearchChange = (event) => {
     setSearchField(event.target.value);
   };
 
-  const addToShoppingList = (event, list, ref) => {
-    event.preventDefault();
-    let { value } = event.target;
-    list.forEach((item) => {
-      if (item.id && item.id === value) {
-        ref.add(item).then((docRef) => {
-          docRef.update({
-            id: docRef.id,
-          });
-        });
-        notification(item.name, "Added to your shopping list", "success");
-      }
-    });
+  const handleAddToShoppingListClick = async (e) => {
+    e.preventDefault();
+    const value = e.target.value;
+    const response = await addToShoppingList(
+      value,
+      recipes,
+      shoppingListCollectionRef
+    );
+    notification(response.name, "Added to your shopping list", "success");
     setSearchField("");
   };
 
-  const editRecipeCardButton = (event, list) => {
-    event.preventDefault();
-    let recipeToEdit = list.find((item) => item.id === event.target.value);
-    setEditingRecipe(recipeToEdit);
+  const handleEditRecipeCardButtonClick = (e) => {
+    e.preventDefault();
+    setEditingRecipe(editRecipeCardButton(e, recipes));
   };
 
-  const updateRecipe = (event, item, ref) => {
-    event.preventDefault();
-    ref
-      .doc(item.id)
-      .update(item)
-      .then(notification(item.name, "edited", "info"))
-      .then(
-        setEditingRecipe({
-          id: "",
-          name: "",
-          link: "",
-          ingredients: [],
-        })
-      )
-      .catch((error) => {
-        notification("ERROR", "error updating recipe", "info");
-        console.log("error updating recipe", error);
+  const handleUpdateRecipeClick = async (e) => {
+    e.preventDefault();
+
+    const response = await updateRecipe(editingRecipe, recipesCollectionRef);
+    console.log(response);
+    if (response === "succeeded") {
+      setEditingRecipe({
+        id: "",
+        name: "",
+        link: "",
+        ingredients: [],
       });
+      notification(editingRecipe.name, "updated", "info");
+    } else {
+      notification("Error", "error updating recipe, please try again", "info");
+    }
   };
-
-  useEffect(() => {
-    setSearchField("");
-  }, [recipes]);
 
   return (
     <div className="page fade-in">
@@ -115,25 +107,17 @@ const Recipes = () => {
         <EditRecipe
           editingRecipe={editingRecipe}
           setEditingRecipe={setEditingRecipe}
-          updateRecipe={(e) => {
-            updateRecipe(e, editingRecipe, recipesCollectionRef);
-          }}
+          updateRecipe={handleUpdateRecipeClick}
         />
         <NewRecipe />
         <SearchBox searchChange={onSearchChange} searchField={searchField} />
       </div>
-      {!isloading && loaded && filteredRecipes.length ? (
+      {!isloading && loaded && recipesFiltered.length ? (
         <CardList
-          recipes={filteredRecipes(recipes)}
-          removeFromRecipes={(e) => {
-            removeFromRecipes(e, recipesCollectionRef);
-          }}
-          cardButton={(e) => {
-            addToShoppingList(e, recipes, shoppingListCollectionRef);
-          }}
-          editRecipeCardButton={(e) => {
-            editRecipeCardButton(e, recipes);
-          }}
+          recipes={recipesFiltered}
+          removeFromRecipes={handleRemoveFromRecipesClick}
+          cardButton={handleAddToShoppingListClick}
+          editRecipeCardButton={handleEditRecipeCardButtonClick}
         />
       ) : searchField ? (
         <div className="card">

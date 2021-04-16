@@ -8,6 +8,7 @@ const OddBits = () => {
   const { uid } = useSelector((state) => state.firebase.auth);
 
   const firestore = useFirestore();
+
   const [inputList, setInputList] = useState([
     { ingredient: "", ingredientRef: null },
   ]);
@@ -23,18 +24,20 @@ const OddBits = () => {
     }
   }, [oddBits]);
 
-  const lossOfFocus = () => {
-    if (uid) {
-      let ingredients = inputList.map((input, i) => {
-        return input.ingredient;
-      });
-      firestore.collection("users").doc(uid).set(
-        {
-          oddBits: ingredients,
-        },
-        { merge: true }
-      );
-    }
+  const handleOnBlur = () => {
+    updateOddBits(inputList, uid);
+  };
+
+  const updateOddBits = (inputList, uid) => {
+    let ingredients = inputList.map((input, i) => {
+      return input.ingredient;
+    });
+    firestore.collection("users").doc(uid).set(
+      {
+        oddBits: ingredients,
+      },
+      { merge: true }
+    );
   };
 
   return (
@@ -46,7 +49,7 @@ const OddBits = () => {
         <IngredientInput
           inputList={inputList}
           setInputList={setInputList}
-          lossOfFocus={lossOfFocus}
+          lossOfFocus={handleOnBlur}
           label="Odd bit"
         />
       </div>
