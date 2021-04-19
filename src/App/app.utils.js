@@ -36,3 +36,15 @@ export const useWindowSize = () => {
   }, []);
   return windowSize;
 };
+
+export const findRecipe = (recipeId, recipeList) => {
+  const recipe = recipeList.filter((recipe) => recipe.id === recipeId);
+
+  return recipe[0];
+};
+
+export const filterRecipeOut = (recipeId, recipeList) => {
+  const recipes = recipeList.filter((recipe) => recipe.id !== recipeId);
+
+  return recipes;
+};

@@ -1,10 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useFirestoreConnect, useFirestore } from "react-redux-firebase";
 import { notification } from "../../App/app.utils";
 import {
   removeFromRecipes,
-  filteredRecipes,
+  filteredRecipesByName,
   updateRecipe,
   addToShoppingList,
   editRecipeCardButton,
@@ -28,14 +28,14 @@ const Recipes = () => {
 
   const firestore = useFirestore();
   const { uid } = useSelector((state) => state.firebase.auth);
-  const recipes = useSelector((state) => state.firestore.ordered.recipes);
+  const recipes = useSelector((state) => state.firestore.ordered.recipes) || [];
   const isloading = useSelector(
     (state) => state.firestore.status.requesting.recipes
   );
   const loaded = useSelector(
     (state) => state.firestore.status.requested.recipes
   );
-  const recipesFiltered = filteredRecipes(recipes, debouncedSearchTerm);
+  const recipesFiltered = filteredRecipesByName(recipes, debouncedSearchTerm);
   useFirestoreConnect({
     collection: `users/${uid}/recipes`,
     storeAs: "recipes",
@@ -77,6 +77,10 @@ const Recipes = () => {
     setSearchField("");
   };
 
+  useEffect(() => {
+    console.log("mount");
+  });
+
   const handleEditRecipeCardButtonClick = (e) => {
     e.preventDefault();
     setEditingRecipe(editRecipeCardButton(e, recipes));
@@ -86,7 +90,6 @@ const Recipes = () => {
     e.preventDefault();
 
     const response = await updateRecipe(editingRecipe, recipesCollectionRef);
-    console.log(response);
     if (response === "succeeded") {
       setEditingRecipe({
         id: "",
@@ -101,35 +104,37 @@ const Recipes = () => {
   };
 
   return (
-    <div className="page fade-in">
-      <div className="page-header">
-        <h2 className="title">Recipe List</h2>
-        <EditRecipe
-          editingRecipe={editingRecipe}
-          setEditingRecipe={setEditingRecipe}
-          updateRecipe={handleUpdateRecipeClick}
-        />
-        <NewRecipe />
-        <SearchBox searchChange={onSearchChange} searchField={searchField} />
+    !isloading && (
+      <div className="page fade-in">
+        <div className="page-header">
+          <h2 className="title">Recipe List</h2>
+          <EditRecipe
+            editingRecipe={editingRecipe}
+            setEditingRecipe={setEditingRecipe}
+            updateRecipe={handleUpdateRecipeClick}
+          />
+          <NewRecipe />
+          <SearchBox searchChange={onSearchChange} searchField={searchField} />
+        </div>
+        {!isloading && loaded && recipesFiltered.length ? (
+          <CardList
+            recipes={recipesFiltered}
+            removeFromRecipes={handleRemoveFromRecipesClick}
+            cardButton={handleAddToShoppingListClick}
+            editRecipeCardButton={handleEditRecipeCardButtonClick}
+          />
+        ) : searchField ? (
+          <div className="card">
+            <h2>Recipe not found.</h2>
+          </div>
+        ) : (
+          <div className="card">
+            <h2>No recipes in your recipe list.</h2>
+            <h2>Go to Add a recipe to add some!</h2>
+          </div>
+        )}
       </div>
-      {!isloading && loaded && recipesFiltered.length ? (
-        <CardList
-          recipes={recipesFiltered}
-          removeFromRecipes={handleRemoveFromRecipesClick}
-          cardButton={handleAddToShoppingListClick}
-          editRecipeCardButton={handleEditRecipeCardButtonClick}
-        />
-      ) : searchField ? (
-        <div className="card">
-          <h2>Recipe not found.</h2>
-        </div>
-      ) : (
-        <div className="card">
-          <h2>No recipes in your recipe list.</h2>
-          <h2>Go to Add a recipe to add some!</h2>
-        </div>
-      )}
-    </div>
+    )
   );
 };
 

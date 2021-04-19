@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import { useFirestoreConnect, useFirestore } from "react-redux-firebase";
 
@@ -11,9 +11,14 @@ import {
 import OddBits from "../../components/oddbits/oddbits.component.jsx";
 import CardList from "../../components/cardList/card-list.component.jsx";
 import SortShopping from "../../components/sort-shopping/sort-shopping.component.jsx";
+import { findRecipe } from "../../App/app.utils";
 
 function ShoppingList() {
   const { uid } = useSelector((state) => state.firebase.auth);
+  const isLoading = useSelector(
+    (state) => state.firestore.status.requesting.shoppingList
+  );
+
   useFirestoreConnect({
     collection: `users/${uid}/shoppingList`,
     storeAs: "shoppingList",
@@ -35,36 +40,46 @@ function ShoppingList() {
 
   const handleRemoveIngredientFromShoppingListItemClick = (e) => {
     e.preventDefault();
-    const [id, ingredient] = e.target.name.split("&");
+    const [recipeId, , ingredientIndex] = e.target.name.split("&");
+    const recipe = findRecipe(recipeId, recipes);
+    const updatedIngredients = recipe.ingredients
+      .slice()
+      .splice(ingredientIndex, 1);
+
     removeIngredientFromShoppingList(
-      id,
-      ingredient,
-      shoppingListCollectionRef,
-      firestore
+      recipeId,
+      updatedIngredients,
+      shoppingListCollectionRef
     );
   };
 
+  useEffect(() => {
+    console.log("mount");
+  });
+
   return (
-    <div className="page fade-in">
-      <div className="page-header">
-        <h2 className="title">Shopping List</h2>
-        <OddBits />
-        {recipes?.length ? <SortShopping recipes={recipes} /> : null}
-      </div>
-      {recipes?.length ? (
-        <CardList
-          recipes={recipes}
-          removeFromRecipes={handleRemoveRecipeFromShoppingListClick}
-          cardButton={handleRemoveRecipeFromShoppingListClick}
-          ingredientButton={handleRemoveIngredientFromShoppingListItemClick}
-        />
-      ) : (
-        <div className="card">
-          <h2>No recipes in your shopping list.</h2>
-          <h2>Go to Recipes to add some!</h2>
+    !isLoading && (
+      <div className="page fade-in">
+        <div className="page-header">
+          <h2 className="title">Shopping List</h2>
+          <OddBits />
+          {recipes?.length ? <SortShopping recipes={recipes} /> : null}
         </div>
-      )}
-    </div>
+        {recipes?.length ? (
+          <CardList
+            recipes={recipes}
+            removeFromRecipes={handleRemoveRecipeFromShoppingListClick}
+            cardButton={handleRemoveRecipeFromShoppingListClick}
+            ingredientButton={handleRemoveIngredientFromShoppingListItemClick}
+          />
+        ) : (
+          <div className="card">
+            <h2>No recipes in your shopping list.</h2>
+            <h2>Go to Recipes to add some!</h2>
+          </div>
+        )}
+      </div>
+    )
   );
 }
 

@@ -9,11 +9,13 @@ export const removeRecipeFromShoppingList = (recipeId, ref) => {
 
 export const removeIngredientFromShoppingList = (
   recipeId,
-  ingredient,
-  ref,
-  firestore
+  updatedIngredients,
+  ref
 ) => {
-  ref.doc(recipeId).update({
-    ingredients: firestore.FieldValue.arrayRemove(ingredient),
-  });
+  ref.doc(recipeId).update(
+    {
+      ingredients: updatedIngredients,
+    },
+    { merge: true }
+  );
 };

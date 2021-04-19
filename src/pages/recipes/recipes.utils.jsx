@@ -12,7 +12,7 @@ export const removeFromRecipes = async (recipeId, ref) => {
     });
 };
 
-export const filteredRecipes = (list, debouncedSearchTerm) => {
+export const filteredRecipesByName = (list, debouncedSearchTerm) => {
   let recipes = [];
   if (list) {
     recipes = list.filter((recipe) => {
@@ -36,7 +36,6 @@ export const updateRecipe = async (item, ref) => {
       response = "failed";
       console.log("error updating recipe", error);
     });
-
   return response;
 };
 
