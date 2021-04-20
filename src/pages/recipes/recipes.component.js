@@ -4,7 +4,6 @@ import { useFirestoreConnect, useFirestore } from "react-redux-firebase";
 import { notification } from "../../App/app.utils";
 import {
   removeFromRecipes,
-  filteredRecipesByName,
   updateRecipe,
   addToShoppingList,
   editRecipeCardButton,
@@ -28,8 +27,8 @@ const Recipes = () => {
   const debouncedSearchTerm = useDebounce(searchField, 200);
 
   const firestore = useFirestore();
-  const { uid } = useSelector((state) => state.firebase.auth);
-  const recipes = useSelector((state) => state.firestore.ordered.recipes) || [];
+  const uid = useSelector((state) => state.firebase.auth.uid);
+  const recipes = useSelector((state) => state.firestore.ordered.recipes);
   const isloading = useSelector(
     (state) => state.firestore.status.requesting.recipes
   );
@@ -80,10 +79,6 @@ const Recipes = () => {
     notification(response.name, "Added to your shopping list", "success");
     setSearchField("");
   };
-
-  useEffect(() => {
-    console.log("mount");
-  });
 
   const handleEditRecipeCardButtonClick = (e) => {
     e.preventDefault();

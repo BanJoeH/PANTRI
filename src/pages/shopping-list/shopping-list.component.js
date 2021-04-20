@@ -53,10 +53,6 @@ function ShoppingList() {
     );
   };
 
-  useEffect(() => {
-    console.log("mount");
-  });
-
   return (
     !isLoading && (
       <div className="page fade-in">

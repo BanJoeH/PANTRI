@@ -12,45 +12,34 @@ export const removeFromRecipes = async (recipeId, ref) => {
     });
 };
 
-export const filteredRecipesByName = (recipeList, debouncedSearchTerm) => {
-  let recipes = [];
-  if (recipeList) {
-    recipes = recipeList.filter((recipe) => {
-      if (recipe.name) {
-        return recipe.name
-          .toLowerCase()
-          .includes(debouncedSearchTerm.toLowerCase());
-      }
-    });
-  }
-  return recipes;
-};
-
 export const filteredRecipesByIngredientAndName = (
   recipeList,
   debouncedSearchTerm
 ) => {
   let recipes = [];
-  if (recipeList) {
-    recipes = recipeList.filter((recipe) => {
-      let ifFound;
-      if (recipe.ingredients.length) {
-        recipe.ingredients.forEach((ingredient) => {
-          if (
-            ingredient.toLowerCase().includes(debouncedSearchTerm.toLowerCase())
-          )
-            ifFound = true;
-        });
-      }
-      if (ifFound) {
-        return recipe;
-      } else if (recipe.name) {
-        return recipe.name
+
+  if (!recipeList) {
+    return recipes;
+  }
+
+  recipeList.forEach((recipe) => {
+    if (!recipe.name || !recipe.ingredients.length) {
+      return;
+    } else if (
+      recipe.name.toLowerCase().includes(debouncedSearchTerm.toLowerCase())
+    ) {
+      recipes.push(recipe);
+    } else if (
+      recipe.ingredients.some((ingredient) => {
+        return ingredient
           .toLowerCase()
           .includes(debouncedSearchTerm.toLowerCase());
-      }
-    });
-  }
+      })
+    ) {
+      recipes.push(recipe);
+    }
+  });
+
   return recipes;
 };
 
