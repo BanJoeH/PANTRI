@@ -59,7 +59,7 @@ const ContactPage = () => {
   };
 
   return (
-    <div className="page fade-in">
+    <div className="sign-in-and-sign-up-page fade-in">
       <div className="sign-in">
         <h2>Contact Us</h2>
         <h4>Any questions, comments or feature requests?</h4>

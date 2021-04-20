@@ -8,6 +8,7 @@ import {
   updateRecipe,
   addToShoppingList,
   editRecipeCardButton,
+  filteredRecipesByIngredientAndName,
 } from "./recipes.utils";
 
 import CardList from "../../components/cardList/card-list.component";
@@ -35,7 +36,10 @@ const Recipes = () => {
   const loaded = useSelector(
     (state) => state.firestore.status.requested.recipes
   );
-  const recipesFiltered = filteredRecipesByName(recipes, debouncedSearchTerm);
+  const recipesFiltered = filteredRecipesByIngredientAndName(
+    recipes,
+    debouncedSearchTerm
+  );
   useFirestoreConnect({
     collection: `users/${uid}/recipes`,
     storeAs: "recipes",

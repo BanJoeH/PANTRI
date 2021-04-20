@@ -14,6 +14,12 @@ const Header = () => {
   const { toggleMenu } = useContext(MenuContext);
   const burgerMenu = useContext(BurgerMenuContext);
 
+  const handleClick = (e) => {
+    e.preventDefault();
+    burgerMenu.toggleBurgerMenu();
+    toggleMenu();
+  };
+
   return (
     <header className="app-header">
       {size.width > 575 ? (
@@ -44,13 +50,7 @@ const Header = () => {
       ) : (
         <div className="small-screen">
           <img src={logo} alt="logo" className="logo" width="250" height="80" />
-          <div
-            className="burger-container"
-            onClick={() => {
-              burgerMenu.toggleBurgerMenu();
-              toggleMenu();
-            }}
-          >
+          <div className="burger-container" onClick={handleClick}>
             <div className={burgerMenu.showMenu ? "bar1 change" : "bar1"}></div>
             <div className={burgerMenu.showMenu ? "bar2 change" : "bar2"}></div>
             <div className={burgerMenu.showMenu ? "bar3 change" : "bar3"}></div>

@@ -58,14 +58,20 @@ function NewRecipe() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inputList]);
 
+  const handleShowNewRecipeClick = (e) => {
+    e.preventDefault();
+    setShowNewRecipeCard(!showNewRecipeCard);
+  };
+
+  const handleCancelClick = (e) => {
+    e.preventDefault();
+    setShowNewRecipeCard(false);
+    setError(false);
+  };
+
   return !showNewRecipeCard ? (
     <div style={{ margin: "0 5%" }}>
-      <CustomButton
-        value="newRecipe"
-        onClick={() => {
-          setShowNewRecipeCard(!showNewRecipeCard);
-        }}
-      >
+      <CustomButton value="newRecipe" onClick={handleShowNewRecipeClick}>
         Add a Recipe
       </CustomButton>
     </div>
@@ -95,13 +101,7 @@ function NewRecipe() {
         <CustomButton value="AddRecipe" onClick={handleAddNewRecipeClick}>
           Add Recipe
         </CustomButton>
-        <CustomButton
-          value="Cancel"
-          onClick={() => {
-            setShowNewRecipeCard(false);
-            setError(false);
-          }}
-        >
+        <CustomButton value="Cancel" onClick={handleCancelClick}>
           Cancel
         </CustomButton>
       </div>

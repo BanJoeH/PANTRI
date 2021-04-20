@@ -12,11 +12,39 @@ export const removeFromRecipes = async (recipeId, ref) => {
     });
 };
 
-export const filteredRecipesByName = (list, debouncedSearchTerm) => {
+export const filteredRecipesByName = (recipeList, debouncedSearchTerm) => {
   let recipes = [];
-  if (list) {
-    recipes = list.filter((recipe) => {
+  if (recipeList) {
+    recipes = recipeList.filter((recipe) => {
       if (recipe.name) {
+        return recipe.name
+          .toLowerCase()
+          .includes(debouncedSearchTerm.toLowerCase());
+      }
+    });
+  }
+  return recipes;
+};
+
+export const filteredRecipesByIngredientAndName = (
+  recipeList,
+  debouncedSearchTerm
+) => {
+  let recipes = [];
+  if (recipeList) {
+    recipes = recipeList.filter((recipe) => {
+      let ifFound;
+      if (recipe.ingredients.length) {
+        recipe.ingredients.forEach((ingredient) => {
+          if (
+            ingredient.toLowerCase().includes(debouncedSearchTerm.toLowerCase())
+          )
+            ifFound = true;
+        });
+      }
+      if (ifFound) {
+        return recipe;
+      } else if (recipe.name) {
         return recipe.name
           .toLowerCase()
           .includes(debouncedSearchTerm.toLowerCase());
@@ -39,9 +67,9 @@ export const updateRecipe = async (item, ref) => {
   return response;
 };
 
-export const addToShoppingList = async (value, list, ref) => {
+export const addToShoppingList = async (value, recipeList, ref) => {
   let response;
-  list.forEach((item) => {
+  recipeList.forEach((item) => {
     if (item.id && item.id === value) {
       response = item;
       ref.add(item).then((docRef) => {
@@ -54,7 +82,9 @@ export const addToShoppingList = async (value, list, ref) => {
   return response;
 };
 
-export const editRecipeCardButton = (event, list) => {
-  const recipeToEdit = list.find((item) => item.id === event.target.value);
+export const editRecipeCardButton = (event, recipeList) => {
+  const recipeToEdit = recipeList.find(
+    (item) => item.id === event.target.value
+  );
   return recipeToEdit;
 };
