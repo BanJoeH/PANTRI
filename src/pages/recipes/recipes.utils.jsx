@@ -26,10 +26,12 @@ export const filteredRecipesByIngredientAndName = (
     if (!recipe.name || !recipe.ingredients.length) {
       return;
     } else if (
+      // Search the recipeName for the searchTerm
       recipe.name.toLowerCase().includes(debouncedSearchTerm.toLowerCase())
     ) {
       recipes.push(recipe);
     } else if (
+      // Search the ingredients for the searchTerm
       recipe.ingredients.some((ingredient) => {
         return ingredient
           .toLowerCase()

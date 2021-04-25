@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useSelector } from "react-redux";
 import { useFirestoreConnect, useFirestore } from "react-redux-firebase";
 import { notification } from "../../App/app.utils";

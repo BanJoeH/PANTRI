@@ -42,9 +42,8 @@ function ShoppingList() {
     e.preventDefault();
     const [recipeId, , ingredientIndex] = e.target.name.split("&");
     const recipe = findRecipe(recipeId, recipes);
-    const updatedIngredients = recipe.ingredients
-      .slice()
-      .splice(ingredientIndex, 1);
+    const updatedIngredients = recipe.ingredients.slice();
+    updatedIngredients.splice(ingredientIndex, 1);
 
     removeIngredientFromShoppingList(
       recipeId,
