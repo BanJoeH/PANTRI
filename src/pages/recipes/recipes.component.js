@@ -5,10 +5,14 @@ import { notification } from "../../App/app.utils";
 import {
   removeFromRecipes,
   updateRecipe,
-  addToShoppingList,
-  editRecipeCardButton,
   filteredRecipesByIngredientAndName,
 } from "./recipes.utils";
+
+import {
+  findRecipe,
+  addToFirebaseCollection,
+  removeFromFirebaseCollection,
+} from "../../App/app.utils";
 
 import CardList from "../../components/cardList/card-list.component";
 import SearchBox from "../../components/search-box/searchbox.component.js";
@@ -54,13 +58,26 @@ const Recipes = () => {
     .doc(uid)
     .collection("recipes");
 
-  const handleRemoveFromRecipesClick = (e) => {
+  const handleRemoveFromRecipesClick = async (e) => {
     e.preventDefault();
     if (
       window.confirm("Are you sure you want to permanently delete this recipe?")
     ) {
       const recipeId = e.target.value;
-      removeFromRecipes(recipeId, recipesCollectionRef);
+      const recipeToRemove = findRecipe(recipeId, recipes);
+      const response = await removeFromFirebaseCollection(
+        recipeToRemove,
+        recipesCollectionRef
+      );
+      if (response === "error") {
+        notification(
+          "Error",
+          "error removing recipe, please try again",
+          "danger"
+        );
+      } else {
+        notification(response.name, "Deleted", "success");
+      }
     }
   };
 
@@ -70,19 +87,33 @@ const Recipes = () => {
 
   const handleAddToShoppingListClick = async (e) => {
     e.preventDefault();
-    const value = e.target.value;
-    const response = await addToShoppingList(
-      value,
-      recipes,
+
+    const recipeToAdd = findRecipe(e.target.value, recipes);
+
+    const response = await addToFirebaseCollection(
+      recipeToAdd,
       shoppingListCollectionRef
     );
-    notification(response.name, "Added to your shopping list", "success");
-    setSearchField("");
+    if (response === "error") {
+      notification("Error", "error adding to shopping list", "danger");
+    } else {
+      notification(response.name, "Added to your shopping list", "success");
+      setSearchField("");
+    }
   };
 
   const handleEditRecipeCardButtonClick = (e) => {
     e.preventDefault();
-    setEditingRecipe(editRecipeCardButton(e, recipes));
+    const foundRecipe = findRecipe(e.target.value, recipes);
+    if (foundRecipe === undefined) {
+      notification(
+        "error",
+        "error finding recipe, please contact admin to resolve issue",
+        "danger"
+      );
+    } else {
+      setEditingRecipe(foundRecipe);
+    }
   };
 
   const handleUpdateRecipeClick = async (e) => {

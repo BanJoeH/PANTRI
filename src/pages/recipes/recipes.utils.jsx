@@ -17,9 +17,11 @@ export const filteredRecipesByIngredientAndName = (
   debouncedSearchTerm
 ) => {
   let recipes = [];
-
   if (!recipeList) {
     return recipes;
+  }
+  if (!debouncedSearchTerm) {
+    return recipeList;
   }
 
   recipeList.forEach((recipe) => {
@@ -56,26 +58,4 @@ export const updateRecipe = async (item, ref) => {
       console.log("error updating recipe", error);
     });
   return response;
-};
-
-export const addToShoppingList = async (value, recipeList, ref) => {
-  let response;
-  recipeList.forEach((item) => {
-    if (item.id && item.id === value) {
-      response = item;
-      ref.add(item).then((docRef) => {
-        docRef.update({
-          id: docRef.id,
-        });
-      });
-    }
-  });
-  return response;
-};
-
-export const editRecipeCardButton = (event, recipeList) => {
-  const recipeToEdit = recipeList.find(
-    (item) => item.id === event.target.value
-  );
-  return recipeToEdit;
 };

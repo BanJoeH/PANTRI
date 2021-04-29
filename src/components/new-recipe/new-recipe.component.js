@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react";
 import { useFirestore } from "react-redux-firebase";
 import { useSelector } from "react-redux";
-import { notification } from "../../App/app.utils";
-import { addNewRecipe } from "./new-recipe.utils";
+import { notification, addToFirebaseCollection } from "../../App/app.utils";
 import CustomButton from "../custom-button/custom-button.component.jsx";
 import IngredientInput from "../ingredient-input/ingredient-input.component.js";
 import CustomInput from "../custom-input/custom-input.component";
@@ -34,17 +33,28 @@ function NewRecipe() {
     setNewRecipe({ ...newRecipe, [name]: value });
   };
 
-  const handleAddNewRecipeClick = (e) => {
+  const handleAddNewRecipeClick = async (e) => {
     e.preventDefault();
     if (!newRecipe.name) {
       setError(true);
     } else {
-      addNewRecipe(newRecipe, recipesCollectionRef);
-      setError(false);
-      notification(newRecipe.name, "Added to Recipes", "success");
-      setNewRecipe({ name: "", link: "", ingredients: [] });
-      setInputList([{ ingredient: "", ingredientRef: null }]);
-      setShowNewRecipeCard(!showNewRecipeCard);
+      const response = await addToFirebaseCollection(
+        newRecipe,
+        recipesCollectionRef
+      );
+      if (response === "error") {
+        notification(
+          "Error",
+          "error adding new recipe, please try again",
+          "danger"
+        );
+      } else {
+        setError(false);
+        notification(newRecipe.name, "Added to Recipes", "success");
+        setNewRecipe({ name: "", link: "", ingredients: [] });
+        setInputList([{ ingredient: "", ingredientRef: null }]);
+        setShowNewRecipeCard(!showNewRecipeCard);
+      }
     }
   };
 
