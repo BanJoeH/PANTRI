@@ -13,6 +13,8 @@ import {
   removeFromFirebaseCollection,
   notification,
 } from "../../App/app.utils";
+import PageContainer from "../../components/page-container/page-container";
+import PageHeaderContainer from "../../components/page-header-container/page-header-container";
 
 const ShoppingList = () => {
   const { uid } = useSelector((state) => state.firebase.auth);
@@ -69,12 +71,11 @@ const ShoppingList = () => {
 
   return (
     !isLoading && (
-      <div className="page fade-in">
-        <div className="page-header">
-          <h2 className="title">Shopping List</h2>
+      <PageContainer>
+        <PageHeaderContainer title="Shopping List">
           <OddBits />
           {recipes?.length ? <SortShopping recipes={recipes} /> : null}
-        </div>
+        </PageHeaderContainer>
         {recipes?.length ? (
           <CardList
             recipes={recipes}
@@ -88,7 +89,7 @@ const ShoppingList = () => {
             <h2>Go to Recipes to add some!</h2>
           </div>
         )}
-      </div>
+      </PageContainer>
     )
   );
 };

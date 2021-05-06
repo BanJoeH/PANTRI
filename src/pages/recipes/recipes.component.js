@@ -3,7 +3,6 @@ import { useSelector } from "react-redux";
 import { useFirestoreConnect, useFirestore } from "react-redux-firebase";
 import { notification } from "../../App/app.utils";
 import {
-  removeFromRecipes,
   updateRecipe,
   filteredRecipesByIngredientAndName,
 } from "./recipes.utils";
@@ -13,12 +12,14 @@ import {
   addToFirebaseCollection,
   removeFromFirebaseCollection,
 } from "../../App/app.utils";
+import useDebounce from "../../App/useDebounce.utils";
 
 import CardList from "../../components/cardList/card-list.component";
 import SearchBox from "../../components/search-box/searchbox.component.js";
 import NewRecipe from "../../components/new-recipe/new-recipe.component";
 import EditRecipe from "../../components/edit-recipe/edit-recipe.component";
-import useDebounce from "../../App/useDebounce.utils";
+import PageContainer from "../../components/page-container/page-container";
+import PageHeaderContainer from "../../components/page-header-container/page-header-container";
 
 const Recipes = () => {
   const [editingRecipe, setEditingRecipe] = useState({
@@ -135,9 +136,8 @@ const Recipes = () => {
 
   return (
     !isloading && (
-      <div className="page fade-in">
-        <div className="page-header">
-          <h2 className="title">Recipe List</h2>
+      <PageContainer>
+        <PageHeaderContainer title="Recipe List">
           <EditRecipe
             editingRecipe={editingRecipe}
             setEditingRecipe={setEditingRecipe}
@@ -145,7 +145,7 @@ const Recipes = () => {
           />
           <NewRecipe />
           <SearchBox searchChange={onSearchChange} searchField={searchField} />
-        </div>
+        </PageHeaderContainer>
         {!isloading && loaded && recipesFiltered.length ? (
           <CardList
             recipes={recipesFiltered}
@@ -163,7 +163,7 @@ const Recipes = () => {
             <h2>Go to Add a recipe to add some!</h2>
           </div>
         )}
-      </div>
+      </PageContainer>
     )
   );
 };

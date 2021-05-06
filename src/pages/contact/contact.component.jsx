@@ -6,6 +6,8 @@ import { notification } from "../../App/app.utils";
 
 import CustomInput from "../../components/custom-input/custom-input.component";
 import CustomButton from "../../components/custom-button/custom-button.component";
+import PageContainer from "../../components/page-container/page-container";
+import PageHeaderContainer from "../../components/page-header-container/page-header-container";
 
 const ContactPage = () => {
   const history = useHistory();
@@ -59,9 +61,8 @@ const ContactPage = () => {
   };
 
   return (
-    <div className="sign-in-and-sign-up-page fade-in">
-      <div className="sign-in">
-        <h2>Contact Us</h2>
+    <PageContainer>
+      <PageHeaderContainer title="Contact Us">
         <h4>Any questions, comments or feature requests?</h4>
 
         <form className="sign-in-form" onSubmit={handleSubmit}>
@@ -101,8 +102,8 @@ const ContactPage = () => {
             Submit
           </CustomButton>
         </form>
-      </div>
-    </div>
+      </PageHeaderContainer>
+    </PageContainer>
   );
 };
 

@@ -115,8 +115,15 @@ a {
   width: 100%;
 
   .page-header {
+    margin-top: 10px;
+    padding: 10px;
+    background-color: $dark-0;
     max-width: 500px;
     width: 100%;
+    color: $dark-secondary-text;
+    border: 1.5px solid $dark-2;
+    border-radius: 6px;
+    box-shadow: 4px 4px 8px 0px rgba(0, 0, 0, 0.4);
   }
   .recipes-empty {
     align-items: center;
@@ -141,7 +148,7 @@ a {
     padding: 15px 0;
     text-align: center;
     width: 100%;
-    margin: 10px 0 0 0;
+    margin: 10px 0;
     @media screen and (max-width: 575px) {
       margin-top: 100px;
     }

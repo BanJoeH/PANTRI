@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router";
 import CustomButton from "../../components/custom-button/custom-button.component";
 import CustomInput from "../../components/custom-input/custom-input.component";
+import PageContainer from "../../components/page-container/page-container";
+import PageHeaderContainer from "../../components/page-header-container/page-header-container";
 import { auth } from "../../firebase/firebase.utils";
 
 const ForgotPassword = () => {
@@ -47,9 +49,8 @@ const ForgotPassword = () => {
     }
   }, [errorMessage, history]);
   return (
-    <div className="page fade-in">
-      <div className="sign-in">
-        <h2>Forgotten Password</h2>
+    <PageContainer>
+      <PageHeaderContainer title="Forgotten Password">
         <CustomInput
           name="email"
           type="email"
@@ -62,8 +63,8 @@ const ForgotPassword = () => {
           {" "}
           Reset Password{" "}
         </CustomButton>
-      </div>
-    </div>
+      </PageHeaderContainer>
+    </PageContainer>
   );
 };
 
