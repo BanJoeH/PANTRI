@@ -15,12 +15,14 @@ import {
 } from "../../App/app.utils";
 import PageContainer from "../../components/page-container/page-container";
 import PageHeaderContainer from "../../components/page-header-container/page-header-container";
+import { useHistory } from "react-router";
 
 const ShoppingList = () => {
   const { uid } = useSelector((state) => state.firebase.auth);
   const isLoading = useSelector(
     (state) => state.firestore.status.requesting.shoppingList
   );
+  const history = useHistory();
 
   useFirestoreConnect({
     collection: `users/${uid}/shoppingList`,
@@ -84,7 +86,13 @@ const ShoppingList = () => {
             ingredientButton={handleRemoveIngredientFromShoppingListItemClick}
           />
         ) : (
-          <div className="card">
+          <div
+            className="card"
+            onClick={() => {
+              history.push("/PANTRI/recipes");
+            }}
+            style={{ cursor: "pointer" }}
+          >
             <h2>No recipes in your shopping list.</h2>
             <h2>Go to Recipes to add some!</h2>
           </div>

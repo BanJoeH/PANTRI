@@ -29,7 +29,7 @@ const OddBits = () => {
   };
 
   const updateOddBits = (inputList, uid) => {
-    let ingredients = inputList.map((input, i) => {
+    let ingredients = inputList.map((input) => {
       return input.ingredient;
     });
     firestore.collection("users").doc(uid).set(

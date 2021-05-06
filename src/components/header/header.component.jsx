@@ -2,14 +2,14 @@ import React, { useContext } from "react";
 import { useSelector } from "react-redux";
 import { auth } from "../../firebase/firebase.utils";
 import { MenuContext } from "react-flexible-sliding-menu";
-import { useWindowSize } from "../../App/app.utils";
+import { useWindowSize } from "../../App/useWindowSize.utils";
 import { Link } from "react-router-dom";
 import BurgerMenuContext from "../../App/context";
 import "./header.styles.scss";
 import logo from "../../assets/P Pantri white.png";
 
 const Header = () => {
-  const { isEmpty } = useSelector((state) => state.firebase.auth);
+  const noUser = useSelector((state) => state.firebase.auth.isEmpty);
   const size = useWindowSize();
   const { toggleMenu } = useContext(MenuContext);
   const burgerMenu = useContext(BurgerMenuContext);
@@ -36,7 +36,7 @@ const Header = () => {
             <Link className="nav-link" to="/PANTRI/contact">
               Contact
             </Link>
-            {isEmpty ? (
+            {noUser ? (
               <Link className="nav-link" to="/PANTRI/">
                 Sign In
               </Link>

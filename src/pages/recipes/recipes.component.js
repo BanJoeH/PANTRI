@@ -160,7 +160,7 @@ const Recipes = () => {
         ) : (
           <div className="card">
             <h2>No recipes in your recipe list.</h2>
-            <h2>Go to Add a recipe to add some!</h2>
+            <h2>Click add a recipe above to add some!</h2>
           </div>
         )}
       </PageContainer>

@@ -14,29 +14,6 @@ export const notification = (title, msg, type) => {
   });
 };
 
-export const useWindowSize = () => {
-  const [windowSize, setWindowSize] = useState({
-    width: undefined,
-    height: undefined,
-  });
-
-  useEffect(() => {
-    function handleResize() {
-      setWindowSize({
-        width: window.innerWidth,
-        height: window.innerHeight,
-      });
-    }
-
-    window.addEventListener("resize", handleResize);
-
-    handleResize();
-
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-  return windowSize;
-};
-
 export const findRecipe = (recipeId, recipeList) => {
   const recipe = recipeList.find((recipe) => recipe.id === recipeId);
 
@@ -72,9 +49,7 @@ export const removeFromFirebaseCollection = async (recipe, ref) => {
     .doc(recipe.id)
     .delete()
     .then((response = recipe))
-    .then(() => {
-      notification("", "Deleted", "danger");
-    })
+
     .catch((error) => {
       console.log("error removing document", error);
       response = "error";

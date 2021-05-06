@@ -15,10 +15,18 @@ const IngredientInput = ({
     setInputList(list);
   };
 
-  const handleRemoveClick = (index) => {
+  const handleRemoveClick = (e) => {
+    e.preventDefault();
+    const index = e.target.value;
+
     const list = [...inputList];
-    list.splice(index, 1);
-    setInputList(list);
+    if (inputList.length > 1) {
+      list.splice(index, 1);
+      setInputList(list);
+    } else if (inputList.length === 1) {
+      list[0].ingredient = "";
+      setInputList(list);
+    }
   };
 
   const handleAddClick = () => {
@@ -72,14 +80,14 @@ const IngredientInput = ({
               </button>
             </div>
           )}
-          {inputList.length !== 1 && (
-            <button
-              onClick={() => handleRemoveClick(i)}
-              className="ingredient-button delete"
-            >
-              &#10005;
-            </button>
-          )}
+
+          <button
+            value={i}
+            onClick={handleRemoveClick}
+            className="ingredient-button delete"
+          >
+            &#10005;
+          </button>
         </div>
       </div>
     );
