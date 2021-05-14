@@ -49,7 +49,7 @@ const ShoppingList = () => {
     if (response === "error") {
       notification(
         "Error",
-        "error removing recipe, please try again",
+        "Error removing recipe, please try again",
         "danger"
       );
     } else {

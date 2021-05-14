@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { store } from "react-notifications-component";
 
 export const notification = (title, msg, type) => {
@@ -15,44 +14,44 @@ export const notification = (title, msg, type) => {
 };
 
 export const findRecipe = (recipeId, recipeList) => {
+  if (!recipeId || !recipeList) {
+    return null;
+  }
   const recipe = recipeList.find((recipe) => recipe.id === recipeId);
-
+  if (recipe === undefined) {
+    return null;
+  }
   return recipe;
 };
 
 export const filterRecipeOut = (recipeId, recipeList) => {
+  if (!recipeId || !recipeList) {
+    return null;
+  }
   const recipes = recipeList.filter((recipe) => recipe.id !== recipeId);
 
   return recipes;
 };
 
 export const addToFirebaseCollection = async (recipe, collectionRef) => {
-  let response = null;
-  collectionRef
-    .add(recipe)
-    .then((docRef) => {
-      docRef.update({
-        id: docRef.id,
-      });
-    })
-    .then((response = recipe))
-    .catch((error) => {
-      response = "error";
+  try {
+    const docRef = await collectionRef.add(recipe);
+    await docRef.update({
+      id: docRef.id,
     });
-
-  return response;
+  } catch (error) {
+    console.log(error);
+    return "error";
+  }
+  return recipe;
 };
 
-export const removeFromFirebaseCollection = async (recipe, ref) => {
-  let response = null;
-  await ref
-    .doc(recipe.id)
-    .delete()
-    .then((response = recipe))
-
-    .catch((error) => {
-      console.log("error removing document", error);
-      response = "error";
-    });
-  return response;
+export const removeFromFirebaseCollection = async (recipe, collectionRef) => {
+  try {
+    await collectionRef.doc(recipe.id).delete();
+  } catch (error) {
+    console.log("ERROR REMOVING DOCUMENT", error);
+    return "error";
+  }
+  return recipe;
 };

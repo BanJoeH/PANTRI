@@ -68,13 +68,3 @@ describe("recipeUtils filterRecipesByIngredientAndName", () => {
     expect(utils.filteredRecipesByIngredientAndName()).toEqual([]);
   });
 });
-
-// describe("recipeUtils findRecipe", () => {
-//   it("should return diyNandos based on recipeId", () => {
-//     expect(utils.findRecipe("s5zIC9lDBMGRpORsCGC2", data)).toEqual(diyNandos);
-//   });
-
-//   it("should return undefined when recipeId not found", () => {
-//     expect(utils.findRecipe("randomRecipeId", data)).toBeUndefined();
-//   });
-// });

@@ -1,17 +1,3 @@
-import { notification } from "../../App/app.utils";
-
-export const removeFromRecipes = async (recipeId, ref) => {
-  await ref
-    .doc(recipeId)
-    .delete()
-    .then(() => {
-      notification("", "Deleted", "danger");
-    })
-    .catch((error) => {
-      console.log("error removing document", error);
-    });
-};
-
 export const filteredRecipesByIngredientAndName = (
   recipeList,
   debouncedSearchTerm
