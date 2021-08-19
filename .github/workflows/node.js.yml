@@ -33,6 +33,7 @@ jobs:
     - name: Run Tests
       run: npm test
       
-    - name: Github Tag with semantic versioning
-      uses: hennejg/github-tag-action@v4.3.1
+    - name: GitHub Tag
+      uses: mathieudutour/github-tag-action@v5.6
+
 
