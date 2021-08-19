@@ -6,6 +6,9 @@ name: Node.js CI
 on:
   push:
     branches: [ master ]
+    paths-ignore:
+     - 'package.json'
+     - 'RELEASE.md'
 
 jobs:
   build:
@@ -32,8 +35,12 @@ jobs:
 
     - name: Run Tests
       run: npm test
-      
-    - name: GitHub Tag
-      uses: mathieudutour/github-tag-action@v5.6
 
-
+    - name: Bump version and push tag
+      uses: TriPSs/conventional-changelog-action@master
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN_ACTION }}
+        git-message: 'chore(release): {version}'
+        preset: 'angular'
+        tag-prefix: ''
+        output-file: 'CHANGELOG.md'
