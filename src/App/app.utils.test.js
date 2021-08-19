@@ -18,7 +18,7 @@ const diyNandos = {
 
 describe("findRecipe", () => {
   it("returns null if args are wrong", () => {
-    expect(utils.findRecipe()).toEqual(true);
+    expect(utils.findRecipe()).toEqual(null);
   });
 
   it("returns diyNandos with recipeId of `s5zIC9lDBMGRpORsCGC2`", () => {
