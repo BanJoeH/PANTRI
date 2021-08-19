@@ -12,6 +12,7 @@ import CookieConsent from "react-cookie-consent";
 import Header from "./components/header/header.component.jsx";
 import Footer from "./components/footer/footer.jsx";
 
+
 import "./App.scss";
 
 const ShoppingList = lazy(() =>
