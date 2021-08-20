@@ -46,6 +46,7 @@ export const addToFirebaseCollection = async (recipe, collectionRef) => {
   return recipe;
 };
 
+
 export const removeFromFirebaseCollection = async (recipe, collectionRef) => {
   try {
     await collectionRef.doc(recipe.id).delete();
