@@ -28,6 +28,7 @@ const ForgotPassword = lazy(() =>
 );
 const ContactPage = lazy(() => import("./pages/contact/contact.component"));
 
+
 export default function App() {
   const [showMenu, setShowMenu] = useState(false);
   const isLoaded = useSelector((state) => state.firebase.auth.isLoaded);
