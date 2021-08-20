@@ -1,7 +1,7 @@
 {
   "homepage": "https://BanJoeH.github.io/PANTRI",
   "name": "recipeshoppinglist2.0",
-  "version": "2.6.3",
+  "version": "2.6.4",
   "private": true,
   "dependencies": {
     "@reduxjs/toolkit": "^1.6.1",
