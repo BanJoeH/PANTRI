@@ -24,4 +24,3 @@ jobs:
           tag-prefix: ""
           output-file: "CHANGELOG.md"
           version-file: "package.json, package-lock.json"
-          skip-on-empty: "false"
