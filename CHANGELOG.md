@@ -1,3 +1,12 @@
+# [2.5.0](https://github.com/BanJoeH/PANTRI/compare/2.4.3...2.5.0) (2021-08-20)
+
+
+### Features
+
+* dev feat ([48dc6da](https://github.com/BanJoeH/PANTRI/commit/48dc6dad65baeb1f813dcc67b3c0835b3205891d))
+
+
+
 ## [2.4.3](https://github.com/BanJoeH/PANTRI/compare/2.4.2...2.4.3) (2021-08-20)
 
 
@@ -32,10 +41,6 @@
 ### Features
 
 * test feat ([267e119](https://github.com/BanJoeH/PANTRI/commit/267e1196ae668cc411c864e31187d311c724cbef))
-
-
-
-## [2.3.1](https://github.com/BanJoeH/PANTRI/compare/2.3.0...2.3.1) (2021-08-20)
 
 
 
