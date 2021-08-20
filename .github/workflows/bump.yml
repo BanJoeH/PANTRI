@@ -19,9 +19,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          commit-message: "chore(release): {{version}}"
+          commit-message: "chore(release): {{version}} [skip ci]"
           target-branch: "master"
-          tag-prefix: ""
           minor-wording: 'feat,feature'
           major-wording: 'MAJOR,BREAKING CHANGE,BREAKING CHANGES'
           patch-wording: 'fix,patch,hotfix,bugfix'
