@@ -1,3 +1,12 @@
+## [3.0.4](https://github.com/BanJoeH/PANTRI/compare/3.0.3...3.0.4) (2021-08-20)
+
+
+### Bug Fixes
+
+* test ([d8b4686](https://github.com/BanJoeH/PANTRI/commit/d8b46865b28c71e5dc23d66d958444ab080e57c8))
+
+
+
 ## [3.0.3](https://github.com/BanJoeH/PANTRI/compare/3.0.2...3.0.3) (2021-08-20)
 
 
@@ -36,15 +45,6 @@
 ### BREAKING CHANGES
 
 * body of git commit
-
-
-
-## [2.7.1](https://github.com/BanJoeH/PANTRI/compare/2.7.0...2.7.1) (2021-08-20)
-
-
-### Bug Fixes
-
-* BREAKING CHANGE ([b4f70b0](https://github.com/BanJoeH/PANTRI/commit/b4f70b0294f10822e5a1487fd657f32e9058cfa5))
 
 
 
