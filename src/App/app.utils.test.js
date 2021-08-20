@@ -42,6 +42,6 @@ describe("filterRecipeOut", () => {
   });
 
   it("returns full recipeList if not found", () => {
-    expect(utils.filterRecipeOut("alkjshdl", recipeList)).toEqual(recipeList);
+    expect(utils.filterRecipeOut("alkjsshdl", recipeList)).toEqual(recipeList);
   });
 });
