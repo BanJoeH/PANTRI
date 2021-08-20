@@ -33,6 +33,15 @@ export const filterRecipeOut = (recipeId, recipeList) => {
   return recipes;
 };
 
+export const removeFromFirebaseCollection = async (recipe, collectionRef) => {
+  try {
+    await collectionRef.doc(recipe.id).delete();
+  } catch (error) {
+    console.log("ERROR REMOVING DOCUMENT", error);
+    return "error";
+  }
+  return recipe;
+};
 
 export const addToFirebaseCollection = async (recipe, collectionRef) => {
   try {
@@ -47,12 +56,3 @@ export const addToFirebaseCollection = async (recipe, collectionRef) => {
   return recipe;
 };
 
-export const removeFromFirebaseCollection = async (recipe, collectionRef) => {
-  try {
-    await collectionRef.doc(recipe.id).delete();
-  } catch (error) {
-    console.log("ERROR REMOVING DOCUMENT", error);
-    return "error";
-  }
-  return recipe;
-};
