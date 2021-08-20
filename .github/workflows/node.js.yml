@@ -36,11 +36,11 @@ jobs:
     - name: Run Tests
       run: npm test
 
-    - name: Bump version and push tag
-      uses: TriPSs/conventional-changelog-action@v3
-      with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
-        git-message: 'chore(release): {version}'
-        preset: 'angular'
-        tag-prefix: 'v'
-        output-file: 'CHANGELOG.md'
+    # - name: Bump version and push tag
+    #   uses: TriPSs/conventional-changelog-action@v3
+    #   with:
+    #     github-token: ${{ secrets.GITHUB_TOKEN }}
+    #     git-message: 'chore(release): {version}'
+    #     preset: 'angular'
+    #     tag-prefix: 'v'
+    #     output-file: 'CHANGELOG.md'
