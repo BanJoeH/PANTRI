@@ -1,3 +1,17 @@
+# [2.7.0](https://github.com/BanJoeH/PANTRI/compare/2.6.5...2.7.0) (2021-08-20)
+
+
+### Bug Fixes
+
+* test fix ([b92150f](https://github.com/BanJoeH/PANTRI/commit/b92150f89c0de315f4aa1cbef0246b9b2c50af72))
+
+
+### Features
+
+* test feat ([917c268](https://github.com/BanJoeH/PANTRI/commit/917c2685b03146bf7fc5d488ac7637ba8e1dffca))
+
+
+
 ## [2.6.5](https://github.com/BanJoeH/PANTRI/compare/2.6.4...2.6.5) (2021-08-20)
 
 
@@ -32,15 +46,6 @@
 ### Bug Fixes
 
 * hotfix test ([0254894](https://github.com/BanJoeH/PANTRI/commit/0254894046c65dad35fafdd739e103a0eb2bfa61))
-
-
-
-## [2.6.1](https://github.com/BanJoeH/PANTRI/compare/2.6.0...2.6.1) (2021-08-20)
-
-
-### Bug Fixes
-
-* dev fix ([1b13509](https://github.com/BanJoeH/PANTRI/commit/1b135098a6686d29e19f4b3a69db8df50f7c092f))
 
 
 
