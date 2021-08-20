@@ -24,6 +24,7 @@ export const findRecipe = (recipeId, recipeList) => {
   return recipe;
 };
 
+
 export const filterRecipeOut = (recipeId, recipeList) => {
   if (!recipeId || !recipeList) {
     return null;
@@ -32,6 +33,7 @@ export const filterRecipeOut = (recipeId, recipeList) => {
 
   return recipes;
 };
+
 
 export const removeFromFirebaseCollection = async (recipe, collectionRef) => {
   try {
