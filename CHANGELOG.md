@@ -1,3 +1,12 @@
+# [2.3.0](https://github.com/BanJoeH/PANTRI/compare/2.2.2...2.3.0) (2021-08-20)
+
+
+### Features
+
+* feature test ([32e51a1](https://github.com/BanJoeH/PANTRI/commit/32e51a1c5cd428a41e1f5d28bc11d8a879247cd2))
+
+
+
 ## [2.2.2](https://github.com/BanJoeH/PANTRI/compare/2.2.1...2.2.2) (2021-08-20)
 
 
@@ -21,10 +30,6 @@
 
 
 ## [2.1.4](https://github.com/BanJoeH/PANTRI/compare/2.1.3...2.1.4) (2021-08-20)
-
-
-
-## [2.1.3](https://github.com/BanJoeH/PANTRI/compare/2.1.2...2.1.3) (2021-08-20)
 
 
 
