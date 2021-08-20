@@ -26,7 +26,7 @@ describe("findRecipe", () => {
   });
 
   it("returns null if not found", () => {
-    expect(utils.findRecipe("alkjshdl", recipeList)).toEqual(null);
+    expect(utils.findRecipe("alkjshdla", recipeList)).toEqual(null);
   });
 });
 
