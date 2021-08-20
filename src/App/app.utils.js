@@ -1,8 +1,8 @@
 import { store } from "react-notifications-component";
 
-export const notification = (titlee, msg, type) => {
+export const notification = (title, msg, type) => {
   store.addNotification({
-    title: titlee,
+    title: title,
     message: msg,
     type: type,
     insert: "bottom",
