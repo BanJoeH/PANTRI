@@ -13,6 +13,16 @@ export const notification = (title, msg, type) => {
   });
 };
 
+
+export const filterRecipeOut = (recipeId, recipeList) => {
+  if (!recipeId || !recipeList) {
+    return null;
+  }
+  const recipes = recipeList.filter((recipe) => recipe.id !== recipeId);
+
+  return recipes;
+};
+
 export const findRecipe = (recipeId, recipeList) => {
   if (!recipeId || !recipeList) {
     return null;
@@ -22,15 +32,6 @@ export const findRecipe = (recipeId, recipeList) => {
     return null;
   }
   return recipe;
-};
-
-export const filterRecipeOut = (recipeId, recipeList) => {
-  if (!recipeId || !recipeList) {
-    return null;
-  }
-  const recipes = recipeList.filter((recipe) => recipe.id !== recipeId);
-
-  return recipes;
 };
 
 export const addToFirebaseCollection = async (recipe, collectionRef) => {
