@@ -33,6 +33,7 @@ export const filterRecipeOut = (recipeId, recipeList) => {
   return recipes;
 };
 
+
 export const removeFromFirebaseCollection = async (recipe, collectionRef) => {
   try {
     await collectionRef.doc(recipe.id).delete();
@@ -42,7 +43,6 @@ export const removeFromFirebaseCollection = async (recipe, collectionRef) => {
   }
   return recipe;
 };
-
 
 export const addToFirebaseCollection = async (recipe, collectionRef) => {
   try {
