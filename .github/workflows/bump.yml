@@ -14,12 +14,12 @@ jobs:
       - uses: actions/checkout@v2
         with:
           token: ${{ secrets.GITHUB_TOKEN  }}
-      - name: Automated Version Bump
-        uses: phips28/gh-action-bump-version@v8.0.18
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Bump version and push tag
+        uses: TriPSs/conventional-changelog-action@v3
         with:
-          target-branch: "master"
-          minor-wording: 'feat,feature'
-          major-wording: 'MAJOR,BREAKING CHANGE,BREAKING CHANGES'
-          patch-wording: 'fix,patch,hotfix,bugfix'
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          git-message: "chore(release): {version}"
+          preset: "angular"
+          tag-prefix: ""
+          output-file: "CHANGELOG.md"
+          version-file: "package.json"
