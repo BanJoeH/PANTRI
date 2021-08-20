@@ -1,3 +1,7 @@
+## [2.2.2](https://github.com/BanJoeH/PANTRI/compare/2.2.1...2.2.2) (2021-08-20)
+
+
+
 ## [2.2.1](https://github.com/BanJoeH/PANTRI/compare/2.2.0...2.2.1) (2021-08-20)
 
 
@@ -21,10 +25,6 @@
 
 
 ## [2.1.3](https://github.com/BanJoeH/PANTRI/compare/2.1.2...2.1.3) (2021-08-20)
-
-
-
-## [2.1.2](https://github.com/BanJoeH/PANTRI/compare/2.1.1...2.1.2) (2021-08-20)
 
 
 
