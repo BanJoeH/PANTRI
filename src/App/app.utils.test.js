@@ -26,7 +26,7 @@ describe("findRecipe", () => {
   });
 
   it("returns null if not found", () => {
-    expect(utils.findRecipe("alkjshdl", recipeList)).toEqual(null);
+    expect(utils.findRecipe("alkjshdla", recipeList)).toEqual(null);
   });
 });
 
@@ -42,6 +42,6 @@ describe("filterRecipeOut", () => {
   });
 
   it("returns full recipeList if not found", () => {
-    expect(utils.filterRecipeOut("alkjshdl", recipeList)).toEqual(recipeList);
+    expect(utils.filterRecipeOut("alkjsshdl", recipeList)).toEqual(recipeList);
   });
 });
