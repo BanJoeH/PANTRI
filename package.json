@@ -8,7 +8,7 @@
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/user-event": "^12.6.3",
     "emailjs-com": "^2.6.4",
-    "firebase": "^8.9.1",
+    "firebase": "^8.10.0",
     "gh-pages": "^3.2.3",
     "react": "^17.0.1",
     "react-cookie-consent": "^6.3.0",
