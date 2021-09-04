@@ -1,3 +1,12 @@
+# [5.1.0](https://github.com/BanJoeH/PANTRI/compare/5.0.2...5.1.0) (2021-09-04)
+
+
+### Features
+
+* added sort by name to all recipe lists ([dc3727d](https://github.com/BanJoeH/PANTRI/commit/dc3727dceebe4ce263f7d99b9f3f31fa44f16fe1))
+
+
+
 ## [5.0.2](https://github.com/BanJoeH/PANTRI/compare/4.0.1...5.0.2) (2021-08-20)
 
 
@@ -21,10 +30,6 @@
 
 
 # [3.1.0](https://github.com/BanJoeH/PANTRI/compare/v3.0.5...v3.1.0) (2021-08-20)
-
-
-
-## [3.0.5](https://github.com/BanJoeH/PANTRI/compare/3.0.4...v3.0.5) (2021-08-20)
 
 
 
