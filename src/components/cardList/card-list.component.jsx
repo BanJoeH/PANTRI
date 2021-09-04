@@ -24,6 +24,18 @@ function CardList({
     1400: 2,
     1000: 1,
   };
+  console.log(recipes);
+
+  const copyRecipes = [...recipes];
+  const sortCompareByName = (a, b) => {
+    if (a.name.toLowerCase() < b.name.toLowerCase()) {
+      return -1;
+    }
+    if (a.name.toLowerCase() > b.name.toLowerCase()) {
+      return 1;
+    }
+    return 0;
+  };
 
   return (
     <div className="card-list fade-in">
@@ -32,7 +44,7 @@ function CardList({
         className="masonry-grid"
         columnClassName="masonry-grid_column"
       >
-        {recipes.map((recipe) => {
+        {copyRecipes.sort(sortCompareByName).map((recipe) => {
           if (recipe !== null) {
             return (
               <Card
