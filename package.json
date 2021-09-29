@@ -29,7 +29,7 @@
     "workbox-core": "^6.2.4",
     "workbox-expiration": "^6.2.4",
     "workbox-google-analytics": "^6.2.4",
-    "workbox-navigation-preload": "^6.2.4",
+    "workbox-navigation-preload": "^6.3.0",
     "workbox-precaching": "^6.2.4",
     "workbox-range-requests": "^6.2.4",
     "workbox-routing": "^6.2.4",
@@ -63,7 +63,7 @@
     ]
   },
   "devDependencies": {
-    "@testing-library/react": "^12.0.0",
+    "@testing-library/react": "^12.1.1",
     "@wojtekmaj/enzyme-adapter-react-17": "^0.6.3",
     "enzyme": "^3.11.0",
     "enzyme-to-json": "^3.6.2",
