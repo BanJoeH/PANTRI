@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import Card from "../card/card.component";
 import CustomButton from "../custom-button/custom-button.component";
+import { useModal } from "../modal/useModal";
 
 const SortShopping = ({ recipes }) => {
+  const { openModal } = useModal();
   const [showSort, setShowSort] = useState(false);
   const [sortShoppingRecipe, setSortShoppingRecipe] = useState({
     id: "sort",
@@ -12,7 +14,16 @@ const SortShopping = ({ recipes }) => {
   });
 
   const togleShowSort = () => {
-    setShowSort(!showSort);
+    openModal(
+      <Card
+        recipe={sortShoppingRecipe}
+        removeFromRecipes={togleShowSort}
+        button={togleShowSort}
+        ingredientButton={handleRemoveIngredientClick}
+      />
+    );
+    // setModalOpen(true);
+    // setShowSort(!showSort);
   };
 
   const handleRemoveIngredientClick = (e) => {

@@ -20,7 +20,7 @@ const IngredientList = ({
               {pathname === "/PANTRI/shoppingList" ? (
                 <button
                   className="ingredient-button"
-                  onClick={ingredientButton}
+                  onClick={(e) => ingredientButton(e, recipeId, ingredient, i)}
                   name={recipeId + "&" + ingredient + "&" + i}
                 >
                   &#10005;

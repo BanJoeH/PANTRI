@@ -12,8 +12,8 @@ import CookieConsent from "react-cookie-consent";
 import Header from "./components/header/header.component.jsx";
 import Footer from "./components/footer/footer.jsx";
 
-
 import "./App.scss";
+import GlobalModal from "./components/modal/modal";
 
 const ShoppingList = lazy(() =>
   import("./pages/shopping-list/shopping-list.component.js")
@@ -27,7 +27,6 @@ const ForgotPassword = lazy(() =>
   import("./pages/forgot-password/forgot-password.component")
 );
 const ContactPage = lazy(() => import("./pages/contact/contact.component"));
-
 
 export default function App() {
   const [showMenu, setShowMenu] = useState(false);
@@ -59,7 +58,7 @@ export default function App() {
           <div className="app">
             <ReactNotification />
             <Header />
-
+            <GlobalModal />
             <div className="body">
               <Switch>
                 <Route path="/PANTRI/recipes">
