@@ -1,44 +1,24 @@
 import React, { useState } from "react";
-import Card from "../card/card.component";
+import { useSelector } from "react-redux";
 import CustomButton from "../custom-button/custom-button.component";
 import { useModal } from "../modal/useModal";
+import SortShoppingModal from "./sort-shopping-modal.component";
 
 const SortShopping = ({ recipes }) => {
   const { openModal } = useModal();
-  const [showSort, setShowSort] = useState(false);
   const [sortShoppingRecipe, setSortShoppingRecipe] = useState({
     id: "sort",
     name: "Sorted Shopping List",
     link: "",
     ingredients: [],
   });
+  const oddBits = useSelector((state) => state.firebase.profile.oddBits);
+  console.log(oddBits);
 
-  const togleShowSort = () => {
+  const togleShowSort = (recipe = null) => {
     openModal(
-      <Card
-        recipe={sortShoppingRecipe}
-        removeFromRecipes={togleShowSort}
-        button={togleShowSort}
-        ingredientButton={handleRemoveIngredientClick}
-      />
+      <SortShoppingModal shoppingList={recipe || sortShoppingRecipe} />
     );
-    // setModalOpen(true);
-    // setShowSort(!showSort);
-  };
-
-  const handleRemoveIngredientClick = (e) => {
-    e.preventDefault();
-    const ingredients = sortShoppingRecipe.ingredients;
-    removeIngredient(e, ingredients);
-  };
-
-  const removeIngredient = (event, ingredients) => {
-    const ingredientToRemove = event.target.name.split("&")[1];
-
-    const temp = ingredients.filter(
-      (ingredient) => ingredient !== ingredientToRemove
-    );
-    setSortShoppingRecipe({ ...sortShoppingRecipe, ingredients: temp });
   };
 
   const handleSortClick = (e) => {
@@ -50,20 +30,21 @@ const SortShopping = ({ recipes }) => {
         ingredients: formattedIngredients,
       };
     });
-    togleShowSort();
+    togleShowSort({ ...sortShoppingRecipe, ingredients: formattedIngredients });
   };
 
   const sortAllIngredients = (recipes) => {
-    const ingredientListSorted = recipes
-      .map((recipe) => {
-        return recipe.ingredients;
-      })
-      .flat()
+    const ingredients = [
+      recipes.map((recipe) => recipe.ingredients),
+      oddBits.filter(Boolean),
+    ]
+      .flat(Infinity)
       .sort();
-    const unique = [...new Set(ingredientListSorted)];
+
+    const unique = [...new Set(ingredients)];
     const duplicates = unique.map((value) => [
       value,
-      ingredientListSorted.filter((str) => str === value).length,
+      ingredients.filter((str) => str === value).length,
     ]);
     const formatted = duplicates.map(
       (ingredient) => ingredient[0] + "  X" + ingredient[1]
@@ -72,14 +53,7 @@ const SortShopping = ({ recipes }) => {
     return formatted;
   };
 
-  return showSort ? (
-    <Card
-      recipe={sortShoppingRecipe}
-      removeFromRecipes={togleShowSort}
-      button={togleShowSort}
-      ingredientButton={handleRemoveIngredientClick}
-    />
-  ) : (
+  return (
     <div style={{ margin: "0 5%" }}>
       <CustomButton value="Sort shopping" onClick={handleSortClick}>
         Sort Shopping

@@ -1,18 +1,6 @@
 const themeOptions = {
   palette: {
-    type: 'dark',
-    primary: {
-      main: '#292929',
-    },
-    secondary: {
-      main: '#d84315',
-    },
-    error: {
-      main: '#ff1100',
-    },
-    warning: {
-      main: '#ff9800',
-    },
+    mode: 'dark',
   },
   typography: {
     fontFamily: 'Poppins',
