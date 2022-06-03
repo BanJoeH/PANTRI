@@ -9,8 +9,9 @@ function Card({
   ingredientButton,
   removeFromRecipes,
   editRecipe,
+  showBodyOnMount
 }) {
-  const [showBody, setShowBody] = useState(false);
+  const [showBody, setShowBody] = useState(() => showBodyOnMount || false);
   const pathname = window.location.pathname;
 
   const toggleShowBody = (e) => {
@@ -36,18 +37,18 @@ function Card({
               Link
             </a>
           ) : null}
-          {pathname === "/PANTRI/recipes" ? (
+          {pathname === "/home/recipes" ? (
             <>
               <button
                 value={recipe.id}
-                onClick={button}
+                onClick={(e) => button(e, recipe)}
                 className="rotate title-link"
               >
                 &#10005;
               </button>
               <button
                 value={recipe.id}
-                onClick={editRecipe}
+                onClick={(e) => editRecipe(e, recipe)}
                 className="title-link"
               >
                 Edit
@@ -57,7 +58,7 @@ function Card({
           <button
             href="#"
             value={recipe.id}
-            onClick={(e) => removeFromRecipes(e)}
+            onClick={(e) => removeFromRecipes(e, recipe)}
             className=" title-link"
           >
             &#10005;
@@ -76,8 +77,8 @@ function Card({
           ) : (
             <div>No ingredients</div>
           )}
-          <CustomButton onClick={button} value={recipe.id}>
-            {pathname === "/PANTRI/shoppingList"
+          <CustomButton onClick={button} value={recipe.id} recipe={recipe}>
+            {pathname === "/home/shopping-list"
               ? "Done"
               : "Add to Shopping List"}
           </CustomButton>

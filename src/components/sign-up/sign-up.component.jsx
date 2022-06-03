@@ -63,7 +63,7 @@ const SignUp = () => {
 
   useEffect(() => {
     if (uid) {
-      history.push("/PANTRI/shoppingList");
+      history.push("/home/shopping-list");
     }
   }, [history, uid]);
 

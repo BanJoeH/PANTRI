@@ -104,7 +104,8 @@ function NewRecipe() {
       />
       <IngredientInput
         inputList={inputList}
-        setInputList={setInputList}
+        // setInputList={setInputList}
+        updateList={setInputList}
         label="Ingredient"
       />
       <div className="new-recipe-button-group">

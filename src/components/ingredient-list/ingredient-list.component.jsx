@@ -17,10 +17,10 @@ const IngredientList = ({
               <div htmlFor={ingredient} className="ingredient-text">
                 {ingredient}
               </div>
-              {pathname === "/PANTRI/shoppingList" ? (
+              {pathname === "/home/shopping-list" ? (
                 <button
                   className="ingredient-button"
-                  onClick={ingredientButton}
+                  onClick={(e) => ingredientButton(e, recipeId, ingredient, i)}
                   name={recipeId + "&" + ingredient + "&" + i}
                 >
                   &#10005;

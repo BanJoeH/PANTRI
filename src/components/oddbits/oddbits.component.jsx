@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import IngredientInput from "../ingredient-input/ingredient-input.component.js";
 import { useFirestore } from "react-redux-firebase";
 import { useSelector } from "react-redux";
@@ -9,26 +8,13 @@ const OddBits = () => {
 
   const firestore = useFirestore();
 
-  const [inputList, setInputList] = useState([
-    { ingredient: "", ingredientRef: null },
-  ]);
 
-  useEffect(() => {
-    if (oddBits?.length) {
-      setInputList(
-        oddBits.map((item) => ({
-          ingredient: item,
-          ingredientRef: null,
-        }))
-      );
-    }
-  }, [oddBits]);
 
   const handleOnBlur = () => {
     updateOddBits(inputList, uid);
   };
 
-  const updateOddBits = (inputList, uid) => {
+  const updateOddBits = (inputList) => {
     let ingredients = inputList.map((input) => {
       return input.ingredient;
     });
@@ -40,6 +26,13 @@ const OddBits = () => {
     );
   };
 
+  const inputList = oddBits?.map((item) => ({
+    ingredient: item,
+    ingredientRef: null,
+  })) ?? [
+    { ingredient: "", ingredientRef: null },
+  ]
+
   return (
     <article className="card">
       <div className="card-header">
@@ -48,7 +41,7 @@ const OddBits = () => {
       <div className="card-body ">
         <IngredientInput
           inputList={inputList}
-          setInputList={setInputList}
+          updateList={updateOddBits}
           lossOfFocus={handleOnBlur}
           label="Odd bit"
         />

@@ -15,7 +15,7 @@ import {
 } from "../../App/app.utils";
 import PageContainer from "../../components/page-container/page-container";
 import PageHeaderContainer from "../../components/page-header-container/page-header-container";
-import { useHistory } from "react-router";
+import { useHistory } from "react-router-dom";
 
 const ShoppingList = () => {
   const { uid } = useSelector((state) => state.firebase.auth);
@@ -89,7 +89,7 @@ const ShoppingList = () => {
           <div
             className="card"
             onClick={() => {
-              history.push("/PANTRI/recipes");
+              history.push("/home/recipes");
             }}
             style={{ cursor: "pointer" }}
           >

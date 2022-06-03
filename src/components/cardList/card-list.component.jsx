@@ -24,7 +24,6 @@ function CardList({
     1400: 2,
     1000: 1,
   };
-  console.log(recipes);
 
   const copyRecipes = [...recipes];
   const sortCompareByName = (a, b) => {

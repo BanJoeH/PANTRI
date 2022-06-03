@@ -59,15 +59,15 @@ const Recipes = () => {
     .doc(uid)
     .collection("recipes");
 
-  const handleRemoveFromRecipesClick = async (e) => {
+  const handleRemoveFromRecipesClick = async (e, recipe) => {
     e.preventDefault();
     if (
-      window.confirm("Are you sure you want to permanently delete this recipe?")
+      window.confirm(
+        `Are you sure you want to permanently delete ${recipe.name}?`
+      )
     ) {
-      const recipeId = e.target.value;
-      const recipeToRemove = findRecipe(recipeId, recipes);
       const response = await removeFromFirebaseCollection(
-        recipeToRemove,
+        recipe,
         recipesCollectionRef
       );
       if (response === "error") {
@@ -86,13 +86,10 @@ const Recipes = () => {
     setSearchField(event.target.value);
   };
 
-  const handleAddToShoppingListClick = async (e) => {
+  const handleAddToShoppingListClick = async (e, recipe) => {
     e.preventDefault();
-
-    const recipeToAdd = findRecipe(e.target.value, recipes);
-
     const response = await addToFirebaseCollection(
-      recipeToAdd,
+      recipe,
       shoppingListCollectionRef
     );
     if (response === "error") {
@@ -103,17 +100,17 @@ const Recipes = () => {
     }
   };
 
-  const handleEditRecipeCardButtonClick = (e) => {
+  const handleEditRecipeCardButtonClick = (e, recipe) => {
     e.preventDefault();
-    const foundRecipe = findRecipe(e.target.value, recipes);
-    if (foundRecipe === undefined) {
+    console.log(recipe)
+    if (recipe === undefined) {
       notification(
         "error",
         "error finding recipe, please contact admin to resolve issue",
         "danger"
       );
     } else {
-      setEditingRecipe(foundRecipe);
+      setEditingRecipe(recipe);
     }
   };
 
