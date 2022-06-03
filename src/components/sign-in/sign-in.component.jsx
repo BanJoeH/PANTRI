@@ -57,13 +57,13 @@ const SignIn = () => {
         type: "popup",
       })
       .then(() => {
-        history.push("/PANTRI/");
+        history.push("/");
       });
   };
 
   useEffect(() => {
     if (uid) {
-      history.push("/PANTRI/shoppingList");
+      history.push("/home/shopping-list");
     } else {
       setUserCredentials((prevState) => ({ ...prevState, error: true }));
     }
@@ -98,7 +98,7 @@ const SignIn = () => {
           </CustomButton>
         </div>
       </form>
-      <Link type="button" to="/PANTRI/forgotPassword">
+      <Link type="button" to="/forgotPassword">
         Forgot Password?
       </Link>
     </div>

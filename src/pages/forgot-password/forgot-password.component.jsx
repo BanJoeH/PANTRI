@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useHistory } from "react-router";
+import { useHistory } from "react-router-dom";
 import CustomButton from "../../components/custom-button/custom-button.component";
 import CustomInput from "../../components/custom-input/custom-input.component";
 import PageContainer from "../../components/page-container/page-container";
@@ -45,7 +45,7 @@ const ForgotPassword = () => {
 
   useEffect(() => {
     if (errorMessage === "Check your inbox for password reset") {
-      setTimeout(() => history.push("/PANTRI/"), 3000);
+      setTimeout(() => history.push("/"), 3000);
     }
   }, [errorMessage, history]);
   return (

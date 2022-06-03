@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import emailjs from "emailjs-com";
-import { useHistory } from "react-router";
+import { useHistory } from "react-router-dom";
 
 import { notification } from "../../App/app.utils";
 
@@ -57,7 +57,7 @@ const ContactPage = () => {
     });
     notification("", "Message Sent", "success");
 
-    setTimeout(() => history.push("/PANTRI/"), 3000);
+    setTimeout(() => history.push("/"), 3000);
   };
 
   return (

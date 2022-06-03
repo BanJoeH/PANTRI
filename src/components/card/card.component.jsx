@@ -37,7 +37,7 @@ function Card({
               Link
             </a>
           ) : null}
-          {pathname === "/PANTRI/recipes" ? (
+          {pathname === "/home/recipes" ? (
             <>
               <button
                 value={recipe.id}
@@ -78,7 +78,7 @@ function Card({
             <div>No ingredients</div>
           )}
           <CustomButton onClick={button} value={recipe.id} recipe={recipe}>
-            {pathname === "/PANTRI/shoppingList"
+            {pathname === "/home/shopping-list"
               ? "Done"
               : "Add to Shopping List"}
           </CustomButton>

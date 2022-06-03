@@ -77,7 +77,7 @@ const EditRecipe = ({ editingRecipe, setEditingRecipe, updateRecipe }) => {
           value={editingRecipe.link}
           autoComplete="off"
         />
-        <IngredientInput inputList={inputList} setInputList={setInputList} />
+        <IngredientInput inputList={inputList} updateList={setInputList} />
       </div>
       <div className="new-recipe-button-group">
         <CustomButton value="editRecipe" onClick={updateRecipe}>

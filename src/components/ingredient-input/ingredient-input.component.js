@@ -5,34 +5,36 @@ import "./ingredient-input.stytles.scss";
 
 const IngredientInput = ({
   inputList,
-  setInputList,
+  updateList,
   lossOfFocus,
   label = "Ingredient",
+  // updateList,
 }) => {
   const previousLength = usePrevious(inputList.length);
   const handleInputChange = (e, index) => {
     const { name, value } = e.target;
     const list = [...inputList];
     list[index][name] = value;
-    setInputList(list);
+    updateList(list);
   };
 
   const handleRemoveClick = (e) => {
     e.preventDefault();
     const index = e.target.value;
-
+    console.log(index, inputList)
     const list = [...inputList];
     if (inputList.length > 1) {
       list.splice(index, 1);
-      setInputList(list);
+      console.log(list)
+      updateList(list);
     } else if (inputList.length === 1) {
       list[0].ingredient = "";
-      setInputList(list);
+      updateList(list);
     }
   };
 
   const handleAddClick = () => {
-    setInputList([...inputList, { ingredient: "", ingredientRef: null }]);
+    updateList([...inputList, { ingredient: "", ingredientRef: null }]);
   };
 
   const addIngredientOnEnter = (event) => {
@@ -42,7 +44,6 @@ const IngredientInput = ({
   };
 
   useEffect(() => {
-    console.log(inputList.length, previousLength)
     if (inputList.length > previousLength && inputList[inputList.length - 1].ingredientRef) {
       inputList[inputList.length - 1].ingredientRef.focus();
     }

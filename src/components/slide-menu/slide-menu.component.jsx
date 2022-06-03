@@ -34,13 +34,13 @@ const SlideMenu = () => {
         <div className="slide-in-nav-group">
           <div
             className="nav-link"
-            onClick={(e) => handleNavClick(e, "/PANTRI/shoppingList")}
+            onClick={(e) => handleNavClick(e, "/home/shopping-list")}
           >
             Shopping list
           </div>
           <div
             className="nav-link"
-            onClick={(e) => handleNavClick(e, "/PANTRI/recipes")}
+            onClick={(e) => handleNavClick(e, "/home/recipes")}
           >
             Recipes
           </div>
@@ -49,7 +49,7 @@ const SlideMenu = () => {
           {isEmpty ? (
             <div
               className="nav-link"
-              onClick={(e) => handleNavClick(e, "/PANTRI/")}
+              onClick={(e) => handleNavClick(e, "/")}
             >
               Sign In
             </div>
@@ -60,7 +60,7 @@ const SlideMenu = () => {
           )}
           <div
             className="nav-link"
-            onClick={(e) => handleNavClick(e, "/PANTRI/contact")}
+            onClick={(e) => handleNavClick(e, "/contact")}
           >
             Contact Us
           </div>

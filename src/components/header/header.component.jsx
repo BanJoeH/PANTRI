@@ -27,17 +27,17 @@ const Header = () => {
           <img src={logo} alt="logo" className="logo" width="250" height="80" />
 
           <div className="nav-group">
-            <Link className="nav-link" to="/PANTRI/shoppingList">
+            <Link className="nav-link" to="/home/shopping-list">
               Shopping list
             </Link>
-            <Link className="nav-link" to="/PANTRI/recipes">
+            <Link className="nav-link" to="/home/recipes">
               Recipes
             </Link>
-            <Link className="nav-link" to="/PANTRI/contact">
+            <Link className="nav-link" to="/contact">
               Contact
             </Link>
             {noUser ? (
-              <Link className="nav-link" to="/PANTRI/">
+              <Link className="nav-link" to="/">
                 Sign In
               </Link>
             ) : (

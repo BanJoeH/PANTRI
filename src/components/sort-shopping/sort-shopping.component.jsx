@@ -13,7 +13,6 @@ const SortShopping = ({ recipes }) => {
     ingredients: [],
   });
   const oddBits = useSelector((state) => state.firebase.profile.oddBits);
-  console.log(oddBits);
 
   const togleShowSort = (recipe = null) => {
     openModal(

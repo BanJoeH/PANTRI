@@ -14,6 +14,7 @@ import Footer from "./components/footer/footer.jsx";
 
 import "./App.scss";
 import GlobalModal from "./components/modal/modal";
+import Home from "./pages/home/home";
 
 const ShoppingList = lazy(() =>
   import("./pages/shopping-list/shopping-list.component.js")
@@ -50,6 +51,8 @@ export default function App() {
   }, []);
 
   const { isEmpty } = useSelector((state) => state.firebase.auth);
+  
+
 
   return (
     isLoaded && (
@@ -61,37 +64,24 @@ export default function App() {
             <GlobalModal />
             <div className="body">
               <Switch>
-                <Route path="/PANTRI/recipes">
+                <Route path="/home/:tab">
                   {isEmpty ? (
-                    <Redirect to="/PANTRI/" />
+                    <Redirect to="/" />
                   ) : (
-                    <Suspense fallback={<div>...loading</div>}>
-                      <Recipes />
-                    </Suspense>
-                  )}
-                </Route>
-
-                <Route path="/PANTRI/shoppingList">
-                  {isEmpty ? (
-                    <Redirect to="/PANTRI/" />
-                  ) : (
-                    <Suspense fallback={<div>...loading</div>}>
-                      <ShoppingList />
-                    </Suspense>
+                    <Home />
                   )}
                 </Route>
                 <Suspense fallback={<div>...loading</div>}>
                   <Route
                     exact
-                    path="/PANTRI/"
+                    path="/"
                     component={SignInAndSignUpPage}
                   />
-
                   <Route
-                    path="/PANTRI/forgotpassword"
+                    path="/forgotpassword"
                     component={ForgotPassword}
                   />
-                  <Route path="/PANTRI/contact" component={ContactPage} />
+                  <Route path="/contact" component={ContactPage} />
                 </Suspense>
               </Switch>
             </div>
