@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import usePrevious from "../../App/usePrevious";
 
 import "./ingredient-input.stytles.scss";
 
@@ -8,6 +9,7 @@ const IngredientInput = ({
   lossOfFocus,
   label = "Ingredient",
 }) => {
+  const previousLength = usePrevious(inputList.length);
   const handleInputChange = (e, index) => {
     const { name, value } = e.target;
     const list = [...inputList];
@@ -40,10 +42,11 @@ const IngredientInput = ({
   };
 
   useEffect(() => {
-    if (inputList[inputList.length - 1].ingredientRef) {
+    console.log(inputList.length, previousLength)
+    if (inputList.length > previousLength && inputList[inputList.length - 1].ingredientRef) {
       inputList[inputList.length - 1].ingredientRef.focus();
     }
-  }, [inputList.length]);
+  }, [inputList.length, inputList, previousLength]);
 
   return inputList.map((x, i) => {
     return (
