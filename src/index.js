@@ -22,7 +22,7 @@ ReactDOM.render(
       <ThemeProvider theme={theme}>
         <Provider store={store}>
           <ReactReduxFirebaseProvider {...rrfProps}>
-            <Router basename="/PANTRI">
+            <Router>
               <App />
             </Router>
           </ReactReduxFirebaseProvider>

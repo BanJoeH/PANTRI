@@ -16,11 +16,6 @@ import "./App.scss";
 import GlobalModal from "./components/modal/modal";
 import Home from "./pages/home/home";
 
-const ShoppingList = lazy(() =>
-  import("./pages/shopping-list/shopping-list.component.js")
-);
-const Recipes = lazy(() => import("./pages/recipes/recipes.component.js"));
-
 const SignInAndSignUpPage = lazy(() =>
   import("./pages/sign-in-and-sign-up/sign-in-and-sign-up.component.jsx")
 );
