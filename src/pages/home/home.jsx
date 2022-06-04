@@ -11,9 +11,8 @@ const Recipes = React.lazy(() => import("../recipes/recipes.component.js"));
 export default function Home() {
     const history = useHistory();
     const {tab} = useParams();
-    console.log(tab)
     const onChangeIndex = (index) => {
-        history.push(`/home/${index}`);
+        history.push(`/home/${index === 0 ? 'shopping-list' : 'recipes'}`);
     };
 
     return (

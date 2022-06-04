@@ -21,11 +21,9 @@ const IngredientInput = ({
   const handleRemoveClick = (e) => {
     e.preventDefault();
     const index = e.target.value;
-    console.log(index, inputList)
     const list = [...inputList];
     if (inputList.length > 1) {
       list.splice(index, 1);
-      console.log(list)
       updateList(list);
     } else if (inputList.length === 1) {
       list[0].ingredient = "";

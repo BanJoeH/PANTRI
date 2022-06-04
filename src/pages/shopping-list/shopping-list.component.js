@@ -30,8 +30,16 @@ const ShoppingList = () => {
   });
 
   const firestore = useFirestore();
-  const recipes = useSelector((state) => state.firestore.ordered.shoppingList);
-
+  const recipesObject = useSelector((state) => {console.log(state);return state.firestore.data.shoppingList});
+  const recipes = Object.entries(recipesObject || {}).map(([key, value]) => {
+    if (value) {
+      return {
+        id: key,
+        ...value,
+      };
+    }
+    return null
+  }).filter(Boolean);
   const shoppingListCollectionRef = firestore
     .collection("users")
     .doc(uid)
@@ -39,7 +47,7 @@ const ShoppingList = () => {
 
   const handleRemoveFromShoppingClick = async (e) => {
     e.preventDefault();
-
+console.log(e)
     const recipeId = e.target.value;
     const recipeToRemove = findRecipe(recipeId, recipes);
     const response = await removeFromFirebaseCollection(
@@ -70,6 +78,7 @@ const ShoppingList = () => {
       shoppingListCollectionRef
     );
   };
+  console.log(recipes)
 
   return (
     !isLoading && (

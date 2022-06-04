@@ -47,7 +47,9 @@ export const removeFromFirebaseCollection = async (recipe, collectionRef) => {
 
 export const addToFirebaseCollection = async (recipe, collectionRef) => {
   try {
+    console.log(collectionRef)
     const docRef = await collectionRef.add(recipe);
+    console.log(recipe.id, docRef.id)
     await docRef.update({
       id: docRef.id,
     });

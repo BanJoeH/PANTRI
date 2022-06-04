@@ -42,7 +42,6 @@ const SignUp = () => {
     auth
       .createUserWithEmailAndPassword(email, password)
       .then((userCredential) => {
-        console.log(userCredential);
         setUserCredentials({
           displayName: "",
           email: "",
