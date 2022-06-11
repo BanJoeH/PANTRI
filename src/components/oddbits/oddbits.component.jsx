@@ -8,12 +8,6 @@ const OddBits = () => {
 
   const firestore = useFirestore();
 
-
-
-  const handleOnBlur = () => {
-    updateOddBits(inputList, uid);
-  };
-
   const updateOddBits = (inputList) => {
     let ingredients = inputList.map((input) => {
       return input.ingredient;
@@ -42,7 +36,6 @@ const OddBits = () => {
         <IngredientInput
           inputList={inputList}
           updateList={updateOddBits}
-          lossOfFocus={handleOnBlur}
           label="Odd bit"
         />
       </div>

@@ -47,7 +47,6 @@ const ShoppingList = () => {
 
   const handleRemoveFromShoppingClick = async (e) => {
     e.preventDefault();
-console.log(e)
     const recipeId = e.target.value;
     const recipeToRemove = findRecipe(recipeId, recipes);
     const response = await removeFromFirebaseCollection(
@@ -78,7 +77,6 @@ console.log(e)
       shoppingListCollectionRef
     );
   };
-  console.log(recipes)
 
   return (
     !isLoading && (

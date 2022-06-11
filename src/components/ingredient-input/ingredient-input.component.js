@@ -6,12 +6,11 @@ import "./ingredient-input.stytles.scss";
 const IngredientInput = ({
   inputList,
   updateList,
-  lossOfFocus,
   label = "Ingredient",
-  // updateList,
+
 }) => {
   const previousLength = usePrevious(inputList.length);
-  const handleInputChange = (e, index) => {
+  const handleBlur = (e, index) => {
     const { name, value } = e.target;
     const list = [...inputList];
     list[index][name] = value;
@@ -49,19 +48,18 @@ const IngredientInput = ({
 
   return inputList.map((x, i) => {
     return (
-      <div key={i} className="ingredient-input-group">
+      <div key={x.ingredient + i} className="ingredient-input-group">
         <div className="group">
           <input
             id={x.ingredient + i}
             name="ingredient"
             label={label}
-            onChange={(e) => handleInputChange(e, i)}
-            value={x.ingredient}
+            defaultValue={x.ingredient}
             onKeyDown={(e) => addIngredientOnEnter(e)}
             ref={(e) => (x.ingredientRef = e)}
             autoComplete="off"
             className="form-input"
-            onBlur={lossOfFocus}
+            onBlur={(e) => handleBlur(e, i)}
           />
 
           <label
