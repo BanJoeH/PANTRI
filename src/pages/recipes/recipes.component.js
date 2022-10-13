@@ -8,7 +8,6 @@ import {
 } from "./recipes.utils";
 
 import {
-  findRecipe,
   addToFirebaseCollection,
   removeFromFirebaseCollection,
 } from "../../App/app.utils";
