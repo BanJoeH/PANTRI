@@ -3,12 +3,7 @@ import usePrevious from "../../App/usePrevious";
 
 import "./ingredient-input.stytles.scss";
 
-const IngredientInput = ({
-  inputList,
-  updateList,
-  label = "Ingredient",
-
-}) => {
+const IngredientInput = ({ inputList, updateList, label = "Ingredient" }) => {
   const previousLength = usePrevious(inputList.length);
   const handleBlur = (e, index) => {
     const { name, value } = e.target;
@@ -41,7 +36,10 @@ const IngredientInput = ({
   };
 
   useEffect(() => {
-    if (inputList.length > previousLength && inputList[inputList.length - 1].ingredientRef) {
+    if (
+      inputList.length > previousLength &&
+      inputList[inputList.length - 1].ingredientRef
+    ) {
       inputList[inputList.length - 1].ingredientRef.focus();
     }
   }, [inputList.length, inputList, previousLength]);

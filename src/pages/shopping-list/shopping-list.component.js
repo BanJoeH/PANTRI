@@ -30,16 +30,21 @@ const ShoppingList = () => {
   });
 
   const firestore = useFirestore();
-  const recipesObject = useSelector((state) => {console.log(state);return state.firestore.data.shoppingList});
-  const recipes = Object.entries(recipesObject || {}).map(([key, value]) => {
-    if (value) {
-      return {
-        id: key,
-        ...value,
-      };
-    }
-    return null
-  }).filter(Boolean);
+  const recipesObject = useSelector((state) => {
+    console.log(state);
+    return state.firestore.data.shoppingList;
+  });
+  const recipes = Object.entries(recipesObject || {})
+    .map(([key, value]) => {
+      if (value) {
+        return {
+          id: key,
+          ...value,
+        };
+      }
+      return null;
+    })
+    .filter(Boolean);
   const shoppingListCollectionRef = firestore
     .collection("users")
     .doc(uid)

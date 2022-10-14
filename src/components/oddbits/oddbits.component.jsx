@@ -23,9 +23,7 @@ const OddBits = () => {
   const inputList = oddBits?.map((item) => ({
     ingredient: item,
     ingredientRef: null,
-  })) ?? [
-    { ingredient: "", ingredientRef: null },
-  ]
+  })) ?? [{ ingredient: "", ingredientRef: null }];
 
   return (
     <article className="card">

@@ -33,15 +33,17 @@ const Recipes = () => {
   const firestore = useFirestore();
   const uid = useSelector((state) => state.firebase.auth.uid);
   const recipesObject = useSelector((state) => state.firestore.ordered.recipes);
-  const recipes = Object.entries(recipesObject || {}).map(([key, value]) => {
-    if (value) {
-      return {
-        id: key,
-        ...value,
-      };
-    }
-    return null
-  }).filter(Boolean);
+  const recipes = Object.entries(recipesObject || {})
+    .map(([key, value]) => {
+      if (value) {
+        return {
+          id: key,
+          ...value,
+        };
+      }
+      return null;
+    })
+    .filter(Boolean);
   const isloading = useSelector(
     (state) => state.firestore.status.requesting.recipes
   );
@@ -95,7 +97,7 @@ const Recipes = () => {
   };
 
   const handleAddToShoppingListClick = async (e, recipe) => {
-    console.log("adding to shopping List")
+    console.log("adding to shopping List");
     e.preventDefault();
     const response = await addToFirebaseCollection(
       recipe,
@@ -111,7 +113,7 @@ const Recipes = () => {
 
   const handleEditRecipeCardButtonClick = (e, recipe) => {
     e.preventDefault();
-    console.log(recipe)
+    console.log(recipe);
     if (recipe === undefined) {
       notification(
         "error",

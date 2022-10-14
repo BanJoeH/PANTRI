@@ -24,7 +24,6 @@ export const findRecipe = (recipeId, recipeList) => {
   return recipe;
 };
 
-
 export const filterRecipeOut = (recipeId, recipeList) => {
   if (!recipeId || !recipeList) {
     return null;
@@ -33,7 +32,6 @@ export const filterRecipeOut = (recipeId, recipeList) => {
 
   return recipes;
 };
-
 
 export const removeFromFirebaseCollection = async (recipe, collectionRef) => {
   try {
@@ -47,9 +45,9 @@ export const removeFromFirebaseCollection = async (recipe, collectionRef) => {
 
 export const addToFirebaseCollection = async (recipe, collectionRef) => {
   try {
-    console.log(collectionRef)
+    console.log(collectionRef);
     const docRef = await collectionRef.add(recipe);
-    console.log(recipe.id, docRef.id)
+    console.log(recipe.id, docRef.id);
     await docRef.update({
       id: docRef.id,
     });
@@ -59,4 +57,3 @@ export const addToFirebaseCollection = async (recipe, collectionRef) => {
   }
   return recipe;
 };
-

@@ -15,14 +15,8 @@ const SignUp = () => {
     error: false,
     errorMessage: "",
   });
-  const {
-    displayName,
-    email,
-    password,
-    confirmPassword,
-    error,
-    errorMessage,
-  } = userCredentials;
+  const { displayName, email, password, confirmPassword, error, errorMessage } =
+    userCredentials;
 
   const history = useHistory();
   const { uid } = useSelector((state) => state.firebase.auth);

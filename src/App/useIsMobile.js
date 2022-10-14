@@ -4,4 +4,4 @@ const useIsMobile = () => {
   return useMediaQuery("(max-width: 600px)");
 };
 
-export default useIsMobile
+export default useIsMobile;

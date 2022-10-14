@@ -1,9 +1,9 @@
 const themeOptions = {
   palette: {
-    mode: 'dark',
+    mode: "dark",
   },
   typography: {
-    fontFamily: 'Poppins',
+    fontFamily: "Poppins",
   },
   props: {
     MuiButtonBase: {

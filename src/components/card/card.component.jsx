@@ -9,7 +9,7 @@ function Card({
   ingredientButton,
   removeFromRecipes,
   editRecipe,
-  showBodyOnMount
+  showBodyOnMount,
 }) {
   const [showBody, setShowBody] = useState(() => showBodyOnMount || false);
   const pathname = window.location.pathname;

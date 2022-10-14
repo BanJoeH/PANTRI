@@ -46,8 +46,6 @@ export default function App() {
   }, []);
 
   const { isEmpty } = useSelector((state) => state.firebase.auth);
-  
-
 
   return (
     isLoaded && (
@@ -60,22 +58,11 @@ export default function App() {
             <div className="body">
               <Switch>
                 <Route path="/home/:tab">
-                  {isEmpty ? (
-                    <Redirect to="/" />
-                  ) : (
-                    <Home />
-                  )}
+                  {isEmpty ? <Redirect to="/" /> : <Home />}
                 </Route>
                 <Suspense fallback={<div>...loading</div>}>
-                  <Route
-                    exact
-                    path="/"
-                    component={SignInAndSignUpPage}
-                  />
-                  <Route
-                    path="/forgotpassword"
-                    component={ForgotPassword}
-                  />
+                  <Route exact path="/" component={SignInAndSignUpPage} />
+                  <Route path="/forgotpassword" component={ForgotPassword} />
                   <Route path="/contact" component={ContactPage} />
                 </Suspense>
               </Switch>

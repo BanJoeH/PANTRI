@@ -47,10 +47,7 @@ const SlideMenu = () => {
         </div>
         <div className="slide-in-nav-group">
           {isEmpty ? (
-            <div
-              className="nav-link"
-              onClick={(e) => handleNavClick(e, "/")}
-            >
+            <div className="nav-link" onClick={(e) => handleNavClick(e, "/")}>
               Sign In
             </div>
           ) : (
