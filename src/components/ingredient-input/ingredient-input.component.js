@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import usePrevious from "../../App/usePrevious";
 
-import "./ingredient-input.stytles.scss";
+import "./ingredient-input.styles.scss";
 
 const IngredientInput = ({ inputList, updateList, label = "Ingredient" }) => {
   const previousLength = usePrevious(inputList.length);
@@ -12,9 +12,8 @@ const IngredientInput = ({ inputList, updateList, label = "Ingredient" }) => {
     updateList(list);
   };
 
-  const handleRemoveClick = (e) => {
+  const handleRemoveClick = (e, index) => {
     e.preventDefault();
-    const index = e.target.value;
     const list = [...inputList];
     if (inputList.length > 1) {
       list.splice(index, 1);
@@ -73,7 +72,7 @@ const IngredientInput = ({ inputList, updateList, label = "Ingredient" }) => {
         <div className="button-group">
           {inputList.length - 1 === i && (
             <div className="ingredient-button">
-              <button onClick={handleAddClick} className="add">
+              <button onClick={handleAddClick} className="add" type="button">
                 &#10005;
               </button>
             </div>
@@ -81,8 +80,9 @@ const IngredientInput = ({ inputList, updateList, label = "Ingredient" }) => {
 
           <button
             value={i}
-            onClick={handleRemoveClick}
+            onClick={(e) => handleRemoveClick(e, i)}
             className="ingredient-button delete"
+            type="button"
           >
             &#10005;
           </button>

@@ -35,7 +35,7 @@ const SortShopping = ({ recipes }) => {
   const sortAllIngredients = (recipes) => {
     const ingredients = [
       recipes.map((recipe) => recipe.ingredients),
-      oddBits.filter(Boolean),
+      oddBits.map(oddBit => oddBit.toLowerCase()).filter(Boolean),
     ]
       .flat(Infinity)
       .sort();
