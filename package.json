@@ -40,6 +40,15 @@
     "workbox-strategies": "^6.2.4",
     "workbox-streams": "^6.3.0"
   },
+  "overrides": {
+    "react-flexible-sliding-menu": {
+      "react": "$react",
+      "react-dom": "$react-dom"
+    },
+    "react-scripts": {
+      "typescript": "$typescript"
+    }
+  },
   "scripts": {
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
