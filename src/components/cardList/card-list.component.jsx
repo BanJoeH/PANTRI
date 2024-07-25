@@ -1,5 +1,5 @@
 import React from "react";
-import Card from "../../components/card/card.component.jsx";
+import Card from "../../components/card/card.component";
 import Masonry from "react-masonry-css";
 
 import "./card-list.styles.scss";

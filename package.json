@@ -25,6 +25,7 @@
     "react-swipeable-views": "^0.14.0",
     "redux-firestore": "^0.15.0",
     "sass": "^1.42.1",
+    "typescript": "^5.5.4",
     "web-vitals": "^2.1.2",
     "workbox-background-sync": "^6.3.0",
     "workbox-broadcast-update": "^6.3.0",
@@ -39,13 +40,23 @@
     "workbox-strategies": "^6.2.4",
     "workbox-streams": "^6.3.0"
   },
+  "overrides": {
+    "react-flexible-sliding-menu": {
+      "react": "$react",
+      "react-dom": "$react-dom"
+    },
+    "react-scripts": {
+      "typescript": "$typescript"
+    }
+  },
   "scripts": {
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "vite",
+    "build": "vite build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "dev": "vite"
   },
   "eslintConfig": {
     "extends": [
@@ -67,10 +78,16 @@
   },
   "devDependencies": {
     "@testing-library/react": "^12.1.2",
+    "@types/react-dom": "^17.0.1",
     "@wojtekmaj/enzyme-adapter-react-17": "^0.6.6",
     "enzyme": "^3.11.0",
     "enzyme-to-json": "^3.6.2",
     "eslint-plugin-react-hooks": "^4.2.0",
-    "react-test-renderer": "^17.0.2"
+    "prettier": "3.3.3",
+    "react-test-renderer": "^17.0.2",
+    "@types/node": "^20.14.2",
+    "@vitejs/plugin-react": "^4.3.1",
+    "vite": "^5.2.13",
+    "vite-tsconfig-paths": "^4.3.2"
   }
 }

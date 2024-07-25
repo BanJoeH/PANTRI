@@ -9,18 +9,18 @@ import BurgerMenuContext from "./App/context";
 
 import ReactNotification from "react-notifications-component";
 import CookieConsent from "react-cookie-consent";
-import Header from "./components/header/header.component.jsx";
-import Footer from "./components/footer/footer.jsx";
+import Header from "./components/header/header.component";
+import Footer from "./components/footer/footer";
 
 import "./App.scss";
 import GlobalModal from "./components/modal/modal";
 import Home from "./pages/home/home";
 
-const SignInAndSignUpPage = lazy(() =>
-  import("./pages/sign-in-and-sign-up/sign-in-and-sign-up.component.jsx")
+const SignInAndSignUpPage = lazy(
+  () => import("./pages/sign-in-and-sign-up/sign-in-and-sign-up.component"),
 );
-const ForgotPassword = lazy(() =>
-  import("./pages/forgot-password/forgot-password.component")
+const ForgotPassword = lazy(
+  () => import("./pages/forgot-password/forgot-password.component"),
 );
 const ContactPage = lazy(() => import("./pages/contact/contact.component"));
 
@@ -33,7 +33,7 @@ export default function App() {
   };
 
   useEffect(() => {
-    const unsubsribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
+    const unsubscribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
       if (userAuth) {
         const userRef = await createUserProfileDocument(userAuth);
 
@@ -41,7 +41,7 @@ export default function App() {
       }
     });
     return () => {
-      unsubsribeFromAuth();
+      unsubscribeFromAuth();
     };
   }, []);
 
@@ -73,7 +73,7 @@ export default function App() {
               buttonText="Gimmie dem cookies"
               style={{ padding: "5px" }}
             >
-              We use cookies to store your recipes to save data usage!
+              We use cookies to store your recipes to save data usage
             </CookieConsent>
             <Footer />
           </div>

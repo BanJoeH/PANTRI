@@ -5,9 +5,9 @@ import { useFirestoreConnect, useFirestore } from "react-redux-firebase";
 import { useSelector } from "react-redux";
 import { removeIngredientFromShoppingList } from "./shopping-list.utils";
 
-import OddBits from "../../components/oddbits/oddbits.component.jsx";
-import CardList from "../../components/cardList/card-list.component.jsx";
-import SortShopping from "../../components/sort-shopping/sort-shopping.component.jsx";
+import OddBits from "../../components/oddbits/oddbits.component";
+import CardList from "../../components/cardList/card-list.component";
+import SortShopping from "../../components/sort-shopping/sort-shopping.component";
 import {
   findRecipe,
   removeFromFirebaseCollection,
@@ -20,7 +20,7 @@ import { useHistory } from "react-router-dom";
 const ShoppingList = () => {
   const { uid } = useSelector((state) => state.firebase.auth);
   const isLoading = useSelector(
-    (state) => state.firestore.status.requesting.shoppingList
+    (state) => state.firestore.status.requesting.shoppingList,
   );
   const history = useHistory();
 
@@ -31,7 +31,6 @@ const ShoppingList = () => {
 
   const firestore = useFirestore();
   const recipesObject = useSelector((state) => {
-    console.log(state);
     return state.firestore.data.shoppingList;
   });
   const recipes = Object.entries(recipesObject || {})
@@ -56,13 +55,13 @@ const ShoppingList = () => {
     const recipeToRemove = findRecipe(recipeId, recipes);
     const response = await removeFromFirebaseCollection(
       recipeToRemove,
-      shoppingListCollectionRef
+      shoppingListCollectionRef,
     );
     if (response === "error") {
       notification(
         "Error",
         "Error removing recipe, please try again",
-        "danger"
+        "danger",
       );
     } else {
       notification(response.name, "Deleted", "success");
@@ -79,7 +78,7 @@ const ShoppingList = () => {
     removeIngredientFromShoppingList(
       recipeId,
       updatedIngredients,
-      shoppingListCollectionRef
+      shoppingListCollectionRef,
     );
   };
 

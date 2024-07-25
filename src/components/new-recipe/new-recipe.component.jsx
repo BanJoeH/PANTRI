@@ -2,8 +2,8 @@ import { useState, useEffect } from "react";
 import { useFirestore } from "react-redux-firebase";
 import { useSelector } from "react-redux";
 import { notification, addToFirebaseCollection } from "../../App/app.utils";
-import CustomButton from "../custom-button/custom-button.component.jsx";
-import IngredientInput from "../ingredient-input/ingredient-input.component.js";
+import CustomButton from "../custom-button/custom-button.component";
+import IngredientInput from "../ingredient-input/ingredient-input.component";
 import CustomInput from "../custom-input/custom-input.component";
 
 // const ID = () => {
@@ -40,13 +40,13 @@ function NewRecipe() {
     } else {
       const response = await addToFirebaseCollection(
         newRecipe,
-        recipesCollectionRef
+        recipesCollectionRef,
       );
       if (response === "error") {
         notification(
           "Error",
           "error adding new recipe, please try again",
-          "danger"
+          "danger",
         );
       } else {
         setError(false);

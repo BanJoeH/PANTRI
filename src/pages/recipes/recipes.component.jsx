@@ -14,7 +14,7 @@ import {
 import useDebounce from "../../App/useDebounce.utils";
 
 import CardList from "../../components/cardList/card-list.component";
-import SearchBox from "../../components/search-box/searchbox.component.js";
+import SearchBox from "../../components/search-box/searchbox.component";
 import NewRecipe from "../../components/new-recipe/new-recipe.component";
 import EditRecipe from "../../components/edit-recipe/edit-recipe.component";
 import PageContainer from "../../components/page-container/page-container";
@@ -45,14 +45,14 @@ const Recipes = () => {
     })
     .filter(Boolean);
   const isloading = useSelector(
-    (state) => state.firestore.status.requesting.recipes
+    (state) => state.firestore.status.requesting.recipes,
   );
   const loaded = useSelector(
-    (state) => state.firestore.status.requested.recipes
+    (state) => state.firestore.status.requested.recipes,
   );
   const recipesFiltered = filteredRecipesByIngredientAndName(
     recipes,
-    debouncedSearchTerm
+    debouncedSearchTerm,
   );
   useFirestoreConnect({
     collection: `users/${uid}/recipes`,
@@ -73,18 +73,18 @@ const Recipes = () => {
     e.preventDefault();
     if (
       window.confirm(
-        `Are you sure you want to permanently delete ${recipe.name}?`
+        `Are you sure you want to permanently delete ${recipe.name}?`,
       )
     ) {
       const response = await removeFromFirebaseCollection(
         recipe,
-        recipesCollectionRef
+        recipesCollectionRef,
       );
       if (response === "error") {
         notification(
           "Error",
           "error removing recipe, please try again",
-          "danger"
+          "danger",
         );
       } else {
         notification(response.name, "Deleted", "success");
@@ -101,7 +101,7 @@ const Recipes = () => {
     e.preventDefault();
     const response = await addToFirebaseCollection(
       recipe,
-      shoppingListCollectionRef
+      shoppingListCollectionRef,
     );
     if (response === "error") {
       notification("Error", "error adding to shopping list", "danger");
@@ -118,7 +118,7 @@ const Recipes = () => {
       notification(
         "error",
         "error finding recipe, please contact admin to resolve issue",
-        "danger"
+        "danger",
       );
     } else {
       setEditingRecipe(recipe);
