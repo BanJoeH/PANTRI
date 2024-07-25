@@ -73,7 +73,7 @@ export default function App() {
               buttonText="Gimmie dem cookies"
               style={{ padding: "5px" }}
             >
-              We use cookies to store your recipes to save data usage.
+              We use cookies to store your recipes to save data usage
             </CookieConsent>
             <Footer />
           </div>
