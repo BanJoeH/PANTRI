@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { auth } from "../../firebase/firebase.utils.js";
+import { auth } from "../../firebase/firebase.utils";
 import { useHistory } from "react-router-dom";
 
 import CustomButton from "../custom-button/custom-button.component";

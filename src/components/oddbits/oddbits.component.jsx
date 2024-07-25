@@ -1,4 +1,4 @@
-import IngredientInput from "../ingredient-input/ingredient-input.component.js";
+import IngredientInput from "../ingredient-input/ingredient-input.component";
 import { useFirestore } from "react-redux-firebase";
 import { useSelector } from "react-redux";
 
@@ -16,7 +16,7 @@ const OddBits = () => {
       {
         oddBits: ingredients,
       },
-      { merge: true }
+      { merge: true },
     );
   };
 

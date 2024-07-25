@@ -5,9 +5,9 @@ import { useFirestoreConnect, useFirestore } from "react-redux-firebase";
 import { useSelector } from "react-redux";
 import { removeIngredientFromShoppingList } from "./shopping-list.utils";
 
-import OddBits from "../../components/oddbits/oddbits.component.jsx";
-import CardList from "../../components/cardList/card-list.component.jsx";
-import SortShopping from "../../components/sort-shopping/sort-shopping.component.jsx";
+import OddBits from "../../components/oddbits/oddbits.component";
+import CardList from "../../components/cardList/card-list.component";
+import SortShopping from "../../components/sort-shopping/sort-shopping.component";
 import {
   findRecipe,
   removeFromFirebaseCollection,
