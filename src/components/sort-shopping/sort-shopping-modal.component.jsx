@@ -8,11 +8,11 @@ const SortShoppingModal = ({ shoppingList }) => {
 
   const pathname = window.location.pathname;
 
-  const removeIngredient = (event, ingredients) => {
-    const ingredientToRemove = event.target.name.split("&")[1];
+  const removeIngredient = (ingredient) => {
+    const ingredients = sortedShoppingList.ingredients;
 
     const temp = ingredients.filter(
-      (ingredient) => ingredient !== ingredientToRemove
+      (ingredient) => ingredient.name !== ingredientToRemove
     );
     setSortedShoppingList({ ...sortedShoppingList, ingredients: temp });
   };

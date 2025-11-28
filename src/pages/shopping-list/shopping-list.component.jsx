@@ -39,6 +39,7 @@ const ShoppingList = () => {
         return {
           id: key,
           ...value,
+          ingredients: value.ingredients.map((ingredient) => ({name: ingredient})),
         };
       }
       return null;

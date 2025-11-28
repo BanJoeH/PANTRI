@@ -39,5 +39,31 @@
         background-color: $dark-1;
       }
     }
+    .ingredient-text {
+      flex-grow: 1;
+      text-align: left;
+      padding: 0 10px;
+      font-size: 18px;
+      cursor: pointer;
+      background: none;
+      border:none;
+      color: inherit;
+      font-size:inherit;
+      
+    }
+    .ingredient-sources {
+      margin-top: 5px;
+      font-size: 14px;
+      color: $dark-secondary-text;
+
+      ul {
+        margin: 5px 0 0 15px;
+        padding: 0;
+      }
+      li {
+        // use '-' as bullet
+        list-style-type: '- ';
+      }
+    }
   }
 }
