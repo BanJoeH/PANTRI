@@ -13,7 +13,7 @@ const diyNandos = {
     "garlic bread",
     "broccoli",
     "green beans",
-  ],
+  ].map((ingredient) => ({ name: ingredient })),
 };
 
 describe("findRecipe", () => {

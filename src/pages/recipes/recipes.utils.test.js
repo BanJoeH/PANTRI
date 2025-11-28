@@ -13,7 +13,7 @@ const diyNandos = {
     "garlic bread",
     "broccoli",
     "green beans",
-  ],
+  ].map((ingredient) => ({ name: ingredient })),
 };
 const sausageGnocchiBake = {
   id: "e201LhvoaeUCESXKAYRj",
@@ -26,7 +26,7 @@ const sausageGnocchiBake = {
     "spinach",
     "fennel",
     "garlic",
-  ],
+  ].map((ingredient) => ({ name: ingredient })),
   name: "sausage gnocchi bake",
 };
 describe("recipeUtils filterRecipesByIngredientAndName", () => {
