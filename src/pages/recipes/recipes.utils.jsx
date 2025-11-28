@@ -1,6 +1,6 @@
 export const filteredRecipesByIngredientAndName = (
   recipeList,
-  debouncedSearchTerm
+  debouncedSearchTerm,
 ) => {
   let recipes = [];
   if (!recipeList) {
@@ -21,7 +21,7 @@ export const filteredRecipesByIngredientAndName = (
     } else if (
       // Search the ingredients for the searchTerm
       recipe.ingredients.some((ingredient) => {
-        return ingredient
+        return ingredient.name
           .toLowerCase()
           .includes(debouncedSearchTerm.toLowerCase());
       })

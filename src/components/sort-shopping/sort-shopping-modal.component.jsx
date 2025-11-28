@@ -3,24 +3,23 @@ import IngredientList from "../ingredient-list/ingredient-list.component";
 
 const SortShoppingModal = ({ shoppingList }) => {
   const [sortedShoppingList, setSortedShoppingList] = useState(
-    () => shoppingList
+    () => shoppingList,
   );
 
   const pathname = window.location.pathname;
 
-  const removeIngredient = (event, ingredients) => {
-    const ingredientToRemove = event.target.name.split("&")[1];
+  const removeIngredient = (ingredientToRemove) => {
+    const ingredients = sortedShoppingList.ingredients;
 
     const temp = ingredients.filter(
-      (ingredient) => ingredient !== ingredientToRemove
+      (ingredient) => ingredient.name !== ingredientToRemove.name,
     );
+    console.log(temp);
     setSortedShoppingList({ ...sortedShoppingList, ingredients: temp });
   };
 
-  const handleRemoveIngredientClick = (e) => {
-    e.preventDefault();
-    const ingredients = sortedShoppingList.ingredients;
-    removeIngredient(e, ingredients);
+  const handleRemoveIngredientClick = (ingredient) => {
+    removeIngredient(ingredient);
   };
 
   return (

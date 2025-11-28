@@ -13,7 +13,7 @@ const diyNandos = {
     "garlic bread",
     "broccoli",
     "green beans",
-  ],
+  ].map((ingredient) => ({ name: ingredient })),
 };
 
 describe("findRecipe", () => {
@@ -37,7 +37,7 @@ describe("filterRecipeOut", () => {
 
   it("returns diyNandos with recipeId of `s5zIC9lDBMGRpORsCGC2`", () => {
     expect(utils.filterRecipeOut(diyNandos.id, recipeList)).toEqual(
-      expect.not.arrayContaining([diyNandos])
+      expect.not.arrayContaining([diyNandos]),
     );
   });
 

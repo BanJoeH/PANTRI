@@ -16,7 +16,7 @@ const SortShopping = ({ recipes }) => {
 
   const togleShowSort = (recipe = null) => {
     openModal(
-      <SortShoppingModal shoppingList={recipe || sortShoppingRecipe} />
+      <SortShoppingModal shoppingList={recipe || sortShoppingRecipe} />,
     );
   };
 
@@ -33,21 +33,39 @@ const SortShopping = ({ recipes }) => {
   };
 
   const sortAllIngredients = (recipes) => {
+    console.log(recipes, oddBits);
     const ingredients = [
-      recipes.map((recipe) => recipe.ingredients),
-      oddBits.map(oddBit => oddBit.toLowerCase()).filter(Boolean),
+      recipes.flatMap((recipe) =>
+        recipe.ingredients.map((ingredient) => ({
+          name: ingredient.name.toLowerCase(),
+          source: recipe.name,
+        })),
+      ),
+      oddBits
+        .map((oddBit) =>
+          oddBit ? { name: oddBit.toLowerCase(), source: "Odd Bits" } : null,
+        )
+        .filter(Boolean),
     ]
       .flat(Infinity)
-      .sort();
+      .sort((a, b) => a.name.localeCompare(b.name));
 
-    const unique = [...new Set(ingredients)];
-    const duplicates = unique.map((value) => [
-      value,
-      ingredients.filter((str) => str === value).length,
-    ]);
-    const formatted = duplicates.map(
-      (ingredient) => ingredient[0] + "  X" + ingredient[1]
-    );
+    const map = new Map();
+    ingredients.forEach((ingredient) => {
+      if (map.has(ingredient.name)) {
+        const existing = map.get(ingredient.name);
+        existing.count += 1;
+        existing.sources.push(ingredient.source);
+        map.set(ingredient.name, existing);
+      } else {
+        map.set(ingredient.name, {
+          name: ingredient.name,
+          sources: [ingredient.source],
+          count: 1,
+        });
+      }
+    });
+    const formatted = Array.from(map.values());
 
     return formatted;
   };

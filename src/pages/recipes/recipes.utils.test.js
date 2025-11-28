@@ -13,7 +13,7 @@ const diyNandos = {
     "garlic bread",
     "broccoli",
     "green beans",
-  ],
+  ].map((ingredient) => ({ name: ingredient })),
 };
 const sausageGnocchiBake = {
   id: "e201LhvoaeUCESXKAYRj",
@@ -26,19 +26,19 @@ const sausageGnocchiBake = {
     "spinach",
     "fennel",
     "garlic",
-  ],
+  ].map((ingredient) => ({ name: ingredient })),
   name: "sausage gnocchi bake",
 };
 describe("recipeUtils filterRecipesByIngredientAndName", () => {
   it("should return a list with length of 3", () => {
     expect(
-      utils.filteredRecipesByIngredientAndName(data, "chicken").length
+      utils.filteredRecipesByIngredientAndName(data, "chicken").length,
     ).toEqual(3);
   });
 
   it("should return all data in recipeList", () => {
     expect(utils.filteredRecipesByIngredientAndName(recipeList, "")).toEqual(
-      data
+      data,
     );
   });
 
