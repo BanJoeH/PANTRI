@@ -30,7 +30,7 @@ const EditRecipe = ({ editingRecipe, setEditingRecipe, updateRecipe }) => {
         return { ingredient: ingredient, ingredientRef: null };
       });
     } else {
-      return (newState = [
+       (newState = [
         {
           ingredient: "",
           ingredientRef: null,

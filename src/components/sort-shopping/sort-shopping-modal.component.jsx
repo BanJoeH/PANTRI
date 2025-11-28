@@ -8,19 +8,18 @@ const SortShoppingModal = ({ shoppingList }) => {
 
   const pathname = window.location.pathname;
 
-  const removeIngredient = (ingredient) => {
+  const removeIngredient = (ingredientToRemove) => {
     const ingredients = sortedShoppingList.ingredients;
 
     const temp = ingredients.filter(
-      (ingredient) => ingredient.name !== ingredientToRemove
+      (ingredient) => ingredient.name !== ingredientToRemove.name
     );
+    console.log(temp)
     setSortedShoppingList({ ...sortedShoppingList, ingredients: temp });
   };
 
-  const handleRemoveIngredientClick = (e) => {
-    e.preventDefault();
-    const ingredients = sortedShoppingList.ingredients;
-    removeIngredient(e, ingredients);
+  const handleRemoveIngredientClick = (ingredient) => {
+    removeIngredient(ingredient);
   };
 
   return (
