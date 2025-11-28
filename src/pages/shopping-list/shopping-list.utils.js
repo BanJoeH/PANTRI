@@ -10,12 +10,12 @@ export const removeRecipeFromShoppingList = (recipeId, ref) => {
 export const removeIngredientFromShoppingList = (
   recipeId,
   updatedIngredients,
-  ref
+  ref,
 ) => {
   ref.doc(recipeId).update(
     {
       ingredients: updatedIngredients,
     },
-    { merge: true }
+    { merge: true },
   );
 };

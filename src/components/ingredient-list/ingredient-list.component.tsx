@@ -3,7 +3,7 @@ import React from "react";
 import "./ingredient-list.styles.scss";
 
 /**
- * 
+ *
  * @param {string} string
  * @returns string
  */
@@ -14,8 +14,7 @@ type Ingredient = {
   name: string;
   sources: string[];
   count?: number;
-}
-
+};
 
 const IngredientList = ({
   recipeId,
@@ -59,17 +58,26 @@ export default IngredientList;
 
 function IngredientTextButton({ ingredient }: { ingredient: Ingredient }) {
   const [showSources, setShowSources] = React.useState(false);
-  return (<button type="button" className="ingredient-text" onClick={() => setShowSources(!showSources)}>
-    {capitalize(ingredient.name)} {ingredient.count != null ? `X ${ingredient.count}` : ""}
-    {ingredient.sources && showSources &&
-      <div className="ingredient-sources">
-        <div>From recipes:</div>
-        <ul>
-          {ingredient.sources.map((source, i) => (
-            <li key={ingredient.name + "-source-" + i}>{capitalize(source)}</li>
-          ))}
-        </ul>
-      </div>}
-  </button>
+  return (
+    <button
+      type="button"
+      className="ingredient-text"
+      onClick={() => setShowSources(!showSources)}
+    >
+      {capitalize(ingredient.name)}{" "}
+      {ingredient.count != null ? `X ${ingredient.count}` : ""}
+      {ingredient.sources && showSources && (
+        <div className="ingredient-sources">
+          <div>From recipes:</div>
+          <ul>
+            {ingredient.sources.map((source, i) => (
+              <li key={ingredient.name + "-source-" + i}>
+                {capitalize(source)}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+    </button>
   );
 }

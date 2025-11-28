@@ -21,7 +21,6 @@ const SearchBox = ({ searchField, searchChange }) => {
         <CustomButton
           className="searchbox__icon"
           onClick={() => setShowSearchBox(!showSearchBox)}
-          
         >
           Search
         </CustomButton>

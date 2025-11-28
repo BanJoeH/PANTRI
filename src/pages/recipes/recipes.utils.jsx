@@ -1,6 +1,6 @@
 export const filteredRecipesByIngredientAndName = (
   recipeList,
-  debouncedSearchTerm
+  debouncedSearchTerm,
 ) => {
   let recipes = [];
   if (!recipeList) {

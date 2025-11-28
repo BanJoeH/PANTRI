@@ -30,12 +30,12 @@ const EditRecipe = ({ editingRecipe, setEditingRecipe, updateRecipe }) => {
         return { ingredient: ingredient, ingredientRef: null };
       });
     } else {
-       (newState = [
+      newState = [
         {
           ingredient: "",
           ingredientRef: null,
         },
-      ]);
+      ];
     }
     setInputList(newState);
     // eslint-disable-next-line react-hooks/exhaustive-deps

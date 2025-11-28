@@ -39,7 +39,9 @@ const Recipes = () => {
         return {
           id: key,
           ...value,
-          ingredients: value.ingredients.map((ingredient) => ({name: ingredient}))
+          ingredients: value.ingredients.map((ingredient) => ({
+            name: ingredient,
+          })),
         };
       }
       return null;
@@ -98,11 +100,14 @@ const Recipes = () => {
   };
 
   const handleAddToShoppingListClick = async (e, recipe) => {
-    console.log(recipe)
+    console.log(recipe);
     console.log("adding to shopping List");
     e.preventDefault();
     const response = await addToFirebaseCollection(
-      {...recipe, ingredients: recipe.ingredients.map(ingredient => ingredient.name)},
+      {
+        ...recipe,
+        ingredients: recipe.ingredients.map((ingredient) => ingredient.name),
+      },
       shoppingListCollectionRef,
     );
     if (response === "error") {
@@ -123,7 +128,10 @@ const Recipes = () => {
         "danger",
       );
     } else {
-      setEditingRecipe({...recipe, ingredients: recipe.ingredients.map(ingredient => ingredient.name)});
+      setEditingRecipe({
+        ...recipe,
+        ingredients: recipe.ingredients.map((ingredient) => ingredient.name),
+      });
     }
   };
 

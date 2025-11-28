@@ -30,7 +30,7 @@ ReactDOM.render(
       </ThemeProvider>
     </ModalProvider>
   </React.StrictMode>,
-  document.getElementById("root")
+  document.getElementById("root"),
 );
 
 serviceWorkerRegistration.register();

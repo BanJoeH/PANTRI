@@ -3,7 +3,7 @@ import IngredientList from "../ingredient-list/ingredient-list.component";
 
 const SortShoppingModal = ({ shoppingList }) => {
   const [sortedShoppingList, setSortedShoppingList] = useState(
-    () => shoppingList
+    () => shoppingList,
   );
 
   const pathname = window.location.pathname;
@@ -12,9 +12,9 @@ const SortShoppingModal = ({ shoppingList }) => {
     const ingredients = sortedShoppingList.ingredients;
 
     const temp = ingredients.filter(
-      (ingredient) => ingredient.name !== ingredientToRemove.name
+      (ingredient) => ingredient.name !== ingredientToRemove.name,
     );
-    console.log(temp)
+    console.log(temp);
     setSortedShoppingList({ ...sortedShoppingList, ingredients: temp });
   };
 

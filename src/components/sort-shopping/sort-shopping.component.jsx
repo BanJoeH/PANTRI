@@ -16,7 +16,7 @@ const SortShopping = ({ recipes }) => {
 
   const togleShowSort = (recipe = null) => {
     openModal(
-      <SortShoppingModal shoppingList={recipe || sortShoppingRecipe} />
+      <SortShoppingModal shoppingList={recipe || sortShoppingRecipe} />,
     );
   };
 
@@ -33,10 +33,19 @@ const SortShopping = ({ recipes }) => {
   };
 
   const sortAllIngredients = (recipes) => {
-    console.log(recipes, oddBits)
+    console.log(recipes, oddBits);
     const ingredients = [
-      recipes.flatMap((recipe) => recipe.ingredients.map((ingredient) => ({ name: ingredient.name.toLowerCase(), source: recipe.name }))),
-      oddBits.map(oddBit => oddBit ? ({ name: oddBit.toLowerCase(), source: 'Odd Bits' }) : null).filter(Boolean),
+      recipes.flatMap((recipe) =>
+        recipe.ingredients.map((ingredient) => ({
+          name: ingredient.name.toLowerCase(),
+          source: recipe.name,
+        })),
+      ),
+      oddBits
+        .map((oddBit) =>
+          oddBit ? { name: oddBit.toLowerCase(), source: "Odd Bits" } : null,
+        )
+        .filter(Boolean),
     ]
       .flat(Infinity)
       .sort((a, b) => a.name.localeCompare(b.name));
@@ -49,9 +58,13 @@ const SortShopping = ({ recipes }) => {
         existing.sources.push(ingredient.source);
         map.set(ingredient.name, existing);
       } else {
-        map.set(ingredient.name, { name: ingredient.name, sources: [ingredient.source], count: 1 });
+        map.set(ingredient.name, {
+          name: ingredient.name,
+          sources: [ingredient.source],
+          count: 1,
+        });
       }
-    })
+    });
     const formatted = Array.from(map.values());
 
     return formatted;
