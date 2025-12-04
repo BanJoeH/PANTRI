@@ -82,19 +82,22 @@ const ShoppingList = () => {
     ingredientIndex,
   ) => {
     const recipe = findRecipe(recipeId, recipes);
+    console.log("recipe", recipe);
+    console.log("ingredientIndex", ingredientIndex);
     const updatedIngredients = [...recipe.ingredients];
 
     updatedIngredients.splice(ingredientIndex, 1);
+    console.log("updatedIngredients", updatedIngredients);
 
     removeIngredientFromShoppingList(
       recipeId,
-      updatedIngredients,
+      updatedIngredients.map((ing) => ing.name),
       shoppingListCollectionRef,
     );
   };
 
   if (isLoading) {
-    return;
+    return null;
   }
   return (
     <PageContainer>
