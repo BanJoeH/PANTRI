@@ -71,11 +71,19 @@ const ShoppingList = () => {
     }
   };
 
-  const handleRemoveIngredientFromShoppingListItemClick = (e) => {
-    e.preventDefault();
-    const [recipeId, , ingredientIndex] = e.target.name.split("&");
+  /*type Ingredient = {
+  name: string;
+  sources: string[];
+  count?: number;
+};*/
+  const handleRemoveIngredientFromShoppingListItemClick = (
+    ingredient,
+    recipeId,
+    ingredientIndex,
+  ) => {
     const recipe = findRecipe(recipeId, recipes);
-    const updatedIngredients = recipe.ingredients.slice();
+    const updatedIngredients = [...recipe.ingredients];
+
     updatedIngredients.splice(ingredientIndex, 1);
 
     removeIngredientFromShoppingList(
@@ -85,34 +93,35 @@ const ShoppingList = () => {
     );
   };
 
+  if (isLoading) {
+    return;
+  }
   return (
-    !isLoading && (
-      <PageContainer>
-        <PageHeaderContainer title="Shopping List">
-          <OddBits />
-          {recipes?.length ? <SortShopping recipes={recipes} /> : null}
-        </PageHeaderContainer>
-        {recipes?.length ? (
-          <CardList
-            recipes={recipes}
-            removeFromRecipes={handleRemoveFromShoppingClick}
-            cardButton={handleRemoveFromShoppingClick}
-            ingredientButton={handleRemoveIngredientFromShoppingListItemClick}
-          />
-        ) : (
-          <div
-            className="card"
-            onClick={() => {
-              history.push("/home/recipes");
-            }}
-            style={{ cursor: "pointer" }}
-          >
-            <h2>No recipes in your shopping list.</h2>
-            <h2>Go to Recipes to add some!</h2>
-          </div>
-        )}
-      </PageContainer>
-    )
+    <PageContainer>
+      <PageHeaderContainer title="Shopping List">
+        <OddBits />
+        {recipes?.length ? <SortShopping recipes={recipes} /> : null}
+      </PageHeaderContainer>
+      {recipes?.length ? (
+        <CardList
+          recipes={recipes}
+          removeFromRecipes={handleRemoveFromShoppingClick}
+          cardButton={handleRemoveFromShoppingClick}
+          ingredientButton={handleRemoveIngredientFromShoppingListItemClick}
+        />
+      ) : (
+        <div
+          className="card"
+          onClick={() => {
+            history.push("/home/recipes");
+          }}
+          style={{ cursor: "pointer" }}
+        >
+          <h2>No recipes in your shopping list.</h2>
+          <h2>Go to Recipes to add some!</h2>
+        </div>
+      )}
+    </PageContainer>
   );
 };
 

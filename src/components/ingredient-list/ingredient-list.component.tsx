@@ -25,7 +25,7 @@ const IngredientList = ({
   recipeId: string;
   ingredients: Ingredient[];
   pathname: string;
-  ingredientButton: (ingredient: Ingredient) => void;
+  ingredientButton: (ingredient: Ingredient, recipeId: string, ingredientIndex: number) => void;
 }) => {
   console.log(ingredients, recipeId);
   return ingredients ? (
@@ -38,7 +38,7 @@ const IngredientList = ({
               {pathname === "/home/shopping-list" ? (
                 <button
                   className="ingredient-button"
-                  onClick={(e) => ingredientButton(ingredient)}
+                  onClick={(e) => ingredientButton(ingredient, recipeId, i)}
                   name={recipeId + "&" + ingredient.name + "&" + i}
                 >
                   &#10005;
