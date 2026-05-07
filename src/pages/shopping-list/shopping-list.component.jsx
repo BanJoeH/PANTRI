@@ -3,11 +3,14 @@ import React from "react";
 import { useFirestoreConnect, useFirestore } from "react-redux-firebase";
 
 import { useSelector } from "react-redux";
-import { removeIngredientFromShoppingList } from "./shopping-list.utils";
+import {
+  normalizeIngredients,
+  setPurchasedInRecipeIngredient,
+} from "./shopping-list.utils";
 
 import OddBits from "../../components/oddbits/oddbits.component";
 import CardList from "../../components/cardList/card-list.component";
-import SortShopping from "../../components/sort-shopping/sort-shopping.component";
+import CustomButton from "../../components/custom-button/custom-button.component";
 import {
   findRecipe,
   removeFromFirebaseCollection,
@@ -36,12 +39,16 @@ const ShoppingList = () => {
   const recipes = Object.entries(recipesObject || {})
     .map(([key, value]) => {
       if (value) {
+        // Stable sort: purchased ingredients fall to the bottom of each
+        // recipe card while preserving the user's original ordering inside
+        // each group.
+        const ingredients = normalizeIngredients(value.ingredients).sort(
+          (a, b) => Number(a.purchased) - Number(b.purchased),
+        );
         return {
           id: key,
           ...value,
-          ingredients: value.ingredients.map((ingredient) => ({
-            name: ingredient,
-          })),
+          ingredients,
         };
       }
       return null;
@@ -71,27 +78,17 @@ const ShoppingList = () => {
     }
   };
 
-  /*type Ingredient = {
-  name: string;
-  sources: string[];
-  count?: number;
-};*/
-  const handleRemoveIngredientFromShoppingListItemClick = (
-    ingredient,
-    recipeId,
-    ingredientIndex,
-  ) => {
-    const recipe = findRecipe(recipeId, recipes);
-    console.log("recipe", recipe);
-    console.log("ingredientIndex", ingredientIndex);
-    const updatedIngredients = [...recipe.ingredients];
-
-    updatedIngredients.splice(ingredientIndex, 1);
-    console.log("updatedIngredients", updatedIngredients);
-
-    removeIngredientFromShoppingList(
+  // Local-only tick: flips just this one ingredient instance inside this
+  // recipe. The grouped view's mental model is "this recipe's stuff", so we
+  // deliberately don't fan out to other recipes or odd bits here. The sorted
+  // view is where the "I bought potatoes once, that's enough for everything"
+  // gesture lives.
+  const handleToggleIngredientPurchased = (ingredient, recipeId, index) => {
+    setPurchasedInRecipeIngredient(
       recipeId,
-      updatedIngredients.map((ing) => ing.name),
+      index,
+      !ingredient.purchased,
+      recipes,
       shoppingListCollectionRef,
     );
   };
@@ -103,14 +100,20 @@ const ShoppingList = () => {
     <PageContainer>
       <PageHeaderContainer title="Shopping List">
         <OddBits />
-        {recipes?.length ? <SortShopping recipes={recipes} /> : null}
+        {recipes?.length ? (
+          <div style={{ margin: "0 5%" }}>
+            <CustomButton onClick={() => history.push("/home/sorted")}>
+              Sort Shopping
+            </CustomButton>
+          </div>
+        ) : null}
       </PageHeaderContainer>
       {recipes?.length ? (
         <CardList
           recipes={recipes}
           removeFromRecipes={handleRemoveFromShoppingClick}
           cardButton={handleRemoveFromShoppingClick}
-          ingredientButton={handleRemoveIngredientFromShoppingListItemClick}
+          ingredientButton={handleToggleIngredientPurchased}
         />
       ) : (
         <div

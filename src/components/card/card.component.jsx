@@ -71,7 +71,6 @@ function Card({
             <IngredientList
               recipeId={recipe.id}
               ingredients={recipe.ingredients}
-              pathname={pathname}
               ingredientButton={ingredientButton}
             />
           ) : (

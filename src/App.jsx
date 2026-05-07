@@ -13,7 +13,6 @@ import Header from "./components/header/header.component";
 import Footer from "./components/footer/footer";
 
 import "./App.scss";
-import GlobalModal from "./components/modal/modal";
 import Home from "./pages/home/home";
 
 const SignInAndSignUpPage = lazy(
@@ -23,6 +22,9 @@ const ForgotPassword = lazy(
   () => import("./pages/forgot-password/forgot-password.component"),
 );
 const ContactPage = lazy(() => import("./pages/contact/contact.component"));
+const SortedShopping = lazy(
+  () => import("./pages/sorted-shopping/sorted-shopping.component"),
+);
 
 export default function App() {
   const [showMenu, setShowMenu] = useState(false);
@@ -52,10 +54,12 @@ export default function App() {
           <div className="app">
             <ReactNotification />
             <Header />
-            <GlobalModal />
             <div className="body">
               <Suspense fallback={<div>...loading</div>}>
                 <Switch>
+                  <Route exact path="/home/sorted">
+                    {isEmpty ? <Redirect to="/" /> : <SortedShopping />}
+                  </Route>
                   <Route path="/home/:tab">
                     {isEmpty ? <Redirect to="/" /> : <Home />}
                   </Route>

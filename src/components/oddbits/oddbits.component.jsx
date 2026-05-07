@@ -1,6 +1,7 @@
 import IngredientInput from "../ingredient-input/ingredient-input.component";
 import { useFirestore } from "react-redux-firebase";
 import { useSelector } from "react-redux";
+import { normalizeIngredient } from "../../pages/shopping-list/shopping-list.utils";
 
 const OddBits = () => {
   const oddBits = useSelector((state) => state.firebase.profile.oddBits);
@@ -8,22 +9,31 @@ const OddBits = () => {
 
   const firestore = useFirestore();
 
-  const updateOddBits = (inputList) => {
-    let ingredients = inputList.map((input) => {
-      return input.ingredient;
-    });
+  // We propagate `purchased` through the inputList so renames in
+  // IngredientInput (which mutates entries in place) keep their tick.
+  const inputList = oddBits?.length
+    ? oddBits.map((item) => {
+        const { name, purchased } = normalizeIngredient(item);
+        return { ingredient: name, purchased, ingredientRef: null };
+      })
+    : [{ ingredient: "", purchased: false, ingredientRef: null }];
+
+  // We deliberately don't filter empty entries here — IngredientInput uses
+  // empty rows as the "add another" placeholder, and they need to round-trip
+  // through Firestore so they stay rendered after re-fetch. Empty names are
+  // filtered out where it matters (the sorted-shopping view).
+  const updateOddBits = (newInputList) => {
+    const updated = newInputList.map((i) => ({
+      name: i.ingredient || "",
+      purchased: i.purchased ?? false,
+    }));
     firestore.collection("users").doc(uid).set(
       {
-        oddBits: ingredients,
+        oddBits: updated,
       },
       { merge: true },
     );
   };
-
-  const inputList = oddBits?.map((item) => ({
-    ingredient: item,
-    ingredientRef: null,
-  })) ?? [{ ingredient: "", ingredientRef: null }];
 
   return (
     <article className="card">

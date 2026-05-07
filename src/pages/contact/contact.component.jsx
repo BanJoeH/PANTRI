@@ -37,14 +37,9 @@ const ContactPage = () => {
         templateParams,
         process.env.REACT_APP_USER_ID,
       )
-      .then(
-        (result) => {
-          console.log(result);
-        },
-        (error) => {
-          console.log(error);
-        },
-      );
+      .catch((error) => {
+        console.log("error sending contact form", error);
+      });
   };
 
   const handleSubmit = (e) => {

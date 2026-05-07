@@ -22,6 +22,17 @@
       border-bottom: none;
     }
 
+    &--purchased .ingredient-text {
+      text-decoration: line-through;
+      opacity: 0.45;
+    }
+
+    .ingredient-count-total {
+      color: $dark-secondary-text;
+      font-size: 0.85em;
+      font-weight: lighter;
+    }
+
     .ingredient-button {
       background-color: transparent;
       border-radius: 0.5rem;
