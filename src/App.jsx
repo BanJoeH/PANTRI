@@ -35,9 +35,7 @@ export default function App() {
   useEffect(() => {
     const unsubscribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
       if (userAuth) {
-        const userRef = await createUserProfileDocument(userAuth);
-
-        userRef.onSnapshot();
+        await createUserProfileDocument(userAuth);
       }
     });
     return () => {
@@ -56,16 +54,16 @@ export default function App() {
             <Header />
             <GlobalModal />
             <div className="body">
-              <Switch>
-                <Route path="/home/:tab">
-                  {isEmpty ? <Redirect to="/" /> : <Home />}
-                </Route>
-                <Suspense fallback={<div>...loading</div>}>
+              <Suspense fallback={<div>...loading</div>}>
+                <Switch>
+                  <Route path="/home/:tab">
+                    {isEmpty ? <Redirect to="/" /> : <Home />}
+                  </Route>
                   <Route exact path="/" component={SignInAndSignUpPage} />
                   <Route path="/forgotpassword" component={ForgotPassword} />
                   <Route path="/contact" component={ContactPage} />
-                </Suspense>
-              </Switch>
+                </Switch>
+              </Suspense>
             </div>
 
             <CookieConsent

@@ -34,14 +34,11 @@ export const filteredRecipesByIngredientAndName = (
 };
 
 export const updateRecipe = async (item, ref) => {
-  let response;
-  await ref
-    .doc(item.id)
-    .update(item)
-    .then((response = "succeeded"))
-    .catch((error) => {
-      response = "failed";
-      console.log("error updating recipe", error);
-    });
-  return response;
+  try {
+    await ref.doc(item.id).update(item);
+    return "succeeded";
+  } catch (error) {
+    console.log("error updating recipe", error);
+    return "failed";
+  }
 };

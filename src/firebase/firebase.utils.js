@@ -6,13 +6,13 @@ import store from "../App/store";
 import { actionTypes } from "redux-firestore";
 
 const config = {
-  apiKey: "AIzaSyBBougi-iecxqTOOD2iahFN-yUfG5tKEMo",
-  authDomain: "pantri-128f4.firebaseapp.com",
-  projectId: "pantri-128f4",
-  storageBucket: "pantri-128f4.appspot.com",
-  messagingSenderId: "480125689887",
-  appId: "1:480125689887:web:8603482672c1217834752a",
-  measurementId: "G-5RVBRNC8RQ",
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.REACT_APP_FIREBASE_APP_ID,
+  measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID,
 };
 
 const rrfConfig = {
