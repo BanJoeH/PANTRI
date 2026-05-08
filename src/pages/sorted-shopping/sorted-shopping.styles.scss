@@ -1,0 +1,54 @@
+@import "../../_globals.scss";
+
+.sorted-shopping-actions {
+  margin: 0 5%;
+}
+
+.sorted-shopping-card {
+  max-width: 600px;
+  margin: 10px auto;
+  padding: 8px 16px;
+}
+
+.sorted-shopping-divider {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 18px 0 6px;
+  color: $dark-secondary-text;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+
+  &::before,
+  &::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: $dark-2;
+  }
+
+  span {
+    white-space: nowrap;
+  }
+}
+
+// The whole "got it" block sits at slightly reduced opacity. Individual
+// purchased rows already strike-through + fade via .ingredient--purchased,
+// so this just adds a subtle global cue without making them unreadable.
+// width: 100% is needed because the parent .card uses
+// `align-items: center`, which shrinks children to content width unless
+// they declare a width.
+.sorted-shopping-got-it {
+  width: 100%;
+  opacity: 0.85;
+}
+
+.sorted-shopping-empty-section {
+  width: 100%;
+  padding: 24px 0;
+  text-align: center;
+  color: $dark-secondary-text;
+  font-style: italic;
+}

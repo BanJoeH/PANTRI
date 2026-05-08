@@ -2,53 +2,71 @@ import React from "react";
 
 import "./ingredient-list.styles.scss";
 
-/**
- *
- * @param {string} string
- * @returns string
- */
 function capitalize(string: string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
+
 type Ingredient = {
   name: string;
-  sources: string[];
+  sources?: string[];
   count?: number;
+  totalCount?: number;
+  purchased?: boolean;
 };
+
+function CountBadge({
+  count,
+  totalCount,
+}: {
+  count?: number;
+  totalCount?: number;
+}) {
+  if (!count) return null;
+  return (
+    <>
+      X {count}
+      {totalCount && totalCount > count ? (
+        <span className="ingredient-count-total"> of {totalCount}</span>
+      ) : null}
+    </>
+  );
+}
 
 const IngredientList = ({
   recipeId,
   ingredients,
-  pathname,
   ingredientButton,
 }: {
   recipeId: string;
   ingredients: Ingredient[];
-  pathname: string;
-  ingredientButton: (ingredient: Ingredient, recipeId: string, ingredientIndex: number) => void;
+  ingredientButton?: (
+    ingredient: Ingredient,
+    recipeId: string,
+    ingredientIndex: number,
+  ) => void;
 }) => {
-  console.log(ingredients, recipeId);
   return ingredients ? (
     <div className="ingredient-list">
       {ingredients.map((ingredient, i) => {
-        if (ingredient.name !== null) {
-          return (
-            <div className="ingredient" key={recipeId + ingredient.name + i}>
-              <IngredientTextButton ingredient={ingredient} />
-              {pathname === "/home/shopping-list" ? (
-                <button
-                  className="ingredient-button"
-                  onClick={(e) => ingredientButton(ingredient, recipeId, i)}
-                  name={recipeId + "&" + ingredient.name + "&" + i}
-                >
-                  &#10005;
-                </button>
-              ) : (
-                <div></div>
-              )}
-            </div>
-          );
-        } else return null;
+        if (ingredient.name == null) return null;
+        return (
+          <div
+            className={`ingredient${ingredient.purchased ? " ingredient--purchased" : ""}`}
+            key={recipeId + ingredient.name + i}
+          >
+            <IngredientTextButton ingredient={ingredient} />
+            {ingredientButton ? (
+              <button
+                className="ingredient-button"
+                onClick={() => ingredientButton(ingredient, recipeId, i)}
+                name={recipeId + "&" + ingredient.name + "&" + i}
+                aria-pressed={ingredient.purchased ?? undefined}
+              >
+                {ingredient.purchased ? "\u21BA" : "\u2715"}
+              </button>
+            ) : null}
+          </div>
+        );
       })}
     </div>
   ) : null;
@@ -65,7 +83,10 @@ function IngredientTextButton({ ingredient }: { ingredient: Ingredient }) {
       onClick={() => setShowSources(!showSources)}
     >
       {capitalize(ingredient.name)}{" "}
-      {ingredient.count != null ? `X ${ingredient.count}` : ""}
+      <CountBadge
+        count={ingredient.count}
+        totalCount={ingredient.totalCount}
+      />
       {ingredient.sources && showSources && (
         <div className="ingredient-sources">
           <div>From recipes:</div>

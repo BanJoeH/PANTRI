@@ -45,14 +45,12 @@ export const removeFromFirebaseCollection = async (recipe, collectionRef) => {
 
 export const addToFirebaseCollection = async (recipe, collectionRef) => {
   try {
-    console.log(collectionRef);
     const docRef = await collectionRef.add(recipe);
-    console.log(recipe.id, docRef.id);
     await docRef.update({
       id: docRef.id,
     });
   } catch (error) {
-    console.log(error);
+    console.log("error adding document", error);
     return "error";
   }
   return recipe;

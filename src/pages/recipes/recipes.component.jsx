@@ -11,7 +11,11 @@ import {
   addToFirebaseCollection,
   removeFromFirebaseCollection,
 } from "../../App/app.utils";
+import { normalizeIngredient } from "../shopping-list/shopping-list.utils";
 import useDebounce from "../../App/useDebounce.utils";
+import { debug } from "../../App/debug.utils";
+
+const log = debug("add");
 
 import CardList from "../../components/cardList/card-list.component";
 import SearchBox from "../../components/search-box/searchbox.component";
@@ -100,16 +104,17 @@ const Recipes = () => {
   };
 
   const handleAddToShoppingListClick = async (e, recipe) => {
-    console.log(recipe);
-    console.log("adding to shopping List");
     e.preventDefault();
+    const payload = {
+      ...recipe,
+      ingredients: recipe.ingredients.map(normalizeIngredient),
+    };
+    log("adding recipe to shopping list", { sourceRecipe: recipe, payload });
     const response = await addToFirebaseCollection(
-      {
-        ...recipe,
-        ingredients: recipe.ingredients.map((ingredient) => ingredient.name),
-      },
+      payload,
       shoppingListCollectionRef,
     );
+    log("addToFirebaseCollection response", response);
     if (response === "error") {
       notification("Error", "error adding to shopping list", "danger");
     } else {
@@ -120,7 +125,6 @@ const Recipes = () => {
 
   const handleEditRecipeCardButtonClick = (e, recipe) => {
     e.preventDefault();
-    console.log(recipe);
     if (recipe === undefined) {
       notification(
         "error",
