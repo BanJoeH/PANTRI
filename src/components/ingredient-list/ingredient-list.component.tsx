@@ -83,10 +83,7 @@ function IngredientTextButton({ ingredient }: { ingredient: Ingredient }) {
       onClick={() => setShowSources(!showSources)}
     >
       {capitalize(ingredient.name)}{" "}
-      <CountBadge
-        count={ingredient.count}
-        totalCount={ingredient.totalCount}
-      />
+      <CountBadge count={ingredient.count} totalCount={ingredient.totalCount} />
       {ingredient.sources && showSources && (
         <div className="ingredient-sources">
           <div>From recipes:</div>
