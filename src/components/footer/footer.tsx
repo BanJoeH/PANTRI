@@ -4,7 +4,7 @@ import linkedin from "../../assets/linkedin.png";
 
 import "./footer.styles.scss";
 
-const Footer = () => {
+const Footer = (): JSX.Element => {
   return (
     <div className="footer">
       <ul className="social-section">

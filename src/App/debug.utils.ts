@@ -8,7 +8,7 @@
 // The flag is read on every call (not cached), so toggling takes effect
 // immediately — no reload needed.
 
-const isEnabled = (namespace) => {
+const isEnabled = (namespace: string): boolean => {
   try {
     if (typeof localStorage === "undefined") return false;
     const raw = localStorage.getItem("pantri:debug");
@@ -20,9 +20,11 @@ const isEnabled = (namespace) => {
   }
 };
 
-export const debug = (namespace) => {
+export type DebugLogger = (...args: unknown[]) => void;
+
+export const debug = (namespace: string): DebugLogger => {
   const tag = `[pantri:${namespace}]`;
-  return (...args) => {
+  return (...args: unknown[]) => {
     if (isEnabled(namespace)) {
       console.log(tag, ...args);
     }

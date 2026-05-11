@@ -1,8 +1,19 @@
-export const filteredRecipesByIngredientAndName = (
-  recipeList,
-  debouncedSearchTerm,
-) => {
-  let recipes = [];
+import type firebase from "firebase/app";
+
+// In-memory recipe shape used by the recipe-list view: ingredient strings are
+// wrapped as { name } before search, see Recipes component.
+type SearchableRecipe = {
+  id: string;
+  name: string;
+  link?: string;
+  ingredients: { name: string }[];
+};
+
+export const filteredRecipesByIngredientAndName = <T extends SearchableRecipe>(
+  recipeList?: T[] | null,
+  debouncedSearchTerm?: string,
+): T[] => {
+  const recipes: T[] = [];
   if (!recipeList) {
     return recipes;
   }
@@ -33,7 +44,10 @@ export const filteredRecipesByIngredientAndName = (
   return recipes;
 };
 
-export const updateRecipe = async (item, ref) => {
+export const updateRecipe = async (
+  item: { id: string } & object,
+  ref: firebase.firestore.CollectionReference,
+): Promise<"succeeded" | "failed"> => {
   try {
     await ref.doc(item.id).update(item);
     return "succeeded";

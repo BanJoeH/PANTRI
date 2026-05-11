@@ -64,3 +64,23 @@ declare module "*.module.sass" {
   const classes: { readonly [key: string]: string };
   export default classes;
 }
+
+// react-notifications-component v3 ships .d.ts files but its package.json
+// lacks a "types" field, so TypeScript can't find them. Declare the bits we
+// actually use; can be removed if/when we move to a typed alternative.
+declare module "react-notifications-component" {
+  import type { ComponentType } from "react";
+  export const store: {
+    addNotification(options: {
+      title?: string;
+      message?: string;
+      type?: "success" | "danger" | "info" | "warning" | "default";
+      insert?: "top" | "bottom";
+      container?: string;
+      dismiss?: { duration?: number };
+      [key: string]: unknown;
+    }): void;
+  };
+  const ReactNotification: ComponentType<Record<string, unknown>>;
+  export default ReactNotification;
+}
