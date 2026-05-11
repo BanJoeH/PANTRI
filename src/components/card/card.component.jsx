@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useLocation } from "react-router-dom";
 import IngredientList from "../ingredient-list/ingredient-list.component";
 import "./card.styles.scss";
 import CustomButton from "../custom-button/custom-button.component";
@@ -12,7 +13,7 @@ function Card({
   showBodyOnMount,
 }) {
   const [showBody, setShowBody] = useState(() => showBodyOnMount || false);
-  const pathname = window.location.pathname;
+  const { pathname } = useLocation();
 
   const toggleShowBody = (e) => {
     e.preventDefault();
