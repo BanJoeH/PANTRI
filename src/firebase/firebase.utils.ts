@@ -1,11 +1,11 @@
 import firebase from "firebase/app";
 import "firebase/firestore";
 import "firebase/auth";
-import { createFirestoreInstance } from "redux-firestore";
+import { actionTypes, createFirestoreInstance } from "redux-firestore";
+import type { ReactReduxFirebaseProviderProps } from "react-redux-firebase";
 import store from "../App/store";
-import { actionTypes } from "redux-firestore";
 
-const config = {
+const config: Parameters<typeof firebase.initializeApp>[0] = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
   authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
   projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
@@ -15,25 +15,34 @@ const config = {
   measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID,
 };
 
-const rrfConfig = {
+const rrfConfig: ReactReduxFirebaseProviderProps["config"] = {
   userProfile: "users",
   useFirestoreForProfile: true,
-  onAuthStateChanged: (authData, firebase, dispatch) => {
+  onAuthStateChanged: (authData, _firebase, dispatch) => {
     if (!authData) {
       dispatch({ type: actionTypes.CLEAR_DATA });
     }
   },
 };
 
-export const rrfProps = {
+export const rrfProps: Omit<ReactReduxFirebaseProviderProps, "children"> = {
   firebase,
   config: rrfConfig,
   dispatch: store.dispatch,
-  createFirestoreInstance, //since we are using Firestore
+  // redux-firestore and react-redux-firebase expose slightly different
+  // Firebase instance aliases, but this is the exact bridge API the provider
+  // expects at runtime.
+  createFirestoreInstance:
+    createFirestoreInstance as ReactReduxFirebaseProviderProps["createFirestoreInstance"],
 };
 
-export const createUserProfileDocument = async (userAuth, additionalData) => {
-  if (!userAuth) return;
+type UserProfileData = Record<string, unknown>;
+
+export const createUserProfileDocument = async (
+  userAuth: firebase.User | null,
+  additionalData: UserProfileData = {},
+): Promise<firebase.firestore.DocumentReference | undefined> => {
+  if (!userAuth) return undefined;
 
   const userRef = firestore.doc(`users/${userAuth.uid}`);
 
@@ -50,7 +59,10 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
         ...additionalData,
       });
     } catch (error) {
-      console.log("error creating user", error.message);
+      console.log(
+        "error creating user",
+        error instanceof Error ? error.message : error,
+      );
     }
   }
 
@@ -59,11 +71,15 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
 
 firebase.initializeApp(config);
 
-export const enablePersistence = () => {
+type PersistenceError = {
+  code?: string;
+};
+
+export const enablePersistence = (): void => {
   firebase
     .firestore()
     .enablePersistence()
-    .catch((err) => {
+    .catch((err: PersistenceError) => {
       if (err.code === "failed-precondition") {
         console.log(err);
       } else if (err.code === "unimplemented") {
@@ -80,6 +96,7 @@ export const firestore = firebase.firestore();
 
 const googleProvider = new firebase.auth.GoogleAuthProvider();
 googleProvider.setCustomParameters({ prompt: "select_account" });
-export const signInWithGoogle = () => auth.signInWithPopup(googleProvider);
+export const signInWithGoogle = (): Promise<firebase.auth.UserCredential> =>
+  auth.signInWithPopup(googleProvider);
 
 export default firebase;

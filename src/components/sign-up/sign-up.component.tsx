@@ -1,13 +1,22 @@
-import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { auth } from "../../firebase/firebase.utils";
 import { useHistory } from "react-router-dom";
 
 import CustomButton from "../custom-button/custom-button.component";
 import CustomInput from "../custom-input/custom-input.component";
+import { useAppSelector } from "../../App/hooks";
 
-const SignUp = () => {
-  const [userCredentials, setUserCredentials] = useState({
+type SignUpState = {
+  displayName: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+  error: boolean;
+  errorMessage: string;
+};
+
+const SignUp = (): JSX.Element => {
+  const [userCredentials, setUserCredentials] = useState<SignUpState>({
     displayName: "",
     email: "",
     password: "",
@@ -19,9 +28,9 @@ const SignUp = () => {
     userCredentials;
 
   const history = useHistory();
-  const { uid } = useSelector((state) => state.firebase.auth);
+  const uid = useAppSelector((state) => state.firebase.auth.uid);
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     if (password !== confirmPassword) {
@@ -35,7 +44,7 @@ const SignUp = () => {
 
     auth
       .createUserWithEmailAndPassword(email, password)
-      .then((userCredential) => {
+      .then(() => {
         setUserCredentials({
           displayName: "",
           email: "",
@@ -45,11 +54,11 @@ const SignUp = () => {
           errorMessage: "",
         });
       })
-      .catch((error) => {
+      .catch((err: Error) => {
         setUserCredentials({
           ...userCredentials,
           error: true,
-          errorMessage: error.message,
+          errorMessage: err.message,
         });
       });
   };
@@ -60,7 +69,7 @@ const SignUp = () => {
     }
   }, [history, uid]);
 
-  const handleChange = (event) => {
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
 
     setUserCredentials({ ...userCredentials, [name]: value });

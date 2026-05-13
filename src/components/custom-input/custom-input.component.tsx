@@ -2,10 +2,14 @@ import React, { ChangeEventHandler, InputHTMLAttributes } from "react";
 
 import "./custom-input.styles.scss";
 
+// Callers may pass either `handleChange` (the named API, wired up explicitly
+// below) or `onChange` (the native attr, picked up by the spread). Both work
+// because the spread comes after, so an onChange passed in props wins over
+// handleChange — preserving original JS behaviour.
 type CustomInputProps = {
   handleChange?: ChangeEventHandler<HTMLInputElement>;
   label?: string;
-} & Omit<InputHTMLAttributes<HTMLInputElement>, "onChange">;
+} & InputHTMLAttributes<HTMLInputElement>;
 
 const CustomInput = ({
   handleChange,

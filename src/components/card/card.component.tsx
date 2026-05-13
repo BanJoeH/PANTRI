@@ -1,8 +1,29 @@
-import React, { useState } from "react";
+import React, { MouseEvent, useState } from "react";
 import { useLocation } from "react-router-dom";
 import IngredientList from "../ingredient-list/ingredient-list.component";
 import "./card.styles.scss";
 import CustomButton from "../custom-button/custom-button.component";
+import type { CardRecipe } from "../../types";
+
+type CardClickHandler = (
+  e: MouseEvent<HTMLButtonElement>,
+  recipe: CardRecipe,
+) => void;
+
+type IngredientButton = (
+  ingredient: { name: string; purchased?: boolean },
+  recipeId: string,
+  ingredientIndex: number,
+) => void;
+
+type CardProps = {
+  recipe: CardRecipe;
+  button?: CardClickHandler;
+  ingredientButton?: IngredientButton;
+  removeFromRecipes: CardClickHandler;
+  editRecipe?: CardClickHandler;
+  showBodyOnMount?: boolean;
+};
 
 function Card({
   recipe,
@@ -11,11 +32,13 @@ function Card({
   removeFromRecipes,
   editRecipe,
   showBodyOnMount,
-}) {
-  const [showBody, setShowBody] = useState(() => showBodyOnMount || false);
+}: CardProps): JSX.Element {
+  const [showBody, setShowBody] = useState<boolean>(
+    () => showBodyOnMount || false,
+  );
   const { pathname } = useLocation();
 
-  const toggleShowBody = (e) => {
+  const toggleShowBody = (e: MouseEvent<HTMLHeadingElement>) => {
     e.preventDefault();
     setShowBody((state) => !state);
   };
@@ -42,14 +65,14 @@ function Card({
             <>
               <button
                 value={recipe.id}
-                onClick={(e) => button(e, recipe)}
+                onClick={(e) => button?.(e, recipe)}
                 className="rotate title-link"
               >
                 &#10005;
               </button>
               <button
                 value={recipe.id}
-                onClick={(e) => editRecipe(e, recipe)}
+                onClick={(e) => editRecipe?.(e, recipe)}
                 className="title-link"
               >
                 Edit
@@ -57,7 +80,6 @@ function Card({
             </>
           ) : null}
           <button
-            href="#"
             value={recipe.id}
             onClick={(e) => removeFromRecipes(e, recipe)}
             className=" title-link"
@@ -77,7 +99,7 @@ function Card({
           ) : (
             <div>No ingredients</div>
           )}
-          <CustomButton onClick={button} value={recipe.id} recipe={recipe}>
+          <CustomButton onClick={(e) => button?.(e, recipe)} value={recipe.id}>
             {pathname === "/home/shopping-list"
               ? "Done"
               : "Add to Shopping List"}

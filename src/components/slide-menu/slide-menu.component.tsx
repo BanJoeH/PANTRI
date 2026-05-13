@@ -1,26 +1,26 @@
-import React, { useContext } from "react";
+import React, { MouseEvent, useContext } from "react";
 import { useHistory } from "react-router-dom";
-import { useSelector } from "react-redux";
 import { auth } from "../../firebase/firebase.utils";
 import { MenuContext } from "react-flexible-sliding-menu";
 import BurgerMenuContext from "../../App/context";
+import { useAppSelector } from "../../App/hooks";
 import logo from "../../assets/P Pantri white.png";
 
 import "./slide-menu.styles.scss";
 
-const SlideMenu = () => {
-  const { isEmpty } = useSelector((state) => state.firebase.auth);
+const SlideMenu = (): JSX.Element => {
+  const isEmpty = useAppSelector((state) => state.firebase.auth.isEmpty);
   const history = useHistory();
   const { toggleMenu } = useContext(MenuContext);
   const burgerMenu = useContext(BurgerMenuContext);
 
-  const handleMenuClick = (e) => {
+  const handleMenuClick = (e: MouseEvent<HTMLElement>) => {
     e.preventDefault();
     toggleMenu();
     burgerMenu.toggleBurgerMenu();
   };
 
-  const handleNavClick = (e, route) => {
+  const handleNavClick = (e: MouseEvent<HTMLElement>, route: string) => {
     e.preventDefault();
     history.push(route);
   };

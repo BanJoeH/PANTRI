@@ -1,7 +1,7 @@
-import { resolve } from "node:path";
-import { readFileSync } from "node:fs";
-import { defineConfig, loadEnv, Plugin } from "vite";
 import react from "@vitejs/plugin-react";
+import { readFileSync } from "node:fs";
+import { resolve } from "node:path";
+import { defineConfig, loadEnv, Plugin } from "vite";
 import tsconfigPaths from "vite-tsconfig-paths";
 
 // https://vitejs.dev/config/
@@ -104,7 +104,7 @@ function devServerPlugin(): Plugin {
       return {
         server: {
           host: HOST || "0.0.0.0",
-          port: parseInt(PORT || "3000", 10),
+          port: parseInt(PORT || "5173", 10),
           open: true,
           ...(https &&
             SSL_CRT_FILE &&

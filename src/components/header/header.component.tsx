@@ -1,20 +1,20 @@
-import React, { useContext } from "react";
-import { useSelector } from "react-redux";
+import React, { MouseEvent, useContext } from "react";
 import { auth } from "../../firebase/firebase.utils";
 import { MenuContext } from "react-flexible-sliding-menu";
 import { useWindowSize } from "../../App/useWindowSize.utils";
 import { Link } from "react-router-dom";
 import BurgerMenuContext from "../../App/context";
+import { useAppSelector } from "../../App/hooks";
 import "./header.styles.scss";
 import logo from "../../assets/P Pantri white.png";
 
-const Header = () => {
-  const noUser = useSelector((state) => state.firebase.auth.isEmpty);
+const Header = (): JSX.Element => {
+  const noUser = useAppSelector((state) => state.firebase.auth.isEmpty);
   const size = useWindowSize();
   const { toggleMenu } = useContext(MenuContext);
   const burgerMenu = useContext(BurgerMenuContext);
 
-  const handleClick = (e) => {
+  const handleClick = (e: MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
     burgerMenu.toggleBurgerMenu();
     toggleMenu();
@@ -22,7 +22,7 @@ const Header = () => {
 
   return (
     <header className="app-header">
-      {size.width > 575 ? (
+      {size.width !== undefined && size.width > 575 ? (
         <nav className="nav">
           <img src={logo} alt="logo" className="logo" width="250" height="80" />
 

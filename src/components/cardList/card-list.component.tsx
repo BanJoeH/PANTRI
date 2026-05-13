@@ -1,8 +1,28 @@
-import React from "react";
+import React, { MouseEvent } from "react";
 import Card from "../../components/card/card.component";
 import Masonry from "react-masonry-css";
+import type { CardRecipe } from "../../types";
 
 import "./card-list.styles.scss";
+
+type CardClickHandler = (
+  e: MouseEvent<HTMLButtonElement>,
+  recipe: CardRecipe,
+) => void;
+
+type IngredientButton = (
+  ingredient: { name: string; purchased?: boolean },
+  recipeId: string,
+  ingredientIndex: number,
+) => void;
+
+type CardListProps = {
+  recipes: CardRecipe[];
+  removeFromRecipes: CardClickHandler;
+  cardButton?: CardClickHandler;
+  editRecipeCardButton?: CardClickHandler;
+  ingredientButton?: IngredientButton;
+};
 
 function CardList({
   recipes,
@@ -10,8 +30,8 @@ function CardList({
   cardButton,
   editRecipeCardButton,
   ingredientButton,
-}) {
-  const numOfColumns = () => {
+}: CardListProps): JSX.Element {
+  const numOfColumns = (): number => {
     if (recipes.length < 3) {
       return recipes.length;
     } else {
@@ -26,7 +46,7 @@ function CardList({
   };
 
   const copyRecipes = [...recipes];
-  const sortCompareByName = (a, b) => {
+  const sortCompareByName = (a: CardRecipe, b: CardRecipe): number => {
     if (a.name.toLowerCase() < b.name.toLowerCase()) {
       return -1;
     }

@@ -1,10 +1,18 @@
-import React from "react";
+import React, { ChangeEventHandler } from "react";
 import CustomButton from "../custom-button/custom-button.component";
 import CustomInput from "../custom-input/custom-input.component";
 
 import "./searchbox.styles.scss";
 
-const SearchBox = ({ searchField, searchChange }) => {
+type SearchBoxProps = {
+  searchField: string;
+  searchChange: ChangeEventHandler<HTMLInputElement>;
+};
+
+const SearchBox = ({
+  searchField,
+  searchChange,
+}: SearchBoxProps): JSX.Element => {
   const [showSearchBox, setShowSearchBox] = React.useState(false);
   return (
     <div className="searchbox">

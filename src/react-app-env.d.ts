@@ -84,3 +84,17 @@ declare module "react-notifications-component" {
   const ReactNotification: ComponentType<Record<string, unknown>>;
   export default ReactNotification;
 }
+
+// react-flexible-sliding-menu has no types at all. Declare the surface area
+// we use: a MenuProvider wrapper and a MenuContext with toggleMenu.
+declare module "react-flexible-sliding-menu" {
+  import type { ComponentType, ReactNode, Context } from "react";
+  export const MenuContext: Context<{ toggleMenu: () => void }>;
+  const MenuProvider: ComponentType<{
+    MenuComponent: ComponentType<Record<string, unknown>>;
+    width?: string;
+    children?: ReactNode;
+    [key: string]: unknown;
+  }>;
+  export default MenuProvider;
+}

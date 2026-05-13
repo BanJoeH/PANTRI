@@ -48,3 +48,46 @@ export type SortedIngredient = {
  * whether to fire a notification, retry, etc.
  */
 export type WriteResult = "succeeded" | "failed" | "noop";
+
+/**
+ * The shape `Card`/`CardList` consume. It's the common subset of recipe
+ * templates (ingredients are `{name}` objects, post-mapping in the Recipes
+ * page) and shopping-list recipes (ingredients are full `Ingredient` objects).
+ * `purchased` is optional because template ingredients don't carry it.
+ */
+export type CardRecipe = {
+  id: string;
+  name: string;
+  link?: string;
+  ingredients: Array<{ name: string; purchased?: boolean }>;
+};
+
+/**
+ * The shape of a recipe template as stored in Firestore (the `recipes`
+ * collection). Distinct from `ShoppingRecipe` — templates store ingredients
+ * as plain strings.
+ */
+export type RecipeTemplate = {
+  id: string;
+  name: string;
+  link?: string;
+  ingredients: string[];
+};
+
+/**
+ * App-specific extension of the react-redux-firebase profile. The standard
+ * fields (email, displayName, etc.) come from the library; this adds the
+ * fields Pantri stores on the user doc.
+ */
+export type AppProfile = {
+  oddBits?: RawIngredient[];
+};
+
+/**
+ * Schema for the redux-firestore reducer — the top-level Firestore
+ * collections we read into Redux.
+ */
+export type AppFirestoreSchema = {
+  recipes: RecipeTemplate;
+  shoppingList: ShoppingRecipe;
+};

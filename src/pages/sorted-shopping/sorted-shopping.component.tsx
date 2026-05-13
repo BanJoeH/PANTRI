@@ -1,5 +1,4 @@
 import React, { useMemo } from "react";
-import { useSelector } from "react-redux";
 import { useFirestoreConnect, useFirestore } from "react-redux-firebase";
 import { useHistory } from "react-router-dom";
 
@@ -14,11 +13,13 @@ import IngredientList from "../../components/ingredient-list/ingredient-list.com
 import PageContainer from "../../components/page-container/page-container";
 import PageHeaderContainer from "../../components/page-header-container/page-header-container";
 import CustomButton from "../../components/custom-button/custom-button.component";
+import { useAppSelector } from "../../App/hooks";
+import type { ShoppingRecipe, SortedIngredient } from "../../types";
 
 import "./sorted-shopping.styles.scss";
 
-const SortedShopping = () => {
-  const { uid } = useSelector((state) => state.firebase.auth);
+const SortedShopping = (): JSX.Element | null => {
+  const uid = useAppSelector((state) => state.firebase.auth.uid);
   const history = useHistory();
 
   useFirestoreConnect({
@@ -26,31 +27,34 @@ const SortedShopping = () => {
     storeAs: "shoppingList",
   });
 
-  const isLoading = useSelector(
+  const isLoading = useAppSelector(
     (state) => state.firestore.status.requesting.shoppingList,
   );
-  const recipesObject = useSelector(
-    (state) => state.firestore.data.shoppingList,
+  const recipesObject = useAppSelector(
+    (state) =>
+      state.firestore.data.shoppingList as unknown as
+        | Record<string, ShoppingRecipe>
+        | undefined,
   );
-  const oddBits = useSelector((state) => state.firebase.profile.oddBits);
+  const oddBits = useAppSelector((state) => state.firebase.profile.oddBits);
 
   const firestore = useFirestore();
   const profileRef = firestore.collection("users").doc(uid);
   const shoppingListCollectionRef = profileRef.collection("shoppingList");
 
-  const recipes = useMemo(
+  const recipes = useMemo<ShoppingRecipe[]>(
     () =>
       Object.entries(recipesObject || {})
         .map(([key, value]) =>
           value
             ? {
-                id: key,
                 ...value,
+                id: key,
                 ingredients: normalizeIngredients(value.ingredients),
               }
             : null,
         )
-        .filter(Boolean),
+        .filter((recipe): recipe is ShoppingRecipe => Boolean(recipe)),
     [recipesObject],
   );
 
@@ -63,7 +67,7 @@ const SortedShopping = () => {
   }, [recipes, oddBits]);
   const isEmpty = toBuy.length === 0 && gotIt.length === 0;
 
-  const handleToggle = (ingredient) => {
+  const handleToggle = (ingredient: { name: string; purchased?: boolean }) => {
     const newValue = !ingredient.purchased;
     // Fan out to both stores: a row may correspond to recipe ingredients,
     // odd bits, or both. Each writer no-ops if it has no matches.

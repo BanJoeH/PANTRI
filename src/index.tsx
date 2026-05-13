@@ -10,6 +10,12 @@ import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
 import { BrowserRouter as Router } from "react-router-dom";
 import { rrfProps } from "./firebase/firebase.utils";
 
+const root = document.getElementById("root");
+
+if (!root) {
+  throw new Error("Root element not found");
+}
+
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
@@ -20,7 +26,7 @@ ReactDOM.render(
       </ReactReduxFirebaseProvider>
     </Provider>
   </React.StrictMode>,
-  document.getElementById("root"),
+  root,
 );
 
 serviceWorkerRegistration.register();

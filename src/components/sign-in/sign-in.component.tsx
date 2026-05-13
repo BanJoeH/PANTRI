@@ -1,22 +1,35 @@
-import React, { useState, useEffect } from "react";
+import React, {
+  ChangeEvent,
+  FormEvent,
+  MouseEvent,
+  useEffect,
+  useState,
+} from "react";
 
-import { useSelector } from "react-redux";
 import { auth } from "../../firebase/firebase.utils";
 import { Link, useHistory } from "react-router-dom";
 import { useFirebase } from "react-redux-firebase";
 
 import CustomInput from "../custom-input/custom-input.component";
 import CustomButton from "../custom-button/custom-button.component";
+import { useAppSelector } from "../../App/hooks";
 
 import "./sign-in.styles.scss";
 
-const SignIn = () => {
+type SignInState = {
+  email: string;
+  password: string;
+  error: boolean;
+  errorMessage: string;
+};
+
+const SignIn = (): JSX.Element => {
   const firebase = useFirebase();
   const history = useHistory();
 
-  const { uid } = useSelector((state) => state.firebase.auth);
+  const uid = useAppSelector((state) => state.firebase.auth.uid);
 
-  const [userCredentials, setUserCredentials] = useState({
+  const [userCredentials, setUserCredentials] = useState<SignInState>({
     email: "",
     password: "",
     error: false,
@@ -25,16 +38,21 @@ const SignIn = () => {
 
   const { email, password, error, errorMessage } = userCredentials;
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     auth
       .signInWithEmailAndPassword(email, password)
       .then(() => {
-        setUserCredentials({ email: "", password: "", error: false });
+        setUserCredentials({
+          email: "",
+          password: "",
+          error: false,
+          errorMessage: "",
+        });
       })
-      .catch((error) => {
-        console.log(error);
+      .catch((err: Error) => {
+        console.log(err);
         setUserCredentials({
           ...userCredentials,
           error: true,
@@ -43,13 +61,13 @@ const SignIn = () => {
       });
   };
 
-  const handleChange = (event) => {
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { value, name } = event.target;
 
     setUserCredentials({ ...userCredentials, [name]: value });
   };
 
-  const signInWithGoogle = (event) => {
+  const signInWithGoogle = (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     firebase
       .login({

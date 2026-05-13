@@ -1,17 +1,19 @@
-import IngredientInput from "../ingredient-input/ingredient-input.component";
+import IngredientInput, {
+  type IngredientInputItem,
+} from "../ingredient-input/ingredient-input.component";
 import { useFirestore } from "react-redux-firebase";
-import { useSelector } from "react-redux";
 import { normalizeIngredient } from "../../pages/shopping-list/shopping-list.utils";
+import { useAppSelector } from "../../App/hooks";
 
-const OddBits = () => {
-  const oddBits = useSelector((state) => state.firebase.profile.oddBits);
-  const { uid } = useSelector((state) => state.firebase.auth);
+const OddBits = (): JSX.Element => {
+  const oddBits = useAppSelector((state) => state.firebase.profile.oddBits);
+  const uid = useAppSelector((state) => state.firebase.auth.uid);
 
   const firestore = useFirestore();
 
   // We propagate `purchased` through the inputList so renames in
   // IngredientInput (which mutates entries in place) keep their tick.
-  const inputList = oddBits?.length
+  const inputList: IngredientInputItem[] = oddBits?.length
     ? oddBits.map((item) => {
         const { name, purchased } = normalizeIngredient(item);
         return { ingredient: name, purchased, ingredientRef: null };
@@ -22,10 +24,10 @@ const OddBits = () => {
   // empty rows as the "add another" placeholder, and they need to round-trip
   // through Firestore so they stay rendered after re-fetch. Empty names are
   // filtered out where it matters (the sorted-shopping view).
-  const updateOddBits = (newInputList) => {
+  const updateOddBits = (newInputList: IngredientInputItem[]): void => {
     const updated = newInputList.map((i) => ({
       name: i.ingredient || "",
-      purchased: i.purchased ?? false,
+      purchased: typeof i.purchased === "boolean" ? i.purchased : false,
     }));
     firestore.collection("users").doc(uid).set(
       {

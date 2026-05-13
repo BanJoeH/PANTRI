@@ -1,39 +1,44 @@
-import { useState, useEffect } from "react";
+import { ChangeEvent, MouseEvent, useEffect, useState } from "react";
 import { useFirestore } from "react-redux-firebase";
-import { useSelector } from "react-redux";
 import { notification, addToFirebaseCollection } from "../../App/app.utils";
+import { useAppSelector } from "../../App/hooks";
 import CustomButton from "../custom-button/custom-button.component";
-import IngredientInput from "../ingredient-input/ingredient-input.component";
+import IngredientInput, {
+  type IngredientInputItem,
+} from "../ingredient-input/ingredient-input.component";
 import CustomInput from "../custom-input/custom-input.component";
 
-// const ID = () => {
-//   return Math.random().toString(36).substr(2, 9);
-// };
-function NewRecipe() {
-  const [inputList, setInputList] = useState([
+type NewRecipeState = {
+  name: string;
+  link: string;
+  ingredients: string[];
+};
+
+function NewRecipe(): JSX.Element {
+  const [inputList, setInputList] = useState<IngredientInputItem[]>([
     { ingredient: "", ingredientRef: null },
   ]);
-  const [newRecipe, setNewRecipe] = useState({
+  const [newRecipe, setNewRecipe] = useState<NewRecipeState>({
     name: "",
     link: "",
     ingredients: [],
   });
-  const [error, setError] = useState(false);
-  const [showNewRecipeCard, setShowNewRecipeCard] = useState(false);
+  const [error, setError] = useState<boolean>(false);
+  const [showNewRecipeCard, setShowNewRecipeCard] = useState<boolean>(false);
 
   const firestore = useFirestore();
-  const { uid } = useSelector((state) => state.firebase.auth);
+  const uid = useAppSelector((state) => state.firebase.auth.uid);
   const recipesCollectionRef = firestore
     .collection("users")
     .doc(uid)
     .collection("recipes");
 
-  const handleChange = (event) => {
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     setNewRecipe({ ...newRecipe, [name]: value });
   };
 
-  const handleAddNewRecipeClick = async (e) => {
+  const handleAddNewRecipeClick = async (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     if (!newRecipe.name) {
       setError(true);
@@ -59,21 +64,19 @@ function NewRecipe() {
   };
 
   useEffect(() => {
-    let ingredients = inputList
-      .map((input, i) => {
-        return input.ingredient.toLowerCase();
-      })
+    const ingredients = inputList
+      .map((input) => input.ingredient.toLowerCase())
       .filter(Boolean);
     setNewRecipe({ ...newRecipe, ingredients: ingredients });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inputList]);
 
-  const handleShowNewRecipeClick = (e) => {
+  const handleShowNewRecipeClick = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     setShowNewRecipeCard(!showNewRecipeCard);
   };
 
-  const handleCancelClick = (e) => {
+  const handleCancelClick = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     setShowNewRecipeCard(false);
     setError(false);

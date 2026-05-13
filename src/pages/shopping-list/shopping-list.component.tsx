@@ -1,8 +1,7 @@
-import React from "react";
+import React, { MouseEvent } from "react";
 
-import { useFirestoreConnect, useFirestore } from "react-redux-firebase";
+import { useFirestore } from "react-redux-firebase";
 
-import { useSelector } from "react-redux";
 import {
   normalizeIngredients,
   setPurchasedInRecipeIngredient,
@@ -19,24 +18,23 @@ import {
 import PageContainer from "../../components/page-container/page-container";
 import PageHeaderContainer from "../../components/page-header-container/page-header-container";
 import { useHistory } from "react-router-dom";
+import { useAppSelector } from "../../App/hooks";
+import type { ShoppingRecipe } from "../../types";
 
-const ShoppingList = () => {
-  const { uid } = useSelector((state) => state.firebase.auth);
-  const isLoading = useSelector(
+const ShoppingList = (): JSX.Element | null => {
+  const uid = useAppSelector((state) => state.firebase.auth.uid);
+  const isLoading = useAppSelector(
     (state) => state.firestore.status.requesting.shoppingList,
   );
   const history = useHistory();
 
-  useFirestoreConnect({
-    collection: `users/${uid}/shoppingList`,
-    storeAs: "shoppingList",
-  });
-
   const firestore = useFirestore();
-  const recipesObject = useSelector((state) => {
-    return state.firestore.data.shoppingList;
+  const recipesObject = useAppSelector((state) => {
+    return state.firestore.data.shoppingList as unknown as
+      | Record<string, ShoppingRecipe>
+      | undefined;
   });
-  const recipes = Object.entries(recipesObject || {})
+  const recipes: ShoppingRecipe[] = Object.entries(recipesObject || {})
     .map(([key, value]) => {
       if (value) {
         // Stable sort: purchased ingredients fall to the bottom of each
@@ -46,23 +44,29 @@ const ShoppingList = () => {
           (a, b) => Number(a.purchased) - Number(b.purchased),
         );
         return {
-          id: key,
           ...value,
+          id: key,
           ingredients,
         };
       }
       return null;
     })
-    .filter(Boolean);
+    .filter((recipe): recipe is ShoppingRecipe => Boolean(recipe));
   const shoppingListCollectionRef = firestore
     .collection("users")
     .doc(uid)
     .collection("shoppingList");
 
-  const handleRemoveFromShoppingClick = async (e) => {
+  const handleRemoveFromShoppingClick = async (
+    e: MouseEvent<HTMLButtonElement>,
+  ) => {
     e.preventDefault();
-    const recipeId = e.target.value;
+    const recipeId = e.currentTarget.value;
     const recipeToRemove = findRecipe(recipeId, recipes);
+    if (!recipeToRemove) {
+      notification("Error", "Error finding recipe, please try again", "danger");
+      return;
+    }
     const response = await removeFromFirebaseCollection(
       recipeToRemove,
       shoppingListCollectionRef,
@@ -83,7 +87,11 @@ const ShoppingList = () => {
   // deliberately don't fan out to other recipes or odd bits here. The sorted
   // view is where the "I bought potatoes once, that's enough for everything"
   // gesture lives.
-  const handleToggleIngredientPurchased = (ingredient, recipeId, index) => {
+  const handleToggleIngredientPurchased = (
+    ingredient: { name: string; purchased?: boolean },
+    recipeId: string,
+    index: number,
+  ) => {
     setPurchasedInRecipeIngredient(
       recipeId,
       index,

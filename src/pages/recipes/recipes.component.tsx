@@ -1,31 +1,29 @@
-import { useState } from "react";
-import { useSelector } from "react-redux";
-import { useFirestoreConnect, useFirestore } from "react-redux-firebase";
+import { ChangeEvent, MouseEvent, useState } from "react";
+import { useFirestore } from "react-redux-firebase";
 import { notification } from "../../App/app.utils";
 import {
-  updateRecipe,
   filteredRecipesByIngredientAndName,
+  updateRecipe,
 } from "./recipes.utils";
 
 import {
   addToFirebaseCollection,
   removeFromFirebaseCollection,
 } from "../../App/app.utils";
-import { normalizeIngredient } from "../shopping-list/shopping-list.utils";
+import { useAppSelector } from "../../App/hooks";
 import useDebounce from "../../App/useDebounce.utils";
-import { debug } from "../../App/debug.utils";
-
-const log = debug("add");
-
 import CardList from "../../components/cardList/card-list.component";
-import SearchBox from "../../components/search-box/searchbox.component";
-import NewRecipe from "../../components/new-recipe/new-recipe.component";
+import type { EditingRecipe } from "../../components/edit-recipe/edit-recipe.component";
 import EditRecipe from "../../components/edit-recipe/edit-recipe.component";
+import NewRecipe from "../../components/new-recipe/new-recipe.component";
 import PageContainer from "../../components/page-container/page-container";
 import PageHeaderContainer from "../../components/page-header-container/page-header-container";
+import SearchBox from "../../components/search-box/searchbox.component";
+import type { CardRecipe, RecipeTemplate, ShoppingRecipe } from "../../types";
+import { normalizeIngredient } from "../shopping-list/shopping-list.utils";
 
-const Recipes = () => {
-  const [editingRecipe, setEditingRecipe] = useState({
+const Recipes = (): JSX.Element | null => {
+  const [editingRecipe, setEditingRecipe] = useState<EditingRecipe>({
     id: "",
     name: "",
     link: "",
@@ -35,37 +33,30 @@ const Recipes = () => {
   const debouncedSearchTerm = useDebounce(searchField, 200);
 
   const firestore = useFirestore();
-  const uid = useSelector((state) => state.firebase.auth.uid);
-  const recipesObject = useSelector((state) => state.firestore.ordered.recipes);
-  const recipes = Object.entries(recipesObject || {})
-    .map(([key, value]) => {
-      if (value) {
-        return {
-          id: key,
-          ...value,
-          ingredients: value.ingredients.map((ingredient) => ({
-            name: ingredient,
-          })),
-        };
-      }
-      return null;
-    })
-    .filter(Boolean);
-  const isloading = useSelector(
+  const uid = useAppSelector((state) => state.firebase.auth.uid);
+  const recipesObject = useAppSelector(
+    (state) =>
+      state.firestore.ordered.recipes as unknown as
+        | RecipeTemplate[]
+        | undefined,
+  );
+  const recipes: CardRecipe[] = (recipesObject || []).map((value) => ({
+    ...value,
+    id: value.id,
+    ingredients: value.ingredients.map((ingredient) => ({
+      name: ingredient,
+    })),
+  }));
+  const isloading = useAppSelector(
     (state) => state.firestore.status.requesting.recipes,
   );
-  const loaded = useSelector(
+  const loaded = useAppSelector(
     (state) => state.firestore.status.requested.recipes,
   );
   const recipesFiltered = filteredRecipesByIngredientAndName(
     recipes,
     debouncedSearchTerm,
   );
-  useFirestoreConnect({
-    collection: `users/${uid}/recipes`,
-    storeAs: "recipes",
-  });
-
   const shoppingListCollectionRef = firestore
     .collection("users")
     .doc(uid)
@@ -76,7 +67,10 @@ const Recipes = () => {
     .doc(uid)
     .collection("recipes");
 
-  const handleRemoveFromRecipesClick = async (e, recipe) => {
+  const handleRemoveFromRecipesClick = async (
+    e: MouseEvent<HTMLButtonElement>,
+    recipe: CardRecipe,
+  ) => {
     e.preventDefault();
     if (
       window.confirm(
@@ -99,22 +93,23 @@ const Recipes = () => {
     }
   };
 
-  const onSearchChange = (event) => {
+  const onSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
     setSearchField(event.target.value);
   };
 
-  const handleAddToShoppingListClick = async (e, recipe) => {
+  const handleAddToShoppingListClick = async (
+    e: MouseEvent<HTMLButtonElement>,
+    recipe: CardRecipe,
+  ) => {
     e.preventDefault();
-    const payload = {
+    const payload: ShoppingRecipe = {
       ...recipe,
       ingredients: recipe.ingredients.map(normalizeIngredient),
     };
-    log("adding recipe to shopping list", { sourceRecipe: recipe, payload });
     const response = await addToFirebaseCollection(
       payload,
       shoppingListCollectionRef,
     );
-    log("addToFirebaseCollection response", response);
     if (response === "error") {
       notification("Error", "error adding to shopping list", "danger");
     } else {
@@ -123,7 +118,10 @@ const Recipes = () => {
     }
   };
 
-  const handleEditRecipeCardButtonClick = (e, recipe) => {
+  const handleEditRecipeCardButtonClick = (
+    e: MouseEvent<HTMLButtonElement>,
+    recipe: CardRecipe,
+  ) => {
     e.preventDefault();
     if (recipe === undefined) {
       notification(
@@ -134,12 +132,13 @@ const Recipes = () => {
     } else {
       setEditingRecipe({
         ...recipe,
+        link: recipe.link || "",
         ingredients: recipe.ingredients.map((ingredient) => ingredient.name),
       });
     }
   };
 
-  const handleUpdateRecipeClick = async (e) => {
+  const handleUpdateRecipeClick = async (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
     const response = await updateRecipe(editingRecipe, recipesCollectionRef);
@@ -156,37 +155,39 @@ const Recipes = () => {
     }
   };
 
+  if (isloading) {
+    return null;
+  }
+
   return (
-    !isloading && (
-      <PageContainer>
-        <PageHeaderContainer title="Recipe List">
-          <EditRecipe
-            editingRecipe={editingRecipe}
-            setEditingRecipe={setEditingRecipe}
-            updateRecipe={handleUpdateRecipeClick}
-          />
-          <NewRecipe />
-          <SearchBox searchChange={onSearchChange} searchField={searchField} />
-        </PageHeaderContainer>
-        {!isloading && loaded && recipesFiltered.length ? (
-          <CardList
-            recipes={recipesFiltered}
-            removeFromRecipes={handleRemoveFromRecipesClick}
-            cardButton={handleAddToShoppingListClick}
-            editRecipeCardButton={handleEditRecipeCardButtonClick}
-          />
-        ) : searchField ? (
-          <div className="card">
-            <h2>Recipe not found.</h2>
-          </div>
-        ) : (
-          <div className="card">
-            <h2>No recipes in your recipe list.</h2>
-            <h2>Click add a recipe above to add some!</h2>
-          </div>
-        )}
-      </PageContainer>
-    )
+    <PageContainer>
+      <PageHeaderContainer title="Recipe List">
+        <EditRecipe
+          editingRecipe={editingRecipe}
+          setEditingRecipe={setEditingRecipe}
+          updateRecipe={handleUpdateRecipeClick}
+        />
+        <NewRecipe />
+        <SearchBox searchChange={onSearchChange} searchField={searchField} />
+      </PageHeaderContainer>
+      {loaded && recipesFiltered.length ? (
+        <CardList
+          recipes={recipesFiltered}
+          removeFromRecipes={handleRemoveFromRecipesClick}
+          cardButton={handleAddToShoppingListClick}
+          editRecipeCardButton={handleEditRecipeCardButtonClick}
+        />
+      ) : searchField ? (
+        <div className="card">
+          <h2>Recipe not found.</h2>
+        </div>
+      ) : (
+        <div className="card">
+          <h2>No recipes in your recipe list.</h2>
+          <h2>Click add a recipe above to add some!</h2>
+        </div>
+      )}
+    </PageContainer>
   );
 };
 

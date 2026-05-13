@@ -5,7 +5,7 @@ import SignUp from "../../components/sign-up/sign-up.component";
 
 import "./sign-in-and-sign-up.styles.scss";
 
-const SignInAndSignUpPage = () => {
+const SignInAndSignUpPage = (): JSX.Element => {
   return (
     <div className="sign-in-and-sign-up-page fade-in">
       <SignIn />
