@@ -27,8 +27,39 @@ export const normalizeIngredients = (
   items?: RawIngredient[] | null,
 ): Ingredient[] => (items || []).map(normalizeIngredient);
 
+const singularizeWord = (word: string): string => {
+  // Keep a few common non-plural foods ending in "s" intact.
+  if (["asparagus", "couscous"].includes(word)) return word;
+  if (word.endsWith("ies") && word.length > 4) return `${word.slice(0, -3)}y`;
+  if (word.endsWith("oes") && word.length > 4) return word.slice(0, -2);
+  if (/(ches|shes|xes|zes|ses)$/.test(word) && word.length > 4) {
+    return word.slice(0, -2);
+  }
+  if (
+    word.endsWith("s") &&
+    word.length > 3 &&
+    !word.endsWith("ss") &&
+    !word.endsWith("us") &&
+    !word.endsWith("is")
+  ) {
+    return word.slice(0, -1);
+  }
+  return word;
+};
+
+// Canonical name used for grouping/toggling. We only singularize the final
+// word so phrases like "red onions" and "red onion" group together without
+// aggressively rewriting the whole ingredient text.
+export const getCanonicalIngredientName = (name: string): string => {
+  const normalized = name.toLowerCase().trim().replace(/\s+/g, " ");
+  const words = normalized.split(" ");
+  const lastWord = words.at(-1);
+  if (!lastWord) return normalized;
+  return [...words.slice(0, -1), singularizeWord(lastWord)].join(" ");
+};
+
 const namesMatch = (a?: string, b?: string): boolean =>
-  (a ?? "").toLowerCase() === (b ?? "").toLowerCase();
+  getCanonicalIngredientName(a ?? "") === getCanonicalIngredientName(b ?? "");
 
 // Flip `purchased` on a single ingredient instance inside one recipe. Used by
 // the recipe-grouped shopping view, where a tick should only mean "I got this
@@ -160,11 +191,17 @@ export const buildSortedIngredients = (
     oddBits,
   });
 
-  type FlatRow = { name: string; purchased: boolean; source: string };
+  type FlatRow = {
+    key: string;
+    name: string;
+    purchased: boolean;
+    source: string;
+  };
 
   const flattened: FlatRow[] = [
     ...recipes.flatMap<FlatRow>((r) =>
       r.ingredients.map((i) => ({
+        key: getCanonicalIngredientName(i.name),
         name: i.name.toLowerCase(),
         purchased: i.purchased,
         source: r.name,
@@ -178,6 +215,7 @@ export const buildSortedIngredients = (
       // sorted-shopping list.
       .filter((bit) => bit.name)
       .map<FlatRow>((bit) => ({
+        key: getCanonicalIngredientName(bit.name),
         name: bit.name.toLowerCase(),
         purchased: bit.purchased,
         source: "Odd Bits",
@@ -190,14 +228,14 @@ export const buildSortedIngredients = (
   // purchased yet, and nothing in the "got it" section (where count = 0).
   const map = new Map<string, SortedIngredient>();
   for (const item of flattened) {
-    const existing = map.get(item.name);
+    const existing = map.get(item.key);
     if (existing) {
       if (!item.purchased) existing.count += 1;
       existing.totalCount += 1;
       existing.sources.push(item.source);
       existing.purchased = existing.purchased && item.purchased;
     } else {
-      map.set(item.name, {
+      map.set(item.key, {
         name: item.name,
         sources: [item.source],
         count: item.purchased ? 0 : 1,

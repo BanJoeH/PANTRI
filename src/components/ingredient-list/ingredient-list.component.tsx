@@ -36,6 +36,7 @@ const IngredientList = ({
   recipeId,
   ingredients,
   ingredientButton,
+  renderIngredientMeta,
 }: {
   recipeId: string;
   ingredients: Ingredient[];
@@ -44,6 +45,7 @@ const IngredientList = ({
     recipeId: string,
     ingredientIndex: number,
   ) => void;
+  renderIngredientMeta?: (ingredient: Ingredient) => React.ReactNode;
 }) => {
   return ingredients ? (
     <div className="ingredient-list">
@@ -55,6 +57,11 @@ const IngredientList = ({
             key={recipeId + ingredient.name + i}
           >
             <IngredientTextButton ingredient={ingredient} />
+            {renderIngredientMeta ? (
+              <div className="ingredient-meta">
+                {renderIngredientMeta(ingredient)}
+              </div>
+            ) : null}
             {ingredientButton ? (
               <button
                 className="ingredient-button"

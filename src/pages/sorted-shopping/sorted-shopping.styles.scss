@@ -1,13 +1,122 @@
 @import "../../_globals.scss";
 
 .sorted-shopping-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
   margin: 0 5%;
+}
+
+.sorted-shopping-sort {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: $dark-secondary-text;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+
+  select {
+    background-color: $dark-0;
+    border: 1px solid $dark-2;
+    border-radius: 4px;
+    color: $dark-primary-text;
+    padding: 8px;
+  }
 }
 
 .sorted-shopping-card {
   max-width: 600px;
   margin: 10px auto;
   padding: 8px 16px;
+}
+
+.sorted-shopping-sections {
+  width: 100%;
+}
+
+.sorted-shopping-section {
+  width: 100%;
+  margin-bottom: 12px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.sorted-shopping-section-title {
+  margin: 14px 0 6px;
+  color: $dark-secondary-text;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.sorted-shopping-category-menu {
+  position: relative;
+
+  &-button {
+    min-width: 32px;
+    min-height: 32px;
+    background-color: transparent;
+    border: none;
+    border-radius: 0.5rem;
+    color: $dark-secondary-text;
+    cursor: pointer;
+    font-size: 22px;
+    line-height: 1;
+
+    &:hover,
+    &:focus {
+      background-color: $dark-1;
+      outline: none;
+    }
+  }
+
+  &-popover {
+    position: absolute;
+    right: 0;
+    top: calc(100% + 4px);
+    z-index: 5;
+    min-width: 170px;
+    padding: 6px;
+    background-color: $dark-0;
+    border: 1px solid $dark-2;
+    border-radius: 6px;
+    box-shadow: 4px 4px 8px 0px rgba(0, 0, 0, 0.4);
+  }
+
+  &-title {
+    padding: 6px 8px;
+    color: $dark-secondary-text;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+}
+
+.sorted-shopping-category-option {
+  display: block;
+  width: 100%;
+  padding: 8px;
+  background: transparent;
+  border: none;
+  border-radius: 4px;
+  color: $dark-primary-text;
+  cursor: pointer;
+  text-align: left;
+
+  &:hover,
+  &:focus {
+    background-color: $dark-1;
+    outline: none;
+  }
+
+  &--active {
+    color: $dark-secondary-text;
+    font-weight: 700;
+  }
 }
 
 .sorted-shopping-divider {

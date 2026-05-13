@@ -5,6 +5,7 @@ import {
   setPurchasedInShoppingList,
   setPurchasedInOddBits,
   buildSortedIngredients,
+  getCanonicalIngredientName,
 } from "./shopping-list.utils";
 
 // Silence the "error toggling..." console.log inside the catch branches; we
@@ -74,6 +75,25 @@ describe("normalizeIngredients", () => {
       { name: "carrots", purchased: true },
       { name: "onions", purchased: false },
     ]);
+  });
+});
+
+// ---------- getCanonicalIngredientName ----------
+
+describe("getCanonicalIngredientName", () => {
+  it("normalizes whitespace and case", () => {
+    expect(getCanonicalIngredientName("  Red   Onions ")).toBe("red onion");
+  });
+
+  it("singularizes common plural endings on the final word", () => {
+    expect(getCanonicalIngredientName("onions")).toBe("onion");
+    expect(getCanonicalIngredientName("potatoes")).toBe("potato");
+    expect(getCanonicalIngredientName("berries")).toBe("berry");
+  });
+
+  it("keeps common non-plural s endings intact", () => {
+    expect(getCanonicalIngredientName("couscous")).toBe("couscous");
+    expect(getCanonicalIngredientName("asparagus")).toBe("asparagus");
   });
 });
 
@@ -233,6 +253,52 @@ describe("buildSortedIngredients", () => {
           id: "r2",
           name: "Stir-fry",
           ingredients: [{ name: "potatoes", purchased: false }],
+        },
+      ],
+      [],
+    );
+    expect(result).toHaveLength(1);
+    expect(result[0].totalCount).toBe(2);
+  });
+
+  it("groups simple singular and plural ingredient names together", () => {
+    const result = buildSortedIngredients(
+      [
+        {
+          id: "r1",
+          name: "Curry",
+          ingredients: [{ name: "onion", purchased: false }],
+        },
+        {
+          id: "r2",
+          name: "Stir-fry",
+          ingredients: [{ name: "onions", purchased: false }],
+        },
+      ],
+      [],
+    );
+    expect(result).toHaveLength(1);
+    expect(result[0]).toMatchObject({
+      name: "onion",
+      sources: ["Curry", "Stir-fry"],
+      count: 2,
+      totalCount: 2,
+      purchased: false,
+    });
+  });
+
+  it("groups plural phrase variants by singularizing the final word", () => {
+    const result = buildSortedIngredients(
+      [
+        {
+          id: "r1",
+          name: "Curry",
+          ingredients: [{ name: "red onion", purchased: false }],
+        },
+        {
+          id: "r2",
+          name: "Stir-fry",
+          ingredients: [{ name: "red onions", purchased: false }],
         },
       ],
       [],
@@ -443,6 +509,38 @@ describe("setPurchasedInShoppingList", () => {
     expect(doc).toHaveBeenCalledWith("r2");
     expect(doc).not.toHaveBeenCalledWith("r3");
     expect(update).toHaveBeenCalledTimes(2);
+  });
+
+  it("fans out across singular and plural variants", async () => {
+    const { ref, doc, update } = makeCollectionRef();
+    const result = await setPurchasedInShoppingList(
+      "onion",
+      true,
+      [
+        {
+          id: "r1",
+          name: "Curry",
+          ingredients: [{ name: "onion", purchased: false }],
+        },
+        {
+          id: "r2",
+          name: "Stir-fry",
+          ingredients: [{ name: "onions", purchased: false }],
+        },
+      ],
+      ref,
+    );
+
+    expect(result).toBe("succeeded");
+    expect(doc).toHaveBeenCalledWith("r1");
+    expect(doc).toHaveBeenCalledWith("r2");
+    expect(update).toHaveBeenCalledTimes(2);
+    expect(update).toHaveBeenCalledWith({
+      ingredients: [{ name: "onion", purchased: true }],
+    });
+    expect(update).toHaveBeenCalledWith({
+      ingredients: [{ name: "onions", purchased: true }],
+    });
   });
 
   it("matches case-insensitively", async () => {

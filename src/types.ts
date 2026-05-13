@@ -43,6 +43,21 @@ export type SortedIngredient = {
   purchased: boolean;
 };
 
+export const SHOPPING_SECTIONS = [
+  "Produce",
+  "Meat & Fish",
+  "Dairy & Eggs",
+  "Bakery",
+  "Pantry",
+  "Frozen",
+  "Household",
+  "Other",
+] as const;
+
+export type ShoppingSection = (typeof SHOPPING_SECTIONS)[number];
+
+export type IngredientCategoryOverrides = Record<string, ShoppingSection>;
+
 /**
  * Return value of the various `setPurchasedIn*` writers. Lets callers decide
  * whether to fire a notification, retry, etc.
@@ -81,6 +96,7 @@ export type RecipeTemplate = {
  */
 export type AppProfile = {
   oddBits?: RawIngredient[];
+  ingredientCategories?: IngredientCategoryOverrides;
 };
 
 /**
