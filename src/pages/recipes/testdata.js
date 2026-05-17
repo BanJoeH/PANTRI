@@ -174,7 +174,9 @@ export const data = [
   },
   {
     id: "nWg5hOqkuQzFfscS9WuR",
-    ingredients: ["bread", "baked beans", "cheese", "cress", "butter"].map((ingredient) => ({ name: ingredient })),
+    ingredients: ["bread", "baked beans", "cheese", "cress", "butter"].map(
+      (ingredient) => ({ name: ingredient }),
+    ),
     name: "beans on toast",
     link: "",
   },

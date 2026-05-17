@@ -50,6 +50,21 @@
         background-color: $dark-1;
       }
     }
+    .ingredient-meta {
+      display: flex;
+      align-items: center;
+      margin-right: 4px;
+
+      select {
+        max-width: 110px;
+        background-color: $dark-0;
+        border: 1px solid $dark-2;
+        border-radius: 4px;
+        color: $dark-secondary-text;
+        font-size: 12px;
+        padding: 4px;
+      }
+    }
     .ingredient-text {
       flex-grow: 1;
       text-align: left;

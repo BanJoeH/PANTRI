@@ -1,5 +1,6 @@
-# This workflow will do a clean install of node dependencies, cache/restore them, build the source code and run tests across different versions of node
-# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+# This workflow runs on PRs into master: it checks formatting, runs the test
+# suite, and verifies a production build can be produced.
+# https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
 
 name: Node.js CI
 
@@ -9,6 +10,8 @@ on:
     paths-ignore:
       - "package.json"
       - "RELEASE.md"
+      - "CHANGELOG.md"
+      - "README.md"
 
 jobs:
   build:
@@ -32,5 +35,20 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Run Tests
+      - name: Check formatting
+        run: npm run format:check
+
+      - name: Type check
+        run: npx tsc --noEmit
+
+      - name: Run tests
         run: npm test
+
+      # Vite inlines REACT_APP_* env vars at build time. .env is gitignored,
+      # so we seed it from the committed example (Firebase web keys aren't
+      # secrets — security is enforced via Firestore rules).
+      - name: Seed env from .env.example
+        run: cp .env.example .env
+
+      - name: Build
+        run: npm run build

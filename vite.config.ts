@@ -1,7 +1,7 @@
-import { resolve } from "node:path";
-import { readFileSync } from "node:fs";
-import { defineConfig, loadEnv, Plugin } from "vite";
 import react from "@vitejs/plugin-react";
+import { readFileSync } from "node:fs";
+import { resolve } from "node:path";
+import { defineConfig, loadEnv, Plugin } from "vite";
 import tsconfigPaths from "vite-tsconfig-paths";
 
 // https://vitejs.dev/config/
@@ -22,6 +22,29 @@ export default defineConfig(({ mode }) => {
     resolve: {
       alias: {
         "~": resolve(__dirname, "src"),
+      },
+    },
+    build: {
+      rollupOptions: {
+        output: {
+          // Split heavy third-party deps into their own chunks so the main
+          // bundle doesn't tip over the 1MB warning and the browser can
+          // download in parallel. Firebase + react-redux-firebase is the
+          // single biggest contributor (~300KB gzip on its own), so it gets
+          // its own chunk; the rest of node_modules goes into "vendor".
+          // These vendor chunks also stay cached across app deploys.
+          manualChunks(id) {
+            if (!id.includes("node_modules")) return undefined;
+            if (
+              /node_modules\/(@?firebase|react-redux-firebase|redux-firestore)\//.test(
+                id,
+              )
+            ) {
+              return "vendor-firebase";
+            }
+            return "vendor";
+          },
+        },
       },
     },
   };
@@ -81,7 +104,7 @@ function devServerPlugin(): Plugin {
       return {
         server: {
           host: HOST || "0.0.0.0",
-          port: parseInt(PORT || "3000", 10),
+          port: parseInt(PORT || "5173", 10),
           open: true,
           ...(https &&
             SSL_CRT_FILE &&
